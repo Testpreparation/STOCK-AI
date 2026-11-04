@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17365d">
+  <title>STOCK AI | 投資分析ダッシュボード</title>
+  <style>
+:root{--navy:#17365d;--navy2:#214a78;--blue:#2878c7;--blue-light:#edf5fd;--ink:#172b43;--muted:#718096;--line:#e4eaf1;--bg:#f5f7fa;--green:#15966a;--red:#d84b55;--shadow:0 5px 20px rgba(27,55,87,.045)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;font-size:14px}.app-shell{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:246px;background:#fff;border-right:1px solid var(--line);padding:25px 16px;display:flex;flex-direction:column;z-index:20}.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px;letter-spacing:.5px;padding:0 8px 34px;color:var(--navy)}.brand b{color:var(--blue)}.brand small{display:block;font-size:8px;letter-spacing:1.25px;color:#91a0b2;margin-top:3px}.brand-mark{width:35px;height:35px;background:var(--navy);color:#fff;display:grid;place-items:center;border-radius:10px;font-size:20px}.nav-label,.eyebrow{font-size:10px;letter-spacing:1.25px;font-weight:800;color:#91a0b2}.nav-label{padding:0 12px 12px}.side-nav{display:grid;gap:5px}.nav-item{border:0;background:transparent;text-align:left;padding:12px 13px;border-radius:9px;color:#63748a;font:inherit;cursor:pointer;display:flex;gap:13px;align-items:center;font-weight:600}.nav-item span{font-size:17px;width:20px;text-align:center}.nav-item:hover{background:#f5f8fc}.nav-item.active{background:var(--blue-light);color:var(--blue)}.sidebar-bottom{margin-top:auto}.data-status{border-top:1px solid var(--line);padding:18px 8px 0;color:#8997a8;font-size:11px;display:flex;align-items:center;gap:8px}.data-status i,.market-pill i{width:7px;height:7px;border-radius:50%;background:#e3a83c;display:inline-block}.main{margin-left:246px;min-height:100vh;display:flex;flex-direction:column}.topbar{height:66px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:10}.breadcrumb{font-size:12px;color:#91a0b2}.breadcrumb span{padding:0 10px;color:#c3ccd6}.breadcrumb b{color:var(--ink)}.top-actions{display:flex;align-items:center;gap:16px}.market-pill{font-size:11px;color:#758398;background:#f6f8fa;padding:8px 11px;border-radius:20px}.market-pill b{color:#bd8425;margin-left:5px}.icon-btn,.avatar,.mobile-menu{border:0;cursor:pointer}.icon-btn{background:#f3f6f9;color:#62758c;width:34px;height:34px;border-radius:9px;font-size:20px}.avatar{width:32px;height:32px;border-radius:50%;background:#dceaf8;color:var(--navy);font-weight:700}.mobile-menu{display:none;background:transparent;font-size:20px;color:var(--navy)}.content{width:min(1500px,100%);padding:31px 34px 45px;margin:0 auto;flex:1}.page{display:none}.page.active{display:block}.page-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px;gap:20px}.page-heading h1{font-size:26px;margin:7px 0 5px;letter-spacing:-.7px}.muted{color:var(--muted);margin:0;font-size:12px}.heading-actions{display:flex;align-items:center;gap:17px}.updated-label{font-size:10px;color:#8997a8}.btn{border:0;border-radius:8px;padding:10px 15px;font-weight:700;font-size:12px;cursor:pointer}.btn-primary{background:var(--blue);color:#fff;box-shadow:0 3px 8px #2878c72a}.btn-primary:hover{background:#1f69b2}.btn-ghost{background:#f1f4f7;color:#607086}.market-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}.market-card,.panel{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}.market-card{padding:15px 17px}.market-card span{display:block;color:#7e8ca0;font-size:11px;margin-bottom:9px}.market-card strong{font-size:19px;display:block;letter-spacing:-.4px}.market-card small{font-size:10px;color:#a1adba;display:block;margin-top:5px}.summary-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:15px;margin-bottom:27px}.asset-panel,.ai-highlight{padding:20px 22px}.panel-title{display:flex;align-items:center;justify-content:space-between}.panel-title h2,.section-row h2{font-size:16px;margin:5px 0 0}.text-btn{border:0;background:transparent;color:var(--blue);font-size:11px;font-weight:700;cursor:pointer}.asset-value{font-size:29px;font-weight:800;margin:20px 0 16px;letter-spacing:-.7px}.neutral-chip{font-size:10px;font-weight:600;background:#f0f3f6;color:#8491a0;border-radius:20px;padding:5px 8px;vertical-align:middle}.asset-stats{display:flex;gap:38px}.asset-stats div{display:grid;gap:6px}.asset-stats span{font-size:10px;color:#8491a0}.asset-stats b{font-size:13px}.neutral{color:#8793a1}.empty-note{border-top:1px solid var(--line);margin-top:18px;padding-top:12px;color:#9aa6b4;font-size:10px}.ai-highlight{background:linear-gradient(130deg,#17365d,#245486);color:#fff;position:relative;overflow:hidden}.ai-highlight .eyebrow{color:#a8c7e8}.ai-highlight h2{color:#fff}.sparkle{font-size:24px;color:#a8d8ff}.ai-number{font-size:36px;font-weight:800;margin-top:18px}.ai-number small{font-size:12px;color:#a9c6e2}.ai-highlight p{font-size:11px;line-height:1.7;color:#c2d5e9;max-width:340px}.ai-footer{border-top:1px solid #ffffff2c;padding-top:12px;margin-top:15px;display:flex;justify-content:space-between;font-size:10px;color:#b7cee5}.ai-footer b{color:#ffcf76}.section-row{display:flex;align-items:end;justify-content:space-between;margin:22px 0 12px}.table-panel{overflow:hidden}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap}th{text-align:left;background:#f8fafc;color:#8290a1;font-size:10px;font-weight:700;padding:13px 16px;border-bottom:1px solid var(--line)}td{padding:14px 16px;border-bottom:1px solid #edf0f4;font-size:11px;color:#52647a}tbody tr:last-child td{border-bottom:0}.empty-cell{text-align:center!important;color:#a0acb8;padding:28px!important}.news-empty{padding:25px;color:#9aa6b4;font-size:11px}.footer{padding:17px 34px;border-top:1px solid var(--line);color:#8794a4;font-size:10px;background:#fff}.footer span{margin-left:12px}.filter-bar{padding:12px 15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.tabs{display:flex;gap:5px}.tab{border:0;background:transparent;padding:8px 14px;border-radius:7px;color:#77869a;font-size:11px;font-weight:700;cursor:pointer}.tab.active{background:var(--blue-light);color:var(--blue)}select,input{font:inherit;border:1px solid var(--line);border-radius:7px;padding:9px 10px;color:#53657a;background:#fff}.notice{padding:13px 15px;border-radius:8px;font-size:11px;margin:14px 0}.notice.warning{background:#fff8e9;color:#9a742e;border:1px solid #f2e4c5}.market-tabs{margin-bottom:14px}.market-placeholder{padding:65px 20px;text-align:center}.placeholder-icon{font-size:30px;color:#9bb8d5}.market-placeholder h3{font-size:15px;margin:13px 0 7px}.market-placeholder p{color:#8a98a9;font-size:11px}.portfolio-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:16px}.mini-stat{padding:17px}.mini-stat span{display:block;color:#8997a8;font-size:10px;margin-bottom:9px}.mini-stat b{font-size:21px}.fine-print{color:#99a5b2;font-size:10px;margin-top:12px}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.settings-panel{padding:22px;display:grid;gap:15px;align-content:start}.settings-panel h2{font-size:15px;margin:0 0 4px}.settings-panel label{display:grid;gap:7px;font-size:11px;color:#68798e}.settings-panel input,.settings-panel select{width:100%;max-width:420px}.settings-panel .btn{justify-self:start;margin-top:3px}.connection-row{display:flex;justify-content:space-between;border-bottom:1px solid #edf0f4;padding:10px 0;font-size:11px;color:#607187}.status-off{font-size:10px;color:#bd8b37}.modal-backdrop{position:fixed;inset:0;background:#10243b66;display:none;align-items:center;justify-content:center;z-index:50;padding:15px}.modal-backdrop.show{display:flex}.modal{background:#fff;width:min(440px,100%);border-radius:14px;padding:20px;box-shadow:0 20px 60px #10243b30}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.modal-head h3{margin:0;font-size:16px}.modal-head button{border:0;background:#f1f4f7;border-radius:50%;width:28px;height:28px;font-size:19px;cursor:pointer}.modal-field{display:grid;gap:6px;margin-bottom:13px;font-size:11px;color:#66778c}.modal-field input,.modal-field select{width:100%}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#17365d;color:#fff;padding:11px 17px;border-radius:8px;font-size:11px;opacity:0;pointer-events:none;transition:.2s;z-index:100}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1050px){.sidebar{width:215px}.main{margin-left:215px}.content{padding:25px 22px}.market-grid{grid-template-columns:repeat(3,1fr)}.summary-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);transition:transform .22s;width:260px;box-shadow:10px 0 35px #10243b18}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.topbar{height:58px;padding:0 15px;gap:12px}.mobile-menu{display:block}.breadcrumb{margin-right:auto}.market-pill{display:none}.content{padding:22px 14px 35px}.page-heading{align-items:flex-start;flex-direction:column;margin-bottom:19px}.page-heading h1{font-size:23px}.heading-actions{width:100%;justify-content:space-between}.market-grid{grid-template-columns:repeat(2,1fr);gap:8px}.market-card{padding:12px}.market-card strong{font-size:17px}.summary-grid{grid-template-columns:1fr}.asset-stats{justify-content:space-between;gap:10px}.asset-panel,.ai-highlight{padding:17px}.section-row{margin-top:20px}.portfolio-cards{grid-template-columns:1fr}.settings-grid{grid-template-columns:1fr}.footer{padding:15px}.footer span{display:block;margin:6px 0 0}.updated-label{font-size:9px}.filter-bar{gap:8px;align-items:flex-start;flex-direction:column}.tabs{flex-wrap:wrap}.filter-bar select{width:100%}}
+.status-on{font-size:10px;color:#15966a}
+
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">S</span><span>STOCK <b>AI</b><small>INVESTMENT INTELLIGENCE</small></span></div>
+      <div class="nav-label">MENU</div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span>ホーム</button>
+        <button class="nav-item" data-page="recommendations"><span>✦</span>AIおすすめ銘柄</button>
+        <button class="nav-item" data-page="market"><span>◫</span>マーケット</button>
+        <button class="nav-item" data-page="watchlist"><span>☆</span>ウォッチリスト</button>
+        <button class="nav-item" data-page="portfolio"><span>▤</span>ポートフォリオ</button>
+        <button class="nav-item" data-page="reports"><span>▧</span>AIレポート</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-page="settings"><span>⚙</span>設定</button>
+        <div class="data-status"><i></i><span>データ接続設定待ち</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuToggle" aria-label="メニュー">☰</button>
+        <div class="breadcrumb">STOCK AI <span>/</span> <b id="pageName">ホーム</b></div>
+        <div class="top-actions">
+          <div class="market-pill"><i></i> 市場データ <b id="marketStatus">デモ表示</b></div>
+          <button class="icon-btn" id="refreshBtn" title="更新">↻</button>
+          <button class="avatar" title="ユーザー">U</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <section class="page active" id="page-dashboard">
+          <div class="page-heading">
+            <div><p class="eyebrow">WEDNESDAY, NOVEMBER 04, 2026</p><h1>おはようございます。</h1><p class="muted">今日のマーケットとAIの注目銘柄を確認しましょう。</p></div>
+            <div class="heading-actions"><span class="updated-label">最終更新：<b id="updatedAt">—</b></span><button class="btn btn-primary" data-go="recommendations">AI分析を見る <span>→</span></button></div>
+          </div>
+          <div class="market-grid" id="indexCards">
+            <article class="market-card"><span>日経平均</span><strong>—</strong><small>データ未接続</small></article>
+            <article class="market-card"><span>TOPIX</span><strong>—</strong><small>データ未接続</small></article>
+            <article class="market-card"><span>S&amp;P 500</span><strong>—</strong><small>データ未接続</small></article>
+            <article class="market-card"><span>NASDAQ</span><strong>—</strong><small>データ未接続</small></article>
+            <article class="market-card"><span>USD / JPY</span><strong>—</strong><small>データ未接続</small></article>
+          </div>
+          <div class="summary-grid">
+            <article class="panel asset-panel">
+              <div class="panel-title"><div><span class="eyebrow">MY INVESTMENT</span><h2>資産サマリー</h2></div><button class="text-btn" data-go="portfolio">詳細を見る →</button></div>
+              <div class="asset-value">¥0 <span class="neutral-chip">記録なし</span></div>
+              <div class="asset-stats"><div><span>評価損益</span><b class="neutral">¥0</b></div><div><span>投資元本</span><b>¥0</b></div><div><span>投資可能予算</span><b>¥10,000</b></div></div>
+              <div class="empty-note">保有銘柄を登録すると、資産推移と損益が表示されます。</div>
+            </article>
+            <article class="panel ai-highlight">
+              <div class="panel-title"><div><span class="eyebrow light">AI DAILY SCAN</span><h2>本日のAI分析</h2></div><span class="sparkle">✦</span></div>
+              <div class="ai-number">—<small>/ 100</small></div>
+              <p>株価データAPIを接続すると、毎営業日の銘柄スクリーニングが利用できます。</p>
+              <div class="ai-footer"><span>分析ステータス</span><b id="homeAiStatus">無料分析エンジン確認中</b></div>
+            </article>
+          </div>
+          <div class="section-row"><div><span class="eyebrow">AI PICKS</span><h2>AI注目銘柄</h2></div><button class="text-btn" data-go="recommendations">すべて見る →</button></div>
+          <div class="panel table-panel">
+            <div class="table-scroll"><table><thead><tr><th>銘柄</th><th>市場</th><th>株価</th><th>前日比</th><th>AIスコア</th><th>判断</th></tr></thead><tbody id="homePicks"><tr><td colspan="6" class="empty-cell">実データ未接続です。サンプル銘柄を実際の推奨として表示しない設計です。</td></tr></tbody></table></div>
+          </div>
+          <div class="section-row"><div><span class="eyebrow">LATEST NEWS</span><h2>マーケットニュース</h2></div></div>
+          <div class="panel news-empty">ニュースAPI接続後、企業ニュース・決算・市場材料をここに表示します。</div>
+        </section>
+
+        <section class="page" id="page-recommendations">
+          <div class="page-heading"><div><p class="eyebrow">AI STOCK DISCOVERY</p><h1>AIおすすめ銘柄</h1><p class="muted">毎営業日のスクリーニング結果と投資シナリオ。</p></div><button class="btn btn-primary" id="runScan">分析を実行</button></div>
+          <div class="filter-bar panel"><div class="tabs"><button class="tab active" data-market="all">すべて</button><button class="tab" data-market="JP">日本株</button><button class="tab" data-market="US">米国株</button></div><select id="sortSelect"><option value="score">AIスコア順</option><option value="change">騰落率順</option></select></div>
+          <div class="notice warning" id="scanNotice">株価API接続後にスクリーニングできます。初回は「分析を実行」を押してください。</div><p class="fine-print" id="scanMeta">初期対象：日本株・米国株 各5銘柄。対象銘柄は backend/.env で変更できます。スコアはテクニカル指標による定量評価です。</p>
+          <div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>銘柄</th><th>市場</th><th>現在株価</th><th>AIスコア</th><th>買い候補</th><th>目標</th><th>損切り目安</th><th>判断</th><th>分析根拠</th></tr></thead><tbody id="recommendationRows"><tr><td colspan="9" class="empty-cell">分析結果はまだありません。</td></tr></tbody></table></div></div>
+        </section>
+
+        <section class="page" id="page-market">
+          <div class="page-heading"><div><p class="eyebrow">GLOBAL MARKET</p><h1>マーケット</h1><p class="muted">日本株・米国株の市場データを確認。</p></div></div>
+          <div class="market-tabs"><button class="tab active" data-market-view="JP">日本株</button><button class="tab" data-market-view="US">米国株</button></div>
+          <div class="panel settings-panel" style="margin-bottom:14px"><h2>銘柄検索</h2><div style="display:flex;gap:9px;flex-wrap:wrap"><input id="quoteSymbol" placeholder="例：7203 / AAPL" style="flex:1;min-width:160px"><button class="btn btn-primary" id="quoteSearch">株価を取得</button></div><p class="fine-print">日本株は証券コード4桁、米国株はティッカーを入力。株価はデータ提供元の更新頻度に準じます。</p></div>
+          <div class="panel market-placeholder" id="quoteResult"><div class="placeholder-icon">◫</div><h3>銘柄を検索してください</h3><p>APIキー設定後、実際の株価と前日比を表示します。</p></div>
+          <div class="panel table-panel" style="margin-top:14px"><div class="table-scroll"><table><thead><tr><th>日付</th><th>始値</th><th>高値</th><th>安値</th><th>終値</th><th>出来高</th></tr></thead><tbody id="historyRows"><tr><td colspan="6" class="empty-cell">銘柄検索後に株価履歴を表示します。</td></tr></tbody></table></div></div>
+        </section>
+
+        <section class="page" id="page-watchlist">
+          <div class="page-heading"><div><p class="eyebrow">MY WATCHLIST</p><h1>ウォッチリスト</h1><p class="muted">気になる銘柄を登録して継続監視。</p></div><button class="btn btn-primary" id="addWatch">＋ 銘柄を追加</button></div>
+          <div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>銘柄コード</th><th>市場</th><th>現在株価</th><th>前日比</th><th>登録日</th><th></th></tr></thead><tbody id="watchRows"><tr><td colspan="6" class="empty-cell">ウォッチリストは空です。</td></tr></tbody></table></div></div>
+        </section>
+
+        <section class="page" id="page-portfolio">
+          <div class="page-heading"><div><p class="eyebrow">MY PORTFOLIO</p><h1>ポートフォリオ</h1><p class="muted">実際の売買結果を手動で記録して管理。</p></div><button class="btn btn-primary" id="addHolding">＋ 保有銘柄を登録</button></div>
+          <div class="portfolio-cards"><div class="panel mini-stat"><span>評価額</span><b id="portfolioValue">¥0</b></div><div class="panel mini-stat"><span>取得総額</span><b id="portfolioCost">¥0</b></div><div class="panel mini-stat"><span>評価損益</span><b id="portfolioPnl">¥0</b></div></div>
+          <div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>銘柄コード</th><th>市場</th><th>取得価格</th><th>株数</th><th>現在価格</th><th>評価損益</th></tr></thead><tbody id="holdingRows"><tr><td colspan="6" class="empty-cell">保有銘柄はまだ登録されていません。</td></tr></tbody></table></div></div>
+          <p class="fine-print">現在価格が未取得の場合、評価額・損益は算出しません。</p>
+        </section>
+
+        <section class="page" id="page-reports">
+          <div class="page-heading"><div><p class="eyebrow">AI MARKET REPORT</p><h1>AIレポート</h1><p class="muted">市場全体の動向と注目材料をまとめます。</p></div></div>
+          <div class="panel market-placeholder"><div class="placeholder-icon">▧</div><h3>レポートはまだありません</h3><p>市場データ・ニュース・AI APIの接続後、毎営業日のレポートを自動生成します。</p></div>
+        </section>
+
+        <section class="page" id="page-settings">
+          <div class="page-heading"><div><p class="eyebrow">PREFERENCES</p><h1>設定</h1><p class="muted">投資条件とデータ接続を管理。</p></div></div>
+          <div class="settings-grid">
+            <div class="panel settings-panel"><h2>投資条件</h2><label>投資予算<input id="budget" type="number" min="0" value="10000"></label><label>投資期間<select id="period"><option>1〜3か月</option><option>数日〜2週間</option><option>半年程度</option><option>1年以上</option></select></label><label>リスク許容度<select id="risk"><option>高め</option><option>中程度</option><option>低め</option></select></label><label>対象市場<select id="targetMarket"><option>日本株・米国株</option><option>日本株のみ</option><option>米国株のみ</option></select></label><button class="btn btn-primary" id="saveSettings">設定を保存</button></div>
+            <div class="panel settings-panel"><h2>データ接続</h2><div class="connection-row"><span>株価データAPI（Twelve Data）</span><b class="status-off" id="marketApiStatus">未設定</b></div><div class="connection-row"><span>AI分析エンジン（無料・ローカル）</span><b class="status-on" id="aiEngineStatus">利用可能</b></div><div class="connection-row"><span>ニュースAPI</span><b class="status-off">未設定</b></div><div class="connection-row"><span>LINE通知</span><b class="status-off">未設定</b></div><p class="fine-print">APIキーはbackend/.envに設定します。ブラウザ上には保存しません。無料プランは米国株リアルタイムを含みますが、日本株は試用対象銘柄に制限があります。</p></div>
+          </div>
+        </section>
+      </section>
+      <footer class="footer">STOCK AI <span>投資判断を支援する分析ツールです。投資成果を保証するものではありません。</span></footer>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">銘柄を追加</h3><button id="modalClose">×</button></div><form id="modalForm"><div id="modalFields"></div><div class="modal-actions"><button type="button" class="btn btn-ghost" id="modalCancel">キャンセル</button><button class="btn btn-primary" type="submit">保存する</button></div></form></div></div>
+  <div class="toast" id="toast"></div>
+  <script>
+const state = { page:"dashboard", market:"all", watch:[], holdings:[], settings:{budget:10000,period:"1〜3か月",risk:"高め",targetMarket:"日本株・米国株"} };
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+function toast(msg){const el=$("#toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2300)}
+function money(v,currency="JPY"){return currency==="USD"?"$"+Number(v).toLocaleString("en-US",{maximumFractionDigits:2}):"¥"+Number(v).toLocaleString("ja-JP")}
+function navigate(page){state.page=page;$$(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));$$(".nav-item[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));$("#pageName").textContent=({dashboard:"ホーム",recommendations:"AIおすすめ銘柄",market:"マーケット",watchlist:"ウォッチリスト",portfolio:"ポートフォリオ",reports:"AIレポート",settings:"設定"})[page]||"ホーム";$("#sidebar").classList.remove("open");}
+$$("[data-page]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.page)));
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.go)));
+$("#menuToggle").addEventListener("click",()=>$("#sidebar").classList.toggle("open"));
+$("#refreshBtn").addEventListener("click",()=>{ $("#updatedAt").textContent=new Date().toLocaleTimeString("ja-JP",{hour:"2-digit",minute:"2-digit"});toast("画面を更新しました。実データはAPI接続後に取得します。");});
+$("#updatedAt").textContent=new Date().toLocaleTimeString("ja-JP",{hour:"2-digit",minute:"2-digit"});
+function openModal(title,fields,onSave){$("#modalTitle").textContent=title;$("#modalFields").innerHTML=fields.map(f=>`<label class="modal-field">${f.label}${f.type==="select"?`<select name="${f.name}">${f.options.map(o=>`<option>${o}</option>`).join("")}</select>`:`<input name="${f.name}" type="${f.type||"text"}" ${f.required?"required":""} ${f.min!==undefined?`min="${f.min}"`:""} step="${f.step||"any"}" placeholder="${f.placeholder||""}">`}</label>`).join("");$("#modalBackdrop").classList.add("show");$("#modalForm").onsubmit=e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.target));onSave(data);$("#modalBackdrop").classList.remove("show");e.target.reset();};}
+function closeModal(){$("#modalBackdrop").classList.remove("show")}
+$("#modalClose").onclick=closeModal;$("#modalCancel").onclick=closeModal;$("#modalBackdrop").addEventListener("click",e=>{if(e.target.id==="modalBackdrop")closeModal()});
+$("#addWatch").onclick=()=>openModal("ウォッチリストに追加",[{name:"symbol",label:"銘柄コード（例：7203 / AAPL）",required:true},{name:"market",label:"市場",type:"select",options:["日本株","米国株"]}],d=>{state.watch.push({...d,date:new Date().toLocaleDateString("ja-JP")});renderWatch();toast("ウォッチリストに追加しました。株価はAPI接続後に表示されます。")});
+function renderWatch(){const body=$("#watchRows");body.innerHTML=state.watch.length?state.watch.map((x,i)=>`<tr><td><b>${escapeHtml(x.symbol.toUpperCase())}</b></td><td>${x.market}</td><td>—</td><td>—</td><td>${x.date}</td><td><button class="text-btn" data-remove="${i}">削除</button></td></tr>`).join(""):`<tr><td colspan="6" class="empty-cell">ウォッチリストは空です。</td></tr>`;$$("[data-remove]").forEach(b=>b.onclick=()=>{state.watch.splice(+b.dataset.remove,1);renderWatch()})}
+$("#addHolding").onclick=()=>openModal("保有銘柄を登録",[{name:"symbol",label:"銘柄コード",required:true},{name:"market",label:"市場",type:"select",options:["日本株","米国株"]},{name:"price",label:"取得価格",type:"number",min:0,required:true},{name:"quantity",label:"保有株数",type:"number",min:0.000001,required:true}],d=>{state.holdings.push({...d,price:+d.price,quantity:+d.quantity});renderHoldings();toast("保有銘柄を登録しました。現在価格は未取得です。")});
+function renderHoldings(){const body=$("#holdingRows");body.innerHTML=state.holdings.length?state.holdings.map(x=>`<tr><td><b>${escapeHtml(x.symbol.toUpperCase())}</b></td><td>${x.market}</td><td>${money(x.price,x.market==="米国株"?"USD":"JPY")}</td><td>${x.quantity}</td><td>—</td><td>—</td></tr>`).join(""):`<tr><td colspan="6" class="empty-cell">保有銘柄はまだ登録されていません。</td></tr>`;const cost=state.holdings.reduce((s,x)=>s+x.price*x.quantity,0);$("#portfolioCost").textContent="¥"+Math.round(cost).toLocaleString("ja-JP");$("#portfolioValue").textContent="—";$("#portfolioPnl").textContent="—"}
+$("#saveSettings").onclick=()=>{state.settings={budget:+$("#budget").value,period:$("#period").value,risk:$("#risk").value,targetMarket:$("#targetMarket").value};localStorage.setItem("stockAiSettings",JSON.stringify(state.settings));toast("設定を保存しました。")};
+const saved=localStorage.getItem("stockAiSettings");if(saved){try{state.settings=JSON.parse(saved);$("#budget").value=state.settings.budget;$("#period").value=state.settings.period;$("#risk").value=state.settings.risk;$("#targetMarket").value=state.settings.targetMarket}catch{}}
+$("#runScan").onclick=runScan;
+$$("[data-market]").forEach(b=>b.onclick=()=>{$$("[data-market]").forEach(x=>x.classList.toggle("active",x===b));state.market=b.dataset.market;});
+$$("[data-market-view]").forEach(b=>b.onclick=()=>{$$("[data-market-view]").forEach(x=>x.classList.toggle("active",x===b));});
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+// Phase 2: real market-data API connection (the key is never sent to the browser).
+const API_BASE = window.STOCK_AI_API_BASE || "http://localhost:5000/api";
+let activeMarket = "JP";
+function marketCode(label){return label === "米国株" ? "US" : "JP";}
+function fmtPrice(value,currency){return value==null?"—":money(value,currency);}
+async function apiGet(path){const response=await fetch(`${API_BASE}${path}`);const payload=await response.json();if(!response.ok)throw new Error(payload.error||"APIエラー");return payload;}
+async function apiPost(path,body={}){const response=await fetch(`${API_BASE}${path}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const payload=await response.json();if(!response.ok)throw new Error(payload.error||"APIエラー");return payload;}
+async function refreshApiStatus(){try{const s=await apiGet("/status");const el=$("#marketApiStatus");if(el){el.textContent=s.market_data==="connected"?"接続済み":"未設定";el.className=s.market_data==="connected"?"status-on":"status-off";}const pill=$("#marketStatus");if(pill)pill.textContent=s.market_data==="connected"?"接続済み":"未設定";const localAI=s.ai==="local_quantitative_free";const aiStatus=$("#homeAiStatus");if(aiStatus)aiStatus.textContent=localAI?"無料分析エンジン利用可能":"未接続";const aiEngine=$("#aiEngineStatus");if(aiEngine){aiEngine.textContent=localAI?"利用可能":"未接続";aiEngine.className=localAI?"status-on":"status-off";}}catch{const aiStatus=$("#homeAiStatus");if(aiStatus)aiStatus.textContent="サーバー接続待ち";}}
+async function searchQuote(){const symbol=$("#quoteSymbol").value.trim().toUpperCase();if(!symbol){toast("銘柄コードを入力してください");return;}const result=$("#quoteResult");result.innerHTML='<h3>株価を取得しています…</h3>';$("#historyRows").innerHTML='<tr><td colspan="6" class="empty-cell">取得中…</td></tr>';try{const q=await apiGet(`/stocks/quote?symbol=${encodeURIComponent(symbol)}&market=${activeMarket}`);const sign=q.change>=0?"＋":"";result.innerHTML=`<div class="eyebrow">${escapeHtml(q.source)} · ${escapeHtml(q.exchange||q.market)}</div><h2 style="font-size:28px;margin:12px 0 5px">${fmtPrice(q.price,q.currency)}</h2><div style="font-weight:700;color:${q.change>=0?'#15966a':'#d65b5b'}">${sign}${Number(q.change).toFixed(2)} (${sign}${Number(q.change_percent).toFixed(2)}%)</div><p>${escapeHtml(q.name)}（${escapeHtml(q.symbol)}）</p><p class="fine-print">データ時刻：${escapeHtml(q.observed_at)} · ${q.is_delayed?'遅延・日次データの可能性あり':'提供元の更新頻度に準拠'}</p>`;const h=await apiGet(`/stocks/history?symbol=${encodeURIComponent(symbol)}&market=${activeMarket}&outputsize=30`);$("#historyRows").innerHTML=h.points.map(x=>`<tr><td>${escapeHtml(x.datetime)}</td><td>${fmtPrice(x.open,h.currency)}</td><td>${fmtPrice(x.high,h.currency)}</td><td>${fmtPrice(x.low,h.currency)}</td><td><b>${fmtPrice(x.close,h.currency)}</b></td><td>${x.volume==null?'—':Number(x.volume).toLocaleString()}</td></tr>`).join("")||'<tr><td colspan="6" class="empty-cell">履歴データがありません。</td></tr>'; }catch(e){result.innerHTML=`<h3>株価を取得できませんでした</h3><p>${escapeHtml(e.message)}</p><p class="fine-print">APIキー・市場の利用権限・銘柄コードを確認してください。</p>`;$("#historyRows").innerHTML='<tr><td colspan="6" class="empty-cell">履歴データを表示できません。</td></tr>';}}
+if($("#quoteSearch"))$("#quoteSearch").addEventListener("click",searchQuote);
+if($("#quoteSymbol"))$("#quoteSymbol").addEventListener("keydown",e=>{if(e.key==="Enter")searchQuote()});
+$$("[data-market-view]").forEach(b=>b.addEventListener("click",()=>{activeMarket=b.dataset.marketView;$("#quoteResult").innerHTML=`<h3>${activeMarket==='JP'?'日本株':'米国株'}を検索してください</h3><p>銘柄コードを入力して株価を取得できます。</p>`;}));
+function renderRecommendations(items){
+  const body=$("#recommendationRows");
+  let rows=[...(items||[])];
+  if(state.market!=="all")rows=rows.filter(x=>x.market===state.market);
+  const sort=$("#sortSelect")?.value||"score";
+  rows.sort((a,b)=>sort==="change"?(Number(b.momentum5||0)-Number(a.momentum5||0)):(Number(b.score||0)-Number(a.score||0)));
+  body.innerHTML=rows.length?rows.map(x=>`<tr><td><b>${escapeHtml(x.name||x.symbol)}</b><br><small>${escapeHtml(x.symbol)} · ${x.market}</small></td><td>${x.market==="JP"?"日本株":"米国株"}</td><td>${fmtPrice(x.current_price,x.currency|| (x.market==="JP"?"JPY":"USD"))}</td><td><b>${Number(x.score||0).toFixed(1)}</b></td><td>${fmtPrice(x.entry_low,x.currency)}〜${fmtPrice(x.entry_high,x.currency)}</td><td>${fmtPrice(x.target_price,x.currency)}</td><td>${fmtPrice(x.stop_price,x.currency)}</td><td><span class="status-on">${escapeHtml(x.decision||"監視")}</span></td><td title="${escapeHtml(x.rationale||"")}"><small>${escapeHtml(x.rationale||"—")}</small></td></tr>`).join(""):`<tr><td colspan="9" class="empty-cell">条件に合う結果がありません。株価APIの設定・対象銘柄を確認してください。</td></tr>`;
+}
+async function loadRecommendations(){try{const data=await apiGet("/recommendations");renderRecommendations(data.items||[]);if(data.count){$("#scanNotice").textContent=`保存済みのスクリーニング結果：${data.count}銘柄`;$("#scanNotice").className="notice";}}catch(e){console.warn(e);}}
+async function runScan(){const button=$("#runScan");button.disabled=true;button.textContent="分析中…";$("#scanNotice").textContent="株価・過去30営業日データを取得して分析しています。銘柄数により時間がかかります。";$("#scanNotice").className="notice warning";try{const data=await apiPost("/screening/run");renderRecommendations(data.items||[]);const ai=data.ai_status==="local_quantitative_free"?"無料の独自定量分析":"定量スクリーニング";$("#scanNotice").textContent=`分析完了：${data.count}銘柄を評価。${ai}。取得失敗 ${data.errors?.length||0}銘柄。`;$("#scanNotice").className="notice";$("#scanMeta").textContent=`分析日時：${new Date(data.analyzed_at).toLocaleString("ja-JP")} · 目標+8%・損切り目安−5%は機械的な参考値で、予測や保証ではありません。`;toast("スクリーニングが完了しました");}catch(e){$("#scanNotice").textContent=`分析できませんでした：${e.message}`;$("#scanNotice").className="notice warning";toast("API設定と接続状態を確認してください");}finally{button.disabled=false;button.textContent="分析を実行";}}
+$("#sortSelect")?.addEventListener("change",()=>loadRecommendations());
+$$("[data-market]").forEach(b=>b.addEventListener("click",()=>loadRecommendations()));
+loadRecommendations();
+refreshApiStatus();
+
+  </script>
+</body>
+</html>
