@@ -12,7 +12,8 @@ export function analyzePortfolio(portfolio, datasets={}, options={}) {
   const maxQuoteAgeDays=Number.isInteger(options.maxQuoteAgeDays)?options.maxQuoteAgeDays:5;
   const warnings=[];
   const holdings=portfolio.holdings.map(holding=>{
-    const key=holding.market+":"+holding.symbol;
+    const normalizedSymbol=holding.market==="JP"?String(holding.symbol).replace(/\\.(T|JP)$/i,""):holding.symbol;
+    const key=holding.market+":"+normalizedSymbol;
     const dataset=datasets[key];
     const rows=Array.isArray(dataset?.data)?dataset.data.filter(row=>row&&/^\d{4}-\d{2}-\d{2}$/.test(row.date)&&finite(row.close)&&row.close>0).sort((a,b)=>a.date.localeCompare(b.date)):[];
     const latest=rows.at(-1)??null;
