@@ -1,5 +1,6 @@
 import { getEngineCapabilities, analyzeInstrument } from "../../engine/pipeline.js";
 import { applyForecastCalibration, createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../../engine/analysis/forecast-history.js";
+import { importPortfolioCsv } from "../../engine/portfolio/csv-import.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -138,6 +139,79 @@ async function loadPublishedData(){
     isLoadingMarketData=false;
   }
 }
+
+const PORTFOLIO_STORAGE_KEY="stock-ai-portfolio-v1";
+const portfolioFile=document.querySelector("#portfolio-csv-file");
+const portfolioImportButton=document.querySelector("#portfolio-import-button");
+const portfolioClearButton=document.querySelector("#portfolio-clear-button");
+const portfolioFileName=document.querySelector("#portfolio-file-name");
+const portfolioStatus=document.querySelector("#portfolio-import-status");
+function readPortfolio(){try{return JSON.parse(localStorage.getItem(PORTFOLIO_STORAGE_KEY)??"null");}catch{return null;}}
+function renderPortfolio(portfolio){
+  const summary=document.querySelector("#portfolio-summary");
+  const tbody=document.querySelector("#portfolio-holdings");
+  const updated=document.querySelector("#portfolio-updated-at");
+  const warnings=document.querySelector("#portfolio-warnings");
+  if(!summary||!tbody)return;
+  summary.replaceChildren();
+  const metrics=[
+    ["保有銘柄数",String(portfolio?.summary?.holdingsCount??0)+"銘柄","CSV取込データ"],
+    ["保有株評価額",money(portfolio?.summary?.marketValue??null,"JPY"),"CSVの評価額または現在値から計算"],
+    ["評価損益",money(portfolio?.summary?.unrealizedPnl??null,"JPY"),"CSV記載値または取得単価から計算"],
+    ["買付余力",money(portfolio?.summary?.buyingPower??portfolio?.summary?.cash??null,"JPY"),"CSVに記載がある場合"]
+  ];
+  for(const [label,value,note] of metrics){const card=element("article","metric");card.append(element("span","",label),element("strong","",value),element("small","",note));summary.append(card);}
+  tbody.replaceChildren();
+  if(!portfolio?.holdings?.length){const row=element("tr");const cell=element("td","muted","CSVを読み込むと表示されます。");cell.colSpan=6;row.append(cell);tbody.append(row);}
+  else for(const holding of portfolio.holdings){
+    const row=element("tr");
+    const identity=element("td");identity.append(element("strong","",holding.symbol),element("small","portfolio-name",holding.name|| (holding.market==="JP"?"日本株":"米国株")));
+    const values=[identity,element("td","",holding.quantity.toLocaleString("ja-JP")),element("td","",money(holding.averageCost,holding.currency)),element("td","",money(holding.currentPrice,holding.currency)),element("td","",money(holding.marketValue,holding.currency)),element("td",holding.unrealizedPnl===null?"":holding.unrealizedPnl>=0?"pnl-positive":"pnl-negative",money(holding.unrealizedPnl,holding.currency))];
+    row.append(...values);tbody.append(row);
+  }
+  if(updated)updated.textContent=portfolio?.importedAt?"取込："+new Date(portfolio.importedAt).toLocaleString("ja-JP"):"未読み込み";
+  if(warnings){warnings.replaceChildren();for(const warning of portfolio?.warnings??[])warnings.append(element("li","",warning));}
+}
+if(portfolioFile&&portfolioImportButton){
+  portfolioFile.addEventListener("change",()=>{
+    const file=portfolioFile.files?.[0]??null;
+    portfolioImportButton.disabled=!file;
+    if(portfolioFileName)portfolioFileName.textContent=file?file.name:"ファイル未選択";
+    if(portfolioStatus)portfolioStatus.textContent=file?"選択済み。読み込みボタンを押すと、この端末内で解析します。":"CSVを選択してください。";
+  });
+  portfolioImportButton.addEventListener("click",async()=>{
+    const file=portfolioFile.files?.[0];
+    if(!file)return;
+    portfolioImportButton.disabled=true;
+    if(portfolioStatus)portfolioStatus.textContent="CSVを解析しています…";
+    try{
+      const buffer=await file.arrayBuffer();
+      let text;
+      try{text=new TextDecoder("utf-8",{fatal:true}).decode(buffer);}
+      catch{text=new TextDecoder("shift_jis").decode(buffer);}
+      const imported=importPortfolioCsv(text,{source:file.name});
+      if(!imported.holdings.length)throw new Error("保有銘柄を認識できませんでした。見出し行を確認してください。");
+      localStorage.setItem(PORTFOLIO_STORAGE_KEY,JSON.stringify(imported));
+      renderPortfolio(imported);
+      if(portfolioStatus)portfolioStatus.textContent=imported.holdings.length+"銘柄を端末内に保存しました。"+(imported.warnings.length?" 注意事項があります。":"");
+    }catch(error){
+      console.error("Portfolio CSV import failed:",error);
+      if(portfolioStatus)portfolioStatus.textContent="読み込み失敗："+error.message;
+    }finally{portfolioImportButton.disabled=false;}
+  });
+}
+if(portfolioClearButton){
+  portfolioClearButton.addEventListener("click",()=>{
+    localStorage.removeItem(PORTFOLIO_STORAGE_KEY);
+    renderPortfolio(null);
+    if(portfolioStatus)portfolioStatus.textContent="この端末に保存していた保有資産データを削除しました。";
+    if(portfolioFile)portfolioFile.value="";
+    if(portfolioFileName)portfolioFileName.textContent="ファイル未選択";
+    if(portfolioImportButton)portfolioImportButton.disabled=true;
+  });
+}
+renderPortfolio(readPortfolio());
+
 activate("overview");
 loadPublishedData();
 const MARKET_DATA_CHECK_INTERVAL_MS=60*1000;
