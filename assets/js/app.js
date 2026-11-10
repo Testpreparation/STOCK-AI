@@ -216,7 +216,7 @@ function renderPortfolio(portfolio){
         if(review.latestPrice!==null) card.append(element("p","", "分析基準価格 "+money(review.latestPrice,review.currency)+" ／ 価格調整 "+review.priceAdjustment));
         if(review.financial){
           const d=review.financial.derived??{};
-          card.append(element("p","", "財務基準日 "+(review.financial.latestPeriod??"—")+" ／ 財務品質 "+review.financial.quality));
+          card.append(element("p","", "財務基準日 "+(review.financial.latestPeriod??"—")+" ／ 財務品質 "+review.financial.quality+" ／ 提供元 "+review.financial.provider+(review.financial.delayPolicy==="FREE_PLAN_12_WEEK_DELAY"?"（約12週間遅延）":"")));
           const ratios=[
             ["売上高成長率",review.financial.metrics?.revenue?.yearOverYearGrowth?.value,"%"],
             ["営業利益率",d.operatingMarginPercent,"%"],
