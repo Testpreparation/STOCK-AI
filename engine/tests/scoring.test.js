@@ -29,7 +29,7 @@ test("weights sum to 100 and full inputs produce a complete score", () => {
   const result = calculateStockScore(fullInput);
   assert.equal(result.coveragePercent, 100);
   assert.ok(result.score >= 0 && result.score <= 100);
-  assert.equal(result.recommendation.code, "VERY_PROMISING");
+  assert.equal(result.recommendation.code, "CONSIDER_BUY");
 });
 
 test("missing components reduce coverage and block buy-oriented labels", () => {
