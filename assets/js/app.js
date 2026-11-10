@@ -114,7 +114,7 @@ async function loadPublishedData(){
 }
 activate("overview");
 loadPublishedData();
-const MARKET_DATA_CHECK_INTERVAL_MS=5*60*1000;
+const MARKET_DATA_CHECK_INTERVAL_MS=60*1000;
 window.setInterval(()=>{
   if(document.visibilityState==="visible")loadPublishedData();
 },MARKET_DATA_CHECK_INTERVAL_MS);
