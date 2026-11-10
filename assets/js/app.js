@@ -162,7 +162,7 @@ if(addAlertButton)addAlertButton.addEventListener("click",()=>{
   const alerts=readPriceAlerts();
   if(alerts.some(item=>item.market===market&&item.symbol===ticker&&item.condition===condition&&Number(item.targetPrice)===targetPrice)){if(statusNode)statusNode.textContent="同じ条件のアラートが登録済みです。";return;}
   alerts.push({id:market+":"+ticker+":"+condition+":"+targetPrice+":"+Date.now(),market,symbol:ticker,condition,targetPrice,enabled:true,triggered:false,createdAt:new Date().toISOString()});
-  if(savePriceAlerts(alerts)){renderPriceAlerts();if(statusNode)statusNode.textContent="アラートを登録しました。公開データの更新時に価格を確認します。";}
+  if(savePriceAlerts(alerts)){renderPriceAlerts();checkPriceAlerts();if(statusNode)statusNode.textContent="アラートを登録しました。公開済み終値も確認しました。";}
 });
 renderPriceAlerts();
 let screeningSourceItems=[];
