@@ -67,7 +67,11 @@ function renderInstrument(item,dataset){
   return card;
 }
 
+let lastManifestGeneratedAt=null;
+let isLoadingMarketData=false;
 async function loadPublishedData(){
+  if(isLoadingMarketData)return;
+  isLoadingMarketData=true;
   const overview=document.querySelector("#instrument-list");
   const screening=document.querySelector("#screening-list");
   const summary=document.querySelector("#market-data-summary");
@@ -76,6 +80,8 @@ async function loadPublishedData(){
     const response=await fetch("./public-data/manifest.json",{cache:"no-store"});
     if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);
     const manifest=await response.json();
+    if(lastManifestGeneratedAt===manifest.generatedAt)return;
+    lastManifestGeneratedAt=manifest.generatedAt??null;
     const records=(manifest.instruments??[]).filter(item=>item.file&&item.status==="updated");
     overview.replaceChildren();if(screening)screening.replaceChildren();
     let loaded=0;
@@ -102,7 +108,16 @@ async function loadPublishedData(){
     summary.textContent="公開データ未取得。初回の自動更新が完了するとここに表示されます。";
     if(status)status.textContent="実データ未接続";
     overview.replaceChildren(element("p","muted","まだ公開データがありません。自動更新の実行後に再読み込みしてください。"));
+  }finally{
+    isLoadingMarketData=false;
   }
 }
 activate("overview");
 loadPublishedData();
+const MARKET_DATA_CHECK_INTERVAL_MS=5*60*1000;
+window.setInterval(()=>{
+  if(document.visibilityState==="visible")loadPublishedData();
+},MARKET_DATA_CHECK_INTERVAL_MS);
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible")loadPublishedData();
+});
