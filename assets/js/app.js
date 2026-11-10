@@ -1,6 +1,7 @@
 import { getEngineCapabilities, analyzeInstrument } from "../../engine/pipeline.js";
 import { applyForecastCalibration, createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../../engine/analysis/forecast-history.js";
 import { importPortfolioCsv } from "../../engine/portfolio/csv-import.js";
+import { analyzePortfolio } from "../../engine/portfolio/analyzer.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -89,6 +90,7 @@ function renderInstrument(item,dataset){
   return card;
 }
 
+let publishedDatasets={};
 let lastManifestGeneratedAt=null;
 let isLoadingMarketData=false;
 async function loadPublishedData(){
@@ -105,6 +107,7 @@ async function loadPublishedData(){
     if(lastManifestGeneratedAt===manifest.generatedAt)return;
     lastManifestGeneratedAt=manifest.generatedAt??null;
     const records=(manifest.instruments??[]).filter(item=>item.file&&item.status==="updated");
+    const nextDatasets={};
     overview.replaceChildren();if(screening)screening.replaceChildren();
     let loaded=0;
     for(const item of records){
@@ -112,11 +115,14 @@ async function loadPublishedData(){
         const dataResponse=await fetch(`.${item.file}`,{cache:"no-store"});
         if(!dataResponse.ok)throw new Error(`data HTTP ${dataResponse.status}`);
         const dataset=await dataResponse.json();
+        nextDatasets[item.market+":"+item.symbol]=dataset;
         const card=renderInstrument(item,dataset);overview.append(card);
         if(screening)screening.append(card.cloneNode(true));
         loaded++;
       }catch(error){console.warn("Data load failed:",item.symbol,error);}
     }
+    publishedDatasets=nextDatasets;
+    renderPortfolio(readPortfolio());
     const forecastTarget=document.querySelector("#forecast-list");
     if(forecastTarget){forecastTarget.replaceChildren();for(const card of overview.children){forecastTarget.append(card.cloneNode(true));}if(!forecastTarget.children.length)forecastTarget.append(element("p","muted","予測対象データがありません。"));}
     const warningCount=(manifest.warnings??[]).length;
@@ -148,6 +154,8 @@ const portfolioFileName=document.querySelector("#portfolio-file-name");
 const portfolioStatus=document.querySelector("#portfolio-import-status");
 function readPortfolio(){try{return JSON.parse(localStorage.getItem(PORTFOLIO_STORAGE_KEY)??"null");}catch{return null;}}
 function renderPortfolio(portfolio){
+  const portfolioAnalysis=portfolio?analyzePortfolio(portfolio,publishedDatasets,{asOf:new Date().toISOString()}):null;
+  const displayPortfolio=portfolioAnalysis??portfolio;
   const summary=document.querySelector("#portfolio-summary");
   const tbody=document.querySelector("#portfolio-holdings");
   const updated=document.querySelector("#portfolio-updated-at");
@@ -155,13 +163,13 @@ function renderPortfolio(portfolio){
   if(!summary||!tbody)return;
   summary.replaceChildren();
   const currencyTotals=(key)=>{
-    const totals=portfolio?.summary?.totalsByCurrency??{};
+    const totals=displayPortfolio?.totalsByCurrency??portfolio?.summary?.totalsByCurrency??{};
     const parts=Object.entries(totals).filter(([,values])=>Number.isFinite(values[key])).map(([currency,values])=>money(values[key],currency));
     return parts.length?parts.join(" ／ "):"—";
   };
   const cashValue=portfolio?.summary?.buyingPower??portfolio?.summary?.cash??null;
   const metrics=[
-    ["保有銘柄数",String(portfolio?.summary?.holdingsCount??0)+"銘柄","CSV取込データ"],
+    ["保有銘柄数",String(displayPortfolio?.summary?.holdingsCount??portfolio?.summary?.holdingsCount??0)+"銘柄","CSV取込データ"],
     ["保有株評価額",currencyTotals("marketValue"),"通貨ごとに分けて表示"],
     ["評価損益",currencyTotals("unrealizedPnl"),"通貨ごとに分けて表示"],
     ["資産合計",portfolio?.summary?.totalAssets===null||portfolio?.summary?.totalAssets===undefined?"—":Number(portfolio.summary.totalAssets).toLocaleString("ja-JP"),"CSVに資産合計の記載がある場合"],
@@ -170,14 +178,37 @@ function renderPortfolio(portfolio){
   for(const [label,value,note] of metrics){const card=element("article","metric");card.append(element("span","",label),element("strong","",value),element("small","",note));summary.append(card);}
   tbody.replaceChildren();
   if(!portfolio?.holdings?.length){const row=element("tr");const cell=element("td","muted","CSVを読み込むと表示されます。");cell.colSpan=6;row.append(cell);tbody.append(row);}
-  else for(const holding of portfolio.holdings){
+  else for(const holding of (displayPortfolio?.holdings??portfolio.holdings)){
     const row=element("tr");
     const identity=element("td");identity.append(element("strong","",holding.symbol),element("small","portfolio-name",holding.name|| (holding.market==="JP"?"日本株":"米国株")));
-    const values=[identity,element("td","",holding.quantity.toLocaleString("ja-JP")),element("td","",money(holding.averageCost,holding.currency)),element("td","",money(holding.currentPrice,holding.currency)),element("td","",money(holding.marketValue,holding.currency)),element("td",holding.unrealizedPnl===null?"":holding.unrealizedPnl>=0?"pnl-positive":"pnl-negative",money(holding.unrealizedPnl,holding.currency))];
+    const quoteLabel=holding.quoteDate?(holding.quoteStale?"古いデータ：":"株価日：")+holding.quoteDate:(holding.quoteAvailable===false?"公開株価なし":"CSV取込値");
+    identity.append(element("small","portfolio-name",quoteLabel));
+    const dailyText=Number.isFinite(holding.dailyChangePercent)?(holding.dailyChangePercent>=0?"+":"")+holding.dailyChangePercent+"%":"—";
+    const values=[identity,element("td","",holding.quantity.toLocaleString("ja-JP")),element("td","",money(holding.averageCost,holding.currency)),element("td",holding.quoteStale?"instrument-warning":"",money(holding.currentPrice,holding.currency)),element("td","",money(holding.marketValue,holding.currency)),element("td",holding.unrealizedPnl===null?"":holding.unrealizedPnl>=0?"pnl-positive":"pnl-negative",money(holding.unrealizedPnl,holding.currency)),element("td",holding.dailyChangePercent===null?"":holding.dailyChangePercent>=0?"pnl-positive":"pnl-negative",dailyText)];
     row.append(...values);tbody.append(row);
   }
   if(updated)updated.textContent=portfolio?.importedAt?"取込："+new Date(portfolio.importedAt).toLocaleString("ja-JP"):"未読み込み";
-  if(warnings){warnings.replaceChildren();for(const warning of portfolio?.warnings??[])warnings.append(element("li","",warning));}
+  if(warnings){warnings.replaceChildren();for(const warning of [...(portfolio?.warnings??[]),...(portfolioAnalysis?.warnings??[])])warnings.append(element("li","",warning));}
+  const risk=document.querySelector("#portfolio-risk");
+  if(risk){
+    risk.replaceChildren();
+    if(!portfolioAnalysis)risk.append(element("p","muted","CSVを読み込むと資産配分とリスクを表示します。"));
+    else{
+      risk.append(element("p","muted","株価データ充足率："+portfolioAnalysis.summary.quoteCoveragePercent+"% ／ 古いデータ："+portfolioAnalysis.summary.staleCount+"銘柄"));
+      for(const [currency,total] of Object.entries(portfolioAnalysis.totalsByCurrency)){
+        const block=element("div","portfolio-risk-block");
+        block.append(element("h4","",currency+" 建て資産"));
+        block.append(element("p","", "評価額 "+money(total.marketValue,currency)+" ／ 評価損益 "+money(total.unrealizedPnl,currency)+" ／ 損益率 "+(total.returnPercent===null?"—":total.returnPercent+"%")));
+        block.append(element("p","", "上位3銘柄の集中度 "+(total.concentrationTop3Percent??"—")+"% ／ 最大保有 "+(total.largestHolding?.symbol??"—")+" ("+(total.largestHolding?.weightPercent??"—")+"%)"));
+        for(const item of total.allocation){
+          const line=element("div","allocation-row");
+          line.append(element("span","",item.symbol+" "+(item.name||"")),element("b","",money(item.marketValue,currency)+" · "+item.weightPercent+"%"));
+          block.append(line);
+        }
+        risk.append(block);
+      }
+    }
+  }
 }
 if(portfolioFile&&portfolioImportButton){
   portfolioFile.addEventListener("change",()=>{
