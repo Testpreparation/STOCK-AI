@@ -20,7 +20,7 @@ const date=value=>{
  */
 export async function fetchJQuantsAnnualFinancials({apiKey,code,fetchImpl=globalThis.fetch,baseUrl=BASE_URL}={}){
   if(!apiKey||!String(apiKey).trim())throw new JQuantsFinancialError("J-Quants API key is required","MISSING_API_KEY");
-  if(!code||!/^\d{4,5}$/.test(String(code)))throw new JQuantsFinancialError("A valid 4- or 5-character Japanese stock code is required","INVALID_CODE");
+  if(!code||!/^(?:\d{4,5}|\d{3}[A-Z])$/i.test(String(code)))throw new JQuantsFinancialError("A valid 4- or 5-character Japanese stock code is required","INVALID_CODE");
   if(typeof fetchImpl!=="function")throw new JQuantsFinancialError("Fetch implementation is unavailable","FETCH_UNAVAILABLE");
   const params=new URLSearchParams({code:String(code)});
   const rows=[];
