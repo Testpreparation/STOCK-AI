@@ -13,3 +13,34 @@
 .alert-panel{margin-top:16px}.alert-panel .section-heading h3{font-size:16px;margin:0}.alert-form{display:grid;grid-template-columns:1.3fr 1.1fr 1fr auto;gap:10px;align-items:end;margin:16px 0}.alert-form label{display:grid;gap:6px;color:#6f7f95;font-size:11px;font-weight:600}.alert-form select,.alert-form input{width:100%;min-width:0;min-height:42px;border:1px solid #dce4ef;border-radius:9px;background:#fff;padding:9px 11px;font:12px 'Noto Sans JP',sans-serif;color:#26354d}.alert-list{display:grid;gap:8px;margin-top:12px}.alert-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid #e8edf5;border-radius:10px;background:#fbfdff;font-size:12px}.alert-row .secondary-button{min-height:34px;padding:6px 11px}@media(max-width:760px){.alert-form{grid-template-columns:1fr 1fr}.alert-form button{grid-column:1/-1}.alert-row{align-items:flex-start}.alert-row span{line-height:1.6}}
 
 .screening-controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.screening-controls input,.screening-controls select{min-height:40px;border:1px solid #dce4ef;border-radius:9px;background:#fff;padding:8px 12px;font:12px 'Noto Sans JP',sans-serif;color:#26354d}.screening-controls input{flex:1;min-width:180px}.screening-controls select{min-width:150px}
+
+
+/* STOCK AI — monochrome editorial interface */
+:root{font-family:'DM Sans','Noto Sans JP',sans-serif;color:#171717;background:#fff;font-synthesis:none;text-rendering:optimizeLegibility;--blue:#171717;--line:#e8e8e8;--muted:#777}
+body{background:#fff;color:#171717}
+.topbar{background:#fffffff2;border-bottom:1px solid #e7e7e7;box-shadow:0 2px 14px #00000005}
+.brand{color:#111}.brand-mark{background:#111;color:#fff;border-radius:10px}.brand small{color:#888}
+.status-dot{background:#111;box-shadow:0 0 0 3px #11111112}.top-meta{color:#666}
+.welcome h1 span,.eyebrow{color:#111}
+.market-note,.metric,.panel{background:#fff;border-color:#e7e7e7;box-shadow:0 5px 22px #00000006}
+.market-note{border-radius:12px}.tabs{background:#f3f3f3;border:1px solid #ededed;border-radius:12px}
+.tab{color:#777}.tab.active{background:#111;color:#fff;box-shadow:0 3px 10px #00000018}
+.section-heading h2{color:#111}.pill.neutral{background:#f1f1f1;color:#555}
+.metric{border-radius:12px}.metric span,.metric small{color:#777}.metric strong{color:#111}
+.instrument-card{background:#fff;border-color:#e8e8e8;border-radius:11px}
+.market-chip{background:#f1f1f1;color:#333}.instrument-price,.instrument-score strong,.forecast-mini-row b{color:#111}
+.instrument-score,.forecast-mini{border-color:#ededed}.instrument-recommendation{color:#111}
+.forecast-accuracy{background:#f7f7f7;border-color:#e8e8e8}.forecast-accuracy>strong,.forecast-accuracy-row span{color:#444}
+.file-picker,.primary-button{background:#111;color:#fff;border-color:#111}
+.file-picker:hover,.primary-button:hover{background:#333;border-color:#333}
+.secondary-button{background:#fff;color:#222;border-color:#d8d8d8}.secondary-button:hover{background:#f5f5f5}
+.alert-form select,.alert-form input,.screening-controls input,.screening-controls select{border-color:#dedede;color:#222}
+.alert-row{background:#fafafa;border-color:#e8e8e8}
+.advice-status,.advice-wait_dip{background:#f1f1f1;color:#333}
+.advice-add_watch{background:#ededed;color:#111}
+.advice-wait_data,.advice-insufficient_data,.advice-risk_blocked{background:#f7f1e9;color:#76572d}
+.pnl-positive{color:#222}.pnl-negative{color:#777}.warning-list{color:#76572d}
+.check-list li,.portfolio-table th,.portfolio-table td,.allocation-row{border-color:#ededed}
+.tag.good{background:#ededed;color:#222}.tag.pending{background:#f5f5f5;color:#777}
+footer{color:#999}button:focus-visible,a:focus-visible{outline:3px solid #777;outline-offset:3px}
+@media(prefers-reduced-motion:no-preference){.panel,.metric,.instrument-card,.tab,.primary-button,.secondary-button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}.panel:hover,.metric:hover{box-shadow:0 10px 28px #0000000b}.instrument-card:hover{border-color:#cfcfcf;transform:translateY(-1px)}}
