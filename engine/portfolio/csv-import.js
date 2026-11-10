@@ -70,7 +70,7 @@ function findHeader(rows) {
 function inferSymbolAndMarket(rawSymbol, rawMarket, currency) {
   const symbol = String(rawSymbol ?? "").trim().replace(/^'/, "");
   const marketText = String(rawMarket ?? "").toUpperCase();
-  const jp = /東証|日本|ＪＰ|JPX|JAPAN/.test(marketText) || /^\d{4,5}(?:\.T|\.JP)?$/i.test(symbol);
+  const jp = /東証|日本|ＪＰ|JPX|JAPAN/.test(marketText) || JP_SYMBOL_PATTERN.test(symbol);
   const market = jp ? "JP" : (marketText ? "US" : (currency === "JPY" ? "JP" : "US"));
   return { symbol, market };
 }
@@ -104,7 +104,7 @@ export function importPortfolioCsv(text, options = {}) {
     const currencyIndex = header.fields.indexOf("currency");
     const marketIndex = header.fields.indexOf("market");
     const currencyRaw = currencyIndex >= 0 ? String(padded[currencyIndex]).trim().toUpperCase() : "";
-    const currency = /USD|米ドル|ドル/.test(currencyRaw) ? "USD" : (/JPY|円|日本円/.test(currencyRaw) ? "JPY" : (/^\d{4,5}(?:\.T|\.JP)?$/i.test(symbol) ? "JPY" : "USD"));
+    const currency = /USD|米ドル|ドル/.test(currencyRaw) ? "USD" : (/JPY|円|日本円/.test(currencyRaw) ? "JPY" : (JP_SYMBOL_PATTERN.test(symbol) ? "JPY" : "USD"));
     const { market } = inferSymbolAndMarket(symbol, marketIndex >= 0 ? padded[marketIndex] : "", currency);
     const nameIndex = header.fields.indexOf("name");
     const currentPrice = firstNumber(padded, header.fields, "currentPrice");
