@@ -22,6 +22,7 @@ export function createForecastSnapshots(dataset, forecast) {
       originDate,
       originIndex,
       originPrice: forecast.latestClose,
+      predictedReturnRatio: item.base / forecast.latestClose,
       predictedPrice: item.base,
       predictedLower: item.range?.lower ?? null,
       predictedUpper: item.range?.upper ?? null,
@@ -41,16 +42,25 @@ export function reconcileForecastHistory(history, dataset) {
     if (record.status === "evaluated" || record.status === "invalid") return record;
     const anchorIndex = rows.findIndex(row => row?.date === record.originDate);
     if (anchorIndex < 0) return record;
+    const anchor = rows[anchorIndex];
     const target = rows[anchorIndex + record.tradingDays];
-    if (!target || !Number.isFinite(target.close) || target.close <= 0) return record;
+    if (!target || !Number.isFinite(anchor?.close) || anchor.close <= 0 || !Number.isFinite(target.close) || target.close <= 0) return record;
+    const rebasedFactor = Number.isFinite(record.predictedReturnRatio) && Number.isFinite(record.originPrice) && record.originPrice > 0 ? anchor.close / record.originPrice : 1;
+    const predictedPrice = record.predictedPrice * rebasedFactor;
+    const predictedLower = Number.isFinite(record.predictedLower) ? record.predictedLower * rebasedFactor : record.predictedLower;
+    const predictedUpper = Number.isFinite(record.predictedUpper) ? record.predictedUpper * rebasedFactor : record.predictedUpper;
     return {
       ...record,
+      originPrice: anchor.close,
+      predictedPrice,
+      predictedLower,
+      predictedUpper,
       status: "evaluated",
       targetDate: target.date,
       actualPrice: target.close,
-      error: record.predictedPrice - target.close,
-      absoluteError: Math.abs(record.predictedPrice - target.close),
-      absolutePercentageError: Math.abs((record.predictedPrice - target.close) / target.close) * 100
+      error: predictedPrice - target.close,
+      absoluteError: Math.abs(predictedPrice - target.close),
+      absolutePercentageError: Math.abs((predictedPrice - target.close) / target.close) * 100
     };
   });
 }
@@ -72,4 +82,26 @@ export function summarizeForecastHistory(history, horizon = null) {
     ...metrics,
     pendingCount: history.filter(record => record.status === "pending" && (!horizon || record.horizon === horizon)).length
   };
+}
+
+/**
+ * Apply a conservative per-horizon bias correction after enough completed forecasts.
+ * The median actual/predicted ratio limits sensitivity to outliers.
+ */
+export function applyForecastCalibration(forecast, history, options = {}) {
+  if (!forecast || !Array.isArray(forecast.forecasts)) return forecast;
+  const minSamples = options.minSamples ?? 5;
+  const maxCorrection = options.maxCorrectionPercent ?? 10;
+  const calibrated = forecast.forecasts.map(item => {
+    const completed = (Array.isArray(history) ? history : []).filter(record => record.status === "evaluated" && record.horizon === item.key && Number.isFinite(record.predictedPrice) && record.predictedPrice > 0 && Number.isFinite(record.actualPrice) && record.actualPrice > 0);
+    const ratios = completed.map(record => record.actualPrice / record.predictedPrice).sort((a, b) => a - b);
+    const middle = Math.floor(ratios.length / 2);
+    const medianRatio = ratios.length ? (ratios.length % 2 ? ratios[middle] : (ratios[middle - 1] + ratios[middle]) / 2) : 1;
+    const limit = maxCorrection / 100;
+    const factor = ratios.length >= minSamples ? Math.min(1 + limit, Math.max(1 - limit, medianRatio)) : 1;
+    const scale = value => Number.isFinite(value) ? Math.round(value * factor * 100) / 100 : value;
+    const base = scale(item.base);
+    return { ...item, base, bull: scale(item.bull), bear: scale(item.bear), range: item.range ? { lower: scale(item.range.lower), upper: scale(item.range.upper) } : item.range, expectedChangePercent: Number.isFinite(forecast.latestClose) && forecast.latestClose > 0 ? Math.round((base / forecast.latestClose - 1) * 10000) / 100 : item.expectedChangePercent, calibration: { applied: ratios.length >= minSamples, factor, sampleCount: ratios.length } };
+  });
+  return { ...forecast, forecasts: calibrated, calibrationMethod: "median_bias_correction" };
 }
