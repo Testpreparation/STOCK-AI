@@ -125,8 +125,14 @@ export function importPortfolioCsv(text, options = {}) {
     unique.set(holding.id + ":" + unique.size, holding);
   }
   const normalizedHoldings = [...unique.values()];
-  const calculatedMarketValue = normalizedHoldings.reduce((sum, item) => sum + (item.marketValue ?? 0), 0);
-  const calculatedPnl = normalizedHoldings.reduce((sum, item) => sum + (item.unrealizedPnl ?? 0), 0);
+  const totalsByCurrency = normalizedHoldings.reduce((totals, item) => {
+    const bucket = totals[item.currency] ??= { marketValue: 0, unrealizedPnl: 0 };
+    bucket.marketValue += item.marketValue ?? 0;
+    bucket.unrealizedPnl += item.unrealizedPnl ?? 0;
+    return totals;
+  }, {});
+  const calculatedMarketValue = totalsByCurrency.JPY?.marketValue ?? 0;
+  const calculatedPnl = totalsByCurrency.JPY?.unrealizedPnl ?? 0;
   return {
     schemaVersion: 1,
     importedAt: options.importedAt ?? new Date().toISOString(),
@@ -137,6 +143,7 @@ export function importPortfolioCsv(text, options = {}) {
       holdingsCount: normalizedHoldings.length,
       marketValue: calculatedMarketValue,
       unrealizedPnl: calculatedPnl,
+      totalsByCurrency,
       totalAssets: summary.totalAssets ?? (summary.cash !== null ? calculatedMarketValue + summary.cash : null)
     },
     warnings,
