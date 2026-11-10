@@ -32,7 +32,7 @@ export async function fetchAlphaVantageDaily({ apiKey, symbol, fetchImpl = globa
     close: Number(values["4. close"]),
     volume: Number(values["5. volume"])
   })).sort((a,b) => a.date.localeCompare(b.date));
-  if (!rows.length || rows.some(row => !Object.values(row).every(Number.isFinite))) {
+  if (!rows.length || rows.some(row => !["open", "high", "low", "close", "volume"].every(key => Number.isFinite(row[key])))) {
     throw new AlphaVantageError("Daily response contains invalid OHLCV rows", "INVALID_DATA");
   }
   return {
