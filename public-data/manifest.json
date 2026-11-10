@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-11-10T01:36:02.025Z",
+  "providers": {
+    "jquants": "configured",
+    "alphaVantage": "configured",
+    "secEdgar": "configured"
+  },
+  "instruments": [
+    {
+      "market": "JP",
+      "symbol": "7203",
+      "file": "/public-data/market/jp/7203.json",
+      "provider": "jquants",
+      "rows": 487,
+      "latestDate": "2026-08-18",
+      "fetchedAt": "2026-11-10T01:36:03.361Z",
+      "priceAdjustment": "SPLIT_ADJUSTED",
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
+      "market": "JP",
+      "symbol": "6758",
+      "file": "/public-data/market/jp/6758.json",
+      "provider": "jquants",
+      "rows": 487,
+      "latestDate": "2026-08-18",
+      "fetchedAt": "2026-11-10T01:36:16.532Z",
+      "priceAdjustment": "SPLIT_ADJUSTED",
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
+      "market": "US",
+      "symbol": "AAPL",
+      "file": "/public-data/market/us/AAPL.json",
+      "provider": "alpha-vantage",
+      "rows": 100,
+      "latestDate": "2026-11-09",
+      "fetchedAt": "2026-11-10T01:36:28.683Z",
+      "priceAdjustment": "RAW_UNADJUSTED",
+      "delayPolicy": null,
+      "status": "updated"
+    },
+    {
+      "market": "US",
+      "symbol": "MSFT",
+      "file": "/public-data/market/us/MSFT.json",
+      "provider": "alpha-vantage",
+      "rows": 100,
+      "latestDate": "2026-11-09",
+      "fetchedAt": "2026-11-10T01:36:43.772Z",
+      "priceAdjustment": "RAW_UNADJUSTED",
+      "delayPolicy": null,
+      "status": "updated"
+    },
+    {
+      "market": "US",
+      "symbol": "AAPL",
+      "provider": "sec-edgar-companyfacts",
+      "fundamentalsFile": "/public-data/fundamentals/us/AAPL.json",
+      "status": "updated"
+    },
+    {
+      "market": "US",
+      "symbol": "MSFT",
+      "provider": "sec-edgar-companyfacts",
+      "fundamentalsFile": "/public-data/fundamentals/us/MSFT.json",
+      "status": "updated"
+    }
+  ],
+  "warnings": []
+}

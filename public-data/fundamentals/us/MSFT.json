@@ -1,0 +1,2089 @@
+{
+  "provider": "sec-edgar-companyfacts",
+  "cik": "0000789019",
+  "entityName": "MICROSOFT CORP",
+  "fetchedAt": "2026-11-10T01:37:00.456Z",
+  "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+  "metrics": {
+    "revenue": [
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 91154000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2016-09-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 21928000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2016-12-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 25826000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2017-03-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 23212000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 96571000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2017-09-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 24538000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2017-12-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 28918000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2018-03-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 26819000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 110360000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2018-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 29084000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2018-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 32471000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2019-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 30571000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 125843000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2019-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 33055000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2019-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 36906000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2020-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 35021000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 143015000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 168088000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 198270000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 211915000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 245122000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 281724000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 331839000000,
+        "unit": "USD",
+        "sourceTag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+      }
+    ],
+    "operatingIncome": [
+      {
+        "fiscalYearEnd": "2008-06-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 22271000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2009-06-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 20363000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2010-06-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 24098000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2011-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 27161000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2012-06-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 21763000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2013-06-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 26764000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-06-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 27759000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-09-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 5844000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-12-31",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 7776000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-03-31",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 6594000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-06-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 18161000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-09-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 5793000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-12-31",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 6026000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-03-31",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 5283000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 26078000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-09-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 6715000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-12-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 7905000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-03-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 6723000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 29025000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-09-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 7708000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-12-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 8679000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-03-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 8292000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 35058000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 9955000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 10258000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 10341000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 42959000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 12686000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 13891000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2020-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 12975000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 52959000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 69916000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 83383000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 88523000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 109433000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 128528000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 155237000000,
+        "unit": "USD",
+        "sourceTag": "OperatingIncomeLoss"
+      }
+    ],
+    "netIncome": [
+      {
+        "fiscalYearEnd": "2007-09-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 4289000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2007-12-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 4707000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2008-03-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 4388000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2008-06-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 17681000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2008-09-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 4373000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2008-12-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 4174000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2009-03-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 2977000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2009-06-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 14569000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2009-09-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 3574000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2009-12-31",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 6662000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2010-03-31",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 4006000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2010-06-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 18760000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2010-09-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 5410000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2010-12-31",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 6634000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2011-03-31",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 5232000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2011-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 23150000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2011-09-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 5738000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2011-12-31",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 6624000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2012-03-31",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 5108000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2012-06-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 16978000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2012-09-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 4466000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2012-12-31",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 6377000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2013-03-31",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 6055000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2013-06-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 21863000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2013-09-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 5244000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2013-12-31",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 6558000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-03-31",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 5660000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-06-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 22074000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-09-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 4540000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2014-12-31",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 5863000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-03-31",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 4985000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-06-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 12193000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-09-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 4902000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2015-12-31",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 5018000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-03-31",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 3756000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 20539000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-09-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 5667000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2016-12-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 6267000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-03-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 5486000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 25489000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-09-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 6576000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2017-12-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": -6302000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-03-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 7424000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 16571000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 8824000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2018-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 8420000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 8809000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 39240000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 10678000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2019-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 11649000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2020-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 10752000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 44281000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 61271000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 72738000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 72361000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 88136000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 101832000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 133749000000,
+        "unit": "USD",
+        "sourceTag": "NetIncomeLoss"
+      }
+    ],
+    "dilutedEps": [
+      {
+        "fiscalYearEnd": "2007-09-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 0.45,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2007-12-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 0.5,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2008-03-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 0.47,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2008-06-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 1.87,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2008-09-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 0.48,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2008-12-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 0.47,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2009-03-31",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 0.33,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2009-06-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 1.62,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2009-09-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 0.4,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2009-12-31",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 0.74,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2010-03-31",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 0.45,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2010-06-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 2.1,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2010-09-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 0.62,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2010-12-31",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 0.77,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2011-03-31",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 0.61,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2011-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 2.69,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2011-09-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 0.68,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2011-12-31",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 0.78,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2012-03-31",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 0.6,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2012-06-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 2,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2012-09-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 0.53,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2012-12-31",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 0.76,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2013-03-31",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 0.72,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2013-06-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 2.58,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2013-09-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 0.62,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2013-12-31",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 0.78,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2014-03-31",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 0.68,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2014-06-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 2.63,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2014-09-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 0.54,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2014-12-31",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 0.71,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2015-03-31",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 0.61,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2015-06-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 1.48,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2015-09-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 0.61,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2015-12-31",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 0.62,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2016-03-31",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 0.47,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 2.56,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2016-09-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 0.72,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2016-12-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 0.8,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2017-03-31",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 0.7,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 3.25,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2017-09-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 0.84,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2017-12-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": -0.82,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2018-03-31",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 0.95,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 2.13,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2018-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 1.14,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2018-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 1.08,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2019-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 1.14,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 5.06,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2019-09-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 1.38,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2019-12-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 1.51,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2020-03-31",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 1.4,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 5.76,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 8.05,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 9.65,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 9.68,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 11.8,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 13.64,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 17.95,
+        "unit": "USD/shares",
+        "sourceTag": "EarningsPerShareDiluted"
+      }
+    ],
+    "totalAssets": [
+      {
+        "fiscalYearEnd": "2009-06-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 77888000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2010-06-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 86113000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2011-06-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 108704000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2012-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 121271000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2013-06-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 142431000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2014-06-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 172384000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2015-06-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 174472000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 193468000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 250312000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 258848000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 286556000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 301311000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 333779000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 364840000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 411976000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 512163000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 619003000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 758376000000,
+        "unit": "USD",
+        "sourceTag": "Assets"
+      }
+    ],
+    "totalLiabilities": [
+      {
+        "fiscalYearEnd": "2010-06-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 39938000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2011-06-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 51621000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2012-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 54908000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2013-06-30",
+        "fiscalYear": 2014,
+        "filedAt": "2014-07-31",
+        "form": "10-K",
+        "value": 63487000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2014-06-30",
+        "fiscalYear": 2015,
+        "filedAt": "2015-07-31",
+        "form": "10-K",
+        "value": 82600000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2015-06-30",
+        "fiscalYear": 2016,
+        "filedAt": "2016-07-28",
+        "form": "10-K",
+        "value": 94389000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2017,
+        "filedAt": "2017-08-02",
+        "form": "10-K",
+        "value": 121471000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 162601000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 176130000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 184226000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 183007000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 191791000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 198298000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 205753000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 243686000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 275524000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 315989000000,
+        "unit": "USD",
+        "sourceTag": "Liabilities"
+      }
+    ],
+    "operatingCashFlow": [
+      {
+        "fiscalYearEnd": "2008-06-30",
+        "fiscalYear": 2010,
+        "filedAt": "2010-07-30",
+        "form": "10-K",
+        "value": 21612000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2009-06-30",
+        "fiscalYear": 2011,
+        "filedAt": "2011-07-28",
+        "form": "10-K",
+        "value": 19037000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2010-06-30",
+        "fiscalYear": 2012,
+        "filedAt": "2012-07-26",
+        "form": "10-K",
+        "value": 24073000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2011-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 26994000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2012-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 31626000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2013-06-30",
+        "fiscalYear": 2013,
+        "filedAt": "2013-07-30",
+        "form": "10-K",
+        "value": 28833000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2016-06-30",
+        "fiscalYear": 2018,
+        "filedAt": "2018-08-03",
+        "form": "10-K",
+        "value": 33325000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2017-06-30",
+        "fiscalYear": 2019,
+        "filedAt": "2019-08-01",
+        "form": "10-K",
+        "value": 39507000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2018-06-30",
+        "fiscalYear": 2020,
+        "filedAt": "2020-07-30",
+        "form": "10-K",
+        "value": 43884000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2019-06-30",
+        "fiscalYear": 2021,
+        "filedAt": "2021-07-29",
+        "form": "10-K",
+        "value": 52185000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2020-06-30",
+        "fiscalYear": 2022,
+        "filedAt": "2022-07-28",
+        "form": "10-K",
+        "value": 60675000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2021-06-30",
+        "fiscalYear": 2023,
+        "filedAt": "2023-07-27",
+        "form": "10-K",
+        "value": 76740000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2022-06-30",
+        "fiscalYear": 2024,
+        "filedAt": "2024-07-30",
+        "form": "10-K",
+        "value": 89035000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2023-06-30",
+        "fiscalYear": 2025,
+        "filedAt": "2025-07-30",
+        "form": "10-K",
+        "value": 87582000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2024-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 118548000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2025-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 136162000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      },
+      {
+        "fiscalYearEnd": "2026-06-30",
+        "fiscalYear": 2026,
+        "filedAt": "2026-07-29",
+        "form": "10-K",
+        "value": 182935000000,
+        "unit": "USD",
+        "sourceTag": "NetCashProvidedByUsedInOperatingActivities"
+      }
+    ]
+  },
+  "availableMetrics": [
+    "revenue",
+    "operatingIncome",
+    "netIncome",
+    "dilutedEps",
+    "totalAssets",
+    "totalLiabilities",
+    "operatingCashFlow"
+  ],
+  "limitations": [
+    "SEC Company Facts contains reported facts, not a complete normalized financial statement.",
+    "Metric tags and units can differ between issuers; missing values must remain null.",
+    "Annual 10-K facts are historical and may be amended or restated in later filings."
+  ]
+}
