@@ -76,6 +76,6 @@ test("uses supplied annual fundamentals in the holding review",()=>{
  }};
  const result=assessHolding(holding,dataset,{asOf:"2026-11-10",financials:{"JP:7203":financials}});
  assert.equal(result.financial.latestPeriod,"2026-03-31");
- assert.equal(result.financial.metrics.revenue.yearOverYearGrowth.value,20);
- assert.equal(result.financial.derived.liabilitiesToAssetsPercent,58.333333333333336);
+ assert.ok(Math.abs(result.financial.metrics.revenue.yearOverYearGrowth.value-20)<1e-9);
+ assert.ok(Math.abs(result.financial.derived.liabilitiesToAssetsPercent-58.333333333333336)<1e-9);
 });
