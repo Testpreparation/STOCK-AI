@@ -144,7 +144,7 @@ export function importPortfolioCsv(text, options = {}) {
       marketValue: calculatedMarketValue,
       unrealizedPnl: calculatedPnl,
       totalsByCurrency,
-      totalAssets: summary.totalAssets ?? (summary.cash !== null ? calculatedMarketValue + summary.cash : null)
+      totalAssets: summary.totalAssets
     },
     warnings,
     detectedHeaderRow: header.index + 1
