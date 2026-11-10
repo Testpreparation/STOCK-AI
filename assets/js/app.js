@@ -195,10 +195,10 @@ async function loadPublishedData(){
   const summary=document.querySelector("#market-data-summary");
   if(!overview||!summary)return;
   try{
-    const response=await fetch("./public-data/manifest.json",{cache:"no-store"});
+    const response=await fetch("./public-data/manifest.json?check="+Date.now(),{cache:"no-store"});
     if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);
     const manifest=await response.json();
-    if(lastManifestGeneratedAt===manifest.generatedAt)return;
+    if(lastManifestGeneratedAt===manifest.generatedAt){const checkedAt=new Date().toLocaleTimeString("ja-JP");const summaryText=document.querySelector("#market-data-summary");if(summaryText&&lastManifestGeneratedAt)summaryText.textContent=summaryText.textContent.split(" ／ 最終確認：")[0]+" ／ 最終確認："+checkedAt;return;}
     lastManifestGeneratedAt=manifest.generatedAt??null;
     const records=(manifest.instruments??[]).filter(item=>item.file&&item.status==="updated");
     const fundamentals=(manifest.instruments??[]).filter(item=>item.fundamentalsFile&&item.status==="updated");
@@ -260,7 +260,7 @@ async function loadPublishedData(){
       const metrics=summarizeForecastHistory(readForecastHistory());
       accuracySummary.textContent=metrics.sampleCount?"検証済み "+metrics.sampleCount+"件 ／ 平均絶対誤差率 "+metrics.mapePercent+"% ／ 予測方向の一致率 "+(metrics.directionalAccuracyPercent??"—")+"% ／ 検証待ち "+metrics.pendingCount+"件（この端末に保存）":"検証済みデータはまだありません。予測を記録し、将来の株価データが取得できた時点で自動採点します。検証待ち "+metrics.pendingCount+"件（この端末に保存）";
     }
-    summary.textContent=`最終更新：${manifest.generatedAt?new Date(manifest.generatedAt).toLocaleString("ja-JP"):"不明"} ／ データ取得：${loaded}/${records.length}銘柄 ／ 警告：${warningCount}件`;
+    summary.textContent=`最終更新：${manifest.generatedAt?new Date(manifest.generatedAt).toLocaleString("ja-JP"):"不明"} ／ データ取得：${loaded}/${records.length}銘柄 ／ 警告：${warningCount}件 ／ 最終確認：${new Date().toLocaleTimeString("ja-JP")}`;
     if(status)status.textContent=loaded?`実データ読み込み済み：${loaded}銘柄（品質確認中）`:"取得データなし・自動更新設定を確認";
     if(!loaded){overview.append(element("p","muted","表示できる株価データがありません。GitHub Actionsの実行結果とmanifest.jsonを確認してください。"));}
     const warningBox=document.querySelector("#provider-warnings");
