@@ -30,6 +30,12 @@ test("rejects invalid OHLC and duplicate dates", () => {
   assert.equal(result.valid, false);
   assert.equal(result.rejected.length, 2);
 });
+test("invalid calendar dates are rejected without crashing", () => {
+  const dataset = normalizePriceRows([{ date: "2026-02-30", open: 10, high: 11, low: 9, close: 10, volume: 1 }]);
+  const result = validatePriceDataset(dataset, { asOf: "2026-03-01T00:00:00Z" });
+  assert.equal(result.rejected.length, 1);
+  assert.ok(result.rejected[0].errors.includes("invalid_date"));
+});
 test("stale prices block purchase-decision eligibility", () => {
   const result = validatePriceDataset(normalizePriceRows(fixtures), { asOf: "2026-12-01T00:00:00Z" });
   assert.equal(result.quality.freshness, "STALE");
