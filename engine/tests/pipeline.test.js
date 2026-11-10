@@ -85,3 +85,14 @@ test("invalid rows are not used for calculations and invalidate purchase eligibi
   assert.equal(result.dataQuality.rejectedRows, 1);
   assert.equal(result.score.recommendation.code, "INSUFFICIENT_COVERAGE");
 });
+
+test("unadjusted raw prices block buy labels and scenario forecasts", () => {
+  const rows = priceRows();
+  const result = analyzeInstrument({
+    priceDataset: { schemaVersion: 1, symbol: "RAW", market: "US", source: "alpha-vantage", priceAdjustment: "RAW_UNADJUSTED", data: rows },
+    asOf: rows.at(-1).date + "T00:00:00Z"
+  });
+  assert.ok(result.score.guardrails.some(message => message.includes("未調整")));
+  assert.equal(result.score.recommendation.code, "INSUFFICIENT_COVERAGE");
+  assert.equal(result.forecast.status, "unsupported_adjustment");
+});
