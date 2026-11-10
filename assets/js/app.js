@@ -6,6 +6,7 @@ import { assessPortfolioHoldings } from "../../engine/portfolio/holding-advisor.
 import { normalizeAnnualFinancials } from "../../engine/data/financial-normalizer.js";
 import { calculateValuationIndicators } from "../../engine/analysis/valuation.js";
 import { evaluatePriceAlerts } from "../../engine/alerts/price-alerts.js";
+import { getInstrumentName } from "../../engine/data/instrument-names.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -42,6 +43,50 @@ if(list){
 
 const money=(value,currency)=>Number.isFinite(value)?new Intl.NumberFormat("ja-JP",{style:"currency",currency:currency==="JPY"?"JPY":"USD",maximumFractionDigits:currency==="JPY"?0:2}).format(value):"—";
 function element(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
+const instrumentLabel=(symbol,market,fallback="")=>getInstrumentName(symbol,market)||fallback||"名称未登録";
+const chartRanges=[["1M","1か月",22],["3M","3か月",66],["6M","6か月",132],["1Y","1年",252],["ALL","全期間",Infinity]];
+const chartRangeState=new Map();
+function createPriceChart(dataset){
+  const rows=(dataset.data??[]).filter(row=>Number.isFinite(row.close)&&row.close>0);
+  const section=element("section","price-chart");
+  const header=element("div","price-chart-header");
+  header.append(element("strong","","株価チャート"),element("span","",rows.length+"営業日"));
+  const controls=element("div","chart-range-controls");
+  const plot=element("div","price-chart-plot");
+  const key=(dataset.market??"")+":"+(dataset.symbol??"");
+  let selected=chartRangeState.get(key)||"3M";
+  const render=()=>{
+    controls.replaceChildren();
+    for(const [range,label] of chartRanges){
+      const button=element("button",range===selected?"chart-range active":"chart-range",label);
+      button.type="button";button.setAttribute("aria-pressed",String(range===selected));
+      button.addEventListener("click",()=>{selected=range;chartRangeState.set(key,range);render();});
+      controls.append(button);
+    }
+    plot.replaceChildren();
+    if(!rows.length){plot.append(element("p","muted","チャート用データがありません。"));return;}
+    const count=chartRanges.find(item=>item[0]===selected)?.[2]??66;
+    const points=rows.slice(count===Infinity?0:Math.max(0,rows.length-count));
+    if(!points.length){plot.append(element("p","muted","表示できるデータがありません。"));return;}
+    const width=640,height=190,left=54,right=12,top=12,bottom=28;
+    const values=points.map(point=>point.close);
+    const min=Math.min(...values),max=Math.max(...values),span=max-min||Math.max(Math.abs(max)*.02,1);
+    const x=index=>left+(points.length===1?0:index/(points.length-1))*(width-left-right);
+    const y=value=>top+(max-value)/span*(height-top-bottom);
+    const ns="http://www.w3.org/2000/svg";
+    const svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox",`0 0 ${width} ${height}`);svg.setAttribute("role","img");svg.setAttribute("aria-label",`株価推移 ${points[0].date} から ${points.at(-1).date}`);
+    for(let i=0;i<4;i++){const gy=top+i*(height-top-bottom)/3;const grid=document.createElementNS(ns,"line");grid.setAttribute("x1",left);grid.setAttribute("x2",width-right);grid.setAttribute("y1",gy);grid.setAttribute("y2",gy);grid.setAttribute("class","chart-grid-line");svg.append(grid);}
+    const area=document.createElementNS(ns,"path");const path=points.map((point,index)=>(index?"L":"M")+x(index).toFixed(2)+" "+y(point.close).toFixed(2)).join(" ");area.setAttribute("d",path+` L ${x(points.length-1)} ${height-bottom} L ${left} ${height-bottom} Z`);area.setAttribute("class","chart-area");svg.append(area);
+    const line=document.createElementNS(ns,"path");line.setAttribute("d",path);line.setAttribute("class","chart-line");svg.append(line);
+    const latest=document.createElementNS(ns,"circle");latest.setAttribute("cx",x(points.length-1));latest.setAttribute("cy",y(points.at(-1).close));latest.setAttribute("r","4");latest.setAttribute("class","chart-point");svg.append(latest);
+    const maxLabel=document.createElementNS(ns,"text");maxLabel.setAttribute("x","4");maxLabel.setAttribute("y",String(top+5));maxLabel.setAttribute("class","chart-axis-label");maxLabel.textContent=money(max,dataset.currency);svg.append(maxLabel);
+    const minLabel=document.createElementNS(ns,"text");minLabel.setAttribute("x","4");minLabel.setAttribute("y",String(height-bottom));minLabel.setAttribute("class","chart-axis-label");minLabel.textContent=money(min,dataset.currency);svg.append(minLabel);
+    const start=document.createElementNS(ns,"text");start.setAttribute("x",String(left));start.setAttribute("y",String(height-5));start.setAttribute("class","chart-date-label");start.textContent=points[0].date;svg.append(start);
+    const end=document.createElementNS(ns,"text");end.setAttribute("x",String(width-right));end.setAttribute("y",String(height-5));end.setAttribute("text-anchor","end");end.setAttribute("class","chart-date-label");end.textContent=points.at(-1).date;svg.append(end);
+    plot.append(svg);
+  };
+  section.append(header,controls,plot);render();return section;
+}
 const FORECAST_HISTORY_KEY="stock-ai-forecast-history-v1";
 function readForecastHistory(){try{const value=JSON.parse(localStorage.getItem(FORECAST_HISTORY_KEY)??"[]");return Array.isArray(value)?value:[];}catch{return [];}}
 function writeForecastHistory(history){try{localStorage.setItem(FORECAST_HISTORY_KEY,JSON.stringify(history.slice(-1000)));return true;}catch(error){console.warn("Forecast history could not be saved:",error);return false;}}
@@ -51,7 +96,9 @@ function renderInstrument(item,dataset,rawFinancials=null){
   try{const financialData=rawFinancials?normalizeAnnualFinancials(rawFinancials,{symbol:item.symbol,market:item.market,currency:dataset.currency}):null;analysis=analyzeInstrument({priceDataset:dataset,financialData,asOf:new Date().toISOString().slice(0,10)});}catch(error){console.warn("Analysis failed:",item.symbol,error);}
   const card=element("article","instrument-card");
   const head=element("div","instrument-head");
-  head.append(element("strong","",item.symbol),element("span","market-chip",item.market==="JP"?"日本株":"米国株"));
+  const identity=element("div","instrument-identity");
+  identity.append(element("strong","",item.symbol),element("small","instrument-company-name",instrumentLabel(item.symbol,item.market)));
+  head.append(identity,element("span","market-chip",item.market==="JP"?"日本株":"米国株"));
   const price=analysis?.technical?.latest?.close;
   const detail=element("div","instrument-price",money(price,dataset.currency));
   const meta=element("p","instrument-meta",`最新データ：${item.latestDate??"不明"} ／ ${item.provider??"提供元不明"}`);
@@ -66,7 +113,7 @@ function renderInstrument(item,dataset,rawFinancials=null){
   const quality=element("p","instrument-meta",`データ充足率：${score?.coveragePercent??0}% ／ ${analysis?.dataQuality?.freshness??"品質未確認"}`);
   const warnings=[...(analysis?.score?.guardrails??[]),...(analysis?.forecast?.reason?[analysis.forecast.reason]:[])];
   if(item.priceAdjustment==="RAW_UNADJUSTED")warnings.push("未調整株価のため予測・買い判定を停止");
-  card.append(head,detail,meta,scoreRow,recommendation,quality);
+  card.append(head,detail,meta,createPriceChart(dataset),scoreRow,recommendation,quality);
   if(analysis?.financial){
     const d=analysis.financial.derived??{};
     const financialSummary=[
@@ -126,7 +173,7 @@ function renderPriceAlerts(){
   for(const alert of alerts){
     const row=element("div","alert-row");
     const condition=alert.condition==="BELOW"?"以下":"以上";
-    const info=element("span","",alert.symbol+"（"+(alert.market==="JP"?"日本株":"米国株")+"） "+alert.targetPrice+" "+condition+(alert.triggered?" · 到達済み":""));
+    const info=element("span","",alert.symbol+" "+instrumentLabel(alert.symbol,alert.market)+"（"+(alert.market==="JP"?"日本株":"米国株")+"） "+alert.targetPrice+" "+condition+(alert.triggered?" · 到達済み":""));
     const remove=element("button","secondary-button","削除");remove.type="button";remove.addEventListener("click",()=>{savePriceAlerts(readPriceAlerts().filter(item=>item.id!==alert.id));renderPriceAlerts();});
     row.append(info,remove);target.append(row);
   }
@@ -171,7 +218,7 @@ function renderScreeningList(){
   const target=document.querySelector("#screening-list");if(!target)return;
   const query=(document.querySelector("#screening-search")?.value??"").trim().toUpperCase();
   const sort=document.querySelector("#screening-sort")?.value??"score";
-  const rows=screeningSourceItems.filter(({item})=>!query||item.symbol.toUpperCase().includes(query));
+  const rows=screeningSourceItems.filter(({item})=>!query||item.symbol.toUpperCase().includes(query)||instrumentLabel(item.symbol,item.market).toUpperCase().includes(query));
   const scored=rows.map(entry=>{
     const financial=screeningFinancialSource[entry.item.market+":"+entry.item.symbol];
     try{const normalized=financial?normalizeAnnualFinancials(financial,{symbol:entry.item.symbol,market:entry.item.market,currency:entry.dataset.currency}):null;const result=analyzeInstrument({priceDataset:entry.dataset,financialData:normalized,asOf:new Date().toISOString().slice(0,10)});return {...entry,score:result.score.score??-1};}catch{return {...entry,score:-1};}
@@ -229,7 +276,7 @@ async function loadPublishedData(){
     if(alertSymbol){
       const previous=alertSymbol.value;
       alertSymbol.replaceChildren(new Option("銘柄を選択",""));
-      for(const {item,dataset} of loadedItems)alertSymbol.add(new Option(item.symbol+"（"+(item.market==="JP"?"日本株":"米国株")+"） "+dataset.currency,item.market+":"+item.symbol));
+      for(const {item,dataset} of loadedItems)alertSymbol.add(new Option(item.symbol+" "+instrumentLabel(item.symbol,item.market)+"（"+(item.market==="JP"?"日本株":"米国株")+"） "+dataset.currency,item.market+":"+item.symbol));
       if([...alertSymbol.options].some(option=>option.value===previous))alertSymbol.value=previous;
     }
     checkPriceAlerts();
@@ -309,7 +356,7 @@ function renderPortfolio(portfolio){
   if(!portfolio?.holdings?.length){const row=element("tr");const cell=element("td","muted","CSVを読み込むと表示されます。");cell.colSpan=7;row.append(cell);tbody.append(row);}
   else for(const holding of (displayPortfolio?.holdings??portfolio.holdings)){
     const row=element("tr");
-    const identity=element("td");identity.append(element("strong","",holding.symbol),element("small","portfolio-name",holding.name|| (holding.market==="JP"?"日本株":"米国株")));
+    const identity=element("td");identity.append(element("strong","",holding.symbol),element("small","portfolio-name",instrumentLabel(holding.symbol,holding.market,holding.name)));
     const quoteLabel=holding.quoteDate?(holding.quoteStale?"古いデータ：":"株価日：")+holding.quoteDate:(holding.quoteAvailable===false?"公開株価なし":"CSV取込値");
     identity.append(element("small","portfolio-name",quoteLabel));
     const dailyText=Number.isFinite(holding.dailyChangePercent)?(holding.dailyChangePercent>=0?"+":"")+holding.dailyChangePercent+"%":"—";
@@ -327,7 +374,7 @@ function renderPortfolio(portfolio){
       for(const review of reviews){
         const card=element("article","holding-advice-card");
         const head=element("div","holding-advice-head");
-        head.append(element("strong","",review.symbol),element("span","advice-status advice-"+review.status.toLowerCase(),review.label));
+        head.append(element("strong","",review.symbol+" "+instrumentLabel(review.symbol,review.market)),element("span","advice-status advice-"+review.status.toLowerCase(),review.label));
         card.append(head);
         card.append(element("p","muted","分析スコア："+(review.score===null?"—":review.score+"/100")+" ／ データ充足率："+review.coveragePercent+"% ／ 株価日："+(review.latestDate??"—")));
         if(review.latestPrice!==null) card.append(element("p","", "分析基準価格 "+money(review.latestPrice,review.currency)+" ／ 価格調整 "+review.priceAdjustment));
@@ -371,7 +418,7 @@ function renderPortfolio(portfolio){
         block.append(element("p","", "上位3銘柄の集中度 "+(total.concentrationTop3Percent??"—")+"% ／ 最大保有 "+(total.largestHolding?.symbol??"—")+" ("+(total.largestHolding?.weightPercent??"—")+"%)"));
         for(const item of total.allocation){
           const line=element("div","allocation-row");
-          line.append(element("span","",item.symbol+" "+(item.name||"")),element("b","",money(item.marketValue,currency)+" · "+item.weightPercent+"%"));
+          line.append(element("span","",item.symbol+" "+instrumentLabel(item.symbol,item.market,item.name)),element("b","",money(item.marketValue,currency)+" · "+item.weightPercent+"%"));
           block.append(line);
         }
         risk.append(block);
