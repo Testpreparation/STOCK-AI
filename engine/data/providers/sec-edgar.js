@@ -16,17 +16,32 @@ const METRICS = {
   dilutedEps: ["EarningsPerShareDiluted"],
   totalAssets: ["Assets"],
   totalLiabilities: ["Liabilities"],
-  operatingCashFlow: ["NetCashProvidedByUsedInOperatingActivities"]
+  operatingCashFlow: ["NetCashProvidedByUsedInOperatingActivities"],
+  capitalExpenditures: ["PaymentsToAcquirePropertyPlantAndEquipment"],
+  grossProfit: ["GrossProfit"],
+  cashAndEquivalents: ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents"],
+  currentAssets: ["AssetsCurrent"],
+  currentLiabilities: ["LiabilitiesCurrent"],
+  stockholdersEquity: ["StockholdersEquity"],
+  longTermDebt: ["LongTermDebtCurrent", "LongTermDebtNoncurrent", "LongTermDebt"]
 };
 
-function latestAnnualFact(facts, tags) {
+const INSTANT_METRICS = new Set(["totalAssets", "totalLiabilities", "cashAndEquivalents", "currentAssets", "currentLiabilities", "stockholdersEquity", "longTermDebt"]);
+
+function latestAnnualFact(facts, tags, { instant = false } = {}) {
   for (const tag of tags) {
     const concept = facts?.["us-gaap"]?.[tag];
     if (!concept?.units) continue;
     const units = Object.entries(concept.units);
     for (const [unit, entries] of units) {
       const annual = entries
-        .filter(item => item.form === "10-K" && item.fy && item.end && Number.isFinite(Number(item.val)))
+        .filter(item => {
+          if (item.form !== "10-K" || !item.fy || !item.end || !Number.isFinite(Number(item.val))) return false;
+          if (instant) return !item.start;
+          if (!item.start) return false;
+          const durationDays = (Date.parse(item.end + "T00:00:00Z") - Date.parse(item.start + "T00:00:00Z")) / 86400000 + 1;
+          return durationDays >= 300 && durationDays <= 400;
+        })
         .sort((a, b) => String(b.end).localeCompare(String(a.end)) || String(b.filed).localeCompare(String(a.filed)));
       if (annual.length) {
         const byPeriod = new Map();
@@ -77,7 +92,7 @@ export async function fetchSecCompanyFacts({ cik, userAgent, fetchImpl = globalT
   }
 
   const metrics = {};
-  for (const [name, tags] of Object.entries(METRICS)) metrics[name] = latestAnnualFact(payload.facts, tags);
+  for (const [name, tags] of Object.entries(METRICS)) metrics[name] = latestAnnualFact(payload.facts, tags, { instant: INSTANT_METRICS.has(name) });
   return {
     provider: "sec-edgar-companyfacts",
     cik: paddedCik,
