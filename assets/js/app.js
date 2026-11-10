@@ -1,4 +1,4 @@
-import { getEngineCapabilities } from "../../engine/pipeline.js";
+import { getEngineCapabilities, analyzeInstrument } from "../../engine/pipeline.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -7,8 +7,6 @@ tabs.forEach(tab=>tab.addEventListener("click",()=>activate(tab.dataset.view)));
 
 const capabilities=getEngineCapabilities();
 const status=document.querySelector("#system-status");
-if(status)status.textContent="定期取得の仕組み実装済み・API認証設定待ち";
-
 const labels={
   priceNormalization:["価格データ正規化","作成済み"],
   priceValidation:["株価データ品質検証","作成済み"],
@@ -19,7 +17,7 @@ const labels={
   forecastEvaluation:["予測精度評価","作成済み"],
   providerAdapters:["株価データ取得アダプター","作成済み"],
   scheduledDataIngestion:["毎日の自動取得ワークフロー","実装済み"],
-  liveProviderConnection:["実データの画面連携","未接続"],
+  liveProviderConnection:["実データの画面連携","接続確認待ち"],
   browserApiCredentials:["ブラウザーへのAPIキー露出","なし（安全設計）"],
   automaticTrading:["自動売買","非対応"]
 };
@@ -27,14 +25,69 @@ const list=document.querySelector("#engine-capabilities");
 if(list){
   list.replaceChildren();
   for(const [key,[label,value]] of Object.entries(labels)){
-    const item=document.createElement("li");
-    const name=document.createElement("span");
-    const tag=document.createElement("b");
-    name.textContent=label;
-    tag.className="tag "+((key==="browserApiCredentials"||key==="automaticTrading")?"good":capabilities[key]?"good":"pending");
-    tag.textContent=value;
-    item.append(name,tag);
-    list.append(item);
+    const item=document.createElement("li"),name=document.createElement("span"),tag=document.createElement("b");
+    name.textContent=label;tag.className="tag "+((key==="browserApiCredentials"||key==="automaticTrading")?"good":capabilities[key]?"good":"pending");
+    tag.textContent=value;item.append(name,tag);list.append(item);
+  }
+}
+
+const money=(value,currency)=>Number.isFinite(value)?new Intl.NumberFormat("ja-JP",{style:"currency",currency:currency==="JPY"?"JPY":"USD",maximumFractionDigits:currency==="JPY"?0:2}).format(value):"—";
+function element(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
+function renderInstrument(item,dataset){
+  let analysis=null;
+  try{analysis=analyzeInstrument({priceDataset:dataset,asOf:new Date().toISOString().slice(0,10)});}catch(error){console.warn("Analysis failed:",item.symbol,error);}
+  const card=element("article","instrument-card");
+  const head=element("div","instrument-head");
+  head.append(element("strong","",item.symbol),element("span","market-chip",item.market==="JP"?"日本株":"米国株"));
+  const price=analysis?.technical?.latest?.close;
+  const detail=element("div","instrument-price",money(price,dataset.currency));
+  const meta=element("p","instrument-meta",`最新データ：${item.latestDate??"不明"} ／ ${item.provider??"提供元不明"}`);
+  const score=analysis?.score;
+  const scoreRow=element("div","instrument-score");
+  scoreRow.append(element("span","","分析スコア"),element("strong","",score?.score===null||score?.score===undefined?"—":`${score.score.toFixed(1)} / 100`));
+  const recommendation=element("p","instrument-recommendation",score?.recommendation?.label??"判定保留");
+  const quality=element("p","instrument-meta",`データ充足率：${score?.coveragePercent??0}% ／ ${analysis?.dataQuality?.freshness??"品質未確認"}`);
+  const warnings=[...(analysis?.score?.guardrails??[]),...(analysis?.forecast?.reason?[analysis.forecast.reason]:[])];
+  if(item.priceAdjustment==="RAW_UNADJUSTED")warnings.push("未調整株価のため予測・買い判定を停止");
+  card.append(head,detail,meta,scoreRow,recommendation,quality);
+  if(warnings.length)card.append(element("p","instrument-warning",[...new Set(warnings)].join(" ")));
+  return card;
+}
+
+async function loadPublishedData(){
+  const overview=document.querySelector("#instrument-list");
+  const screening=document.querySelector("#screening-list");
+  const summary=document.querySelector("#market-data-summary");
+  if(!overview||!summary)return;
+  try{
+    const response=await fetch("./public-data/manifest.json",{cache:"no-store"});
+    if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);
+    const manifest=await response.json();
+    const records=(manifest.instruments??[]).filter(item=>item.file&&item.status==="updated");
+    overview.replaceChildren();if(screening)screening.replaceChildren();
+    let loaded=0;
+    for(const item of records){
+      try{
+        const dataResponse=await fetch(`.${item.file}`,{cache:"no-store"});
+        if(!dataResponse.ok)throw new Error(`data HTTP ${dataResponse.status}`);
+        const dataset=await dataResponse.json();
+        const card=renderInstrument(item,dataset);overview.append(card);
+        if(screening)screening.append(card.cloneNode(true));
+        loaded++;
+      }catch(error){console.warn("Data load failed:",item.symbol,error);}
+    }
+    const warningCount=(manifest.warnings??[]).length;
+    summary.textContent=`最終更新：${manifest.generatedAt?new Date(manifest.generatedAt).toLocaleString("ja-JP"):"不明"} ／ データ取得：${loaded}/${records.length}銘柄 ／ 警告：${warningCount}件`;
+    if(status)status.textContent=loaded?`実データ読み込み済み：${loaded}銘柄（品質確認中）`:"取得データなし・自動更新設定を確認";
+    if(!loaded){overview.append(element("p","muted","表示できる株価データがありません。GitHub Actionsの実行結果とmanifest.jsonを確認してください。"));}
+    const warningBox=document.querySelector("#provider-warnings");
+    if(warningBox){warningBox.replaceChildren();for(const warning of (manifest.warnings??[])){warningBox.append(element("li","",`${warning.provider??warning.market??"provider"}：${warning.code??"WARNING"} — ${warning.message??""}`));}}
+  }catch(error){
+    console.warn("Published market data unavailable:",error);
+    summary.textContent="公開データ未取得。初回の自動更新が完了するとここに表示されます。";
+    if(status)status.textContent="実データ未接続";
+    overview.replaceChildren(element("p","muted","まだ公開データがありません。自動更新の実行後に再読み込みしてください。"));
   }
 }
 activate("overview");
+loadPublishedData();
