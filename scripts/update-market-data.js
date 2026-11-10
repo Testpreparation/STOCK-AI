@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { normalizePriceRows } from "../engine/data/normalizer.js";
 import { validatePriceDataset } from "../engine/data/validator.js";
 import { fetchJQuantsDaily } from "../engine/data/providers/jquants.js";
+import { fetchJQuantsAnnualFinancials } from "../engine/data/providers/jquants-financials.js";
 import { fetchAlphaVantageDaily } from "../engine/data/providers/alpha-vantage.js";
 import { fetchSecCompanyFacts } from "../engine/data/providers/sec-edgar.js";
 
@@ -65,6 +66,14 @@ if (process.env.JQUANTS_API_KEY) {
       await storePrice({ market:"JP", symbol:code, raw, source:"jquants", adjustment:"SPLIT_ADJUSTED", delayPolicy:raw.delayPolicy });
     } catch (error) {
       summary.warnings.push({ market:"JP", symbol:code, code:error.code ?? "FETCH_FAILED", message:error.message });
+    }
+    try {
+      const financials = await fetchJQuantsAnnualFinancials({ apiKey:process.env.JQUANTS_API_KEY, code });
+      const relativePath = "fundamentals/jp/" + safeName(code) + ".json";
+      await saveJson(relativePath, financials);
+      summary.instruments.push({ market:"JP", symbol:code, provider:"jquants-fins-summary", fundamentalsFile:"/public-data/" + relativePath, periods:financials.periods, delayPolicy:financials.delayPolicy, status:"updated" });
+    } catch (error) {
+      summary.warnings.push({ market:"JP", symbol:code, provider:"jquants-financials", code:error.code ?? "FETCH_FAILED", message:error.message });
     }
     await wait(12000);
   }
