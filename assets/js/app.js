@@ -164,6 +164,7 @@ function renderPortfolio(portfolio){
     ["保有銘柄数",String(portfolio?.summary?.holdingsCount??0)+"銘柄","CSV取込データ"],
     ["保有株評価額",currencyTotals("marketValue"),"通貨ごとに分けて表示"],
     ["評価損益",currencyTotals("unrealizedPnl"),"通貨ごとに分けて表示"],
+    ["資産合計",portfolio?.summary?.totalAssets===null||portfolio?.summary?.totalAssets===undefined?"—":Number(portfolio.summary.totalAssets).toLocaleString("ja-JP"),"CSVに資産合計の記載がある場合"],
     ["買付余力",cashValue===null?"—":Number(cashValue).toLocaleString("ja-JP"),"CSV記載値（通貨単位は元データ準拠）"]
   ];
   for(const [label,value,note] of metrics){const card=element("article","metric");card.append(element("span","",label),element("strong","",value),element("small","",note));summary.append(card);}
