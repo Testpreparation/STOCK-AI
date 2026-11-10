@@ -9,8 +9,9 @@ export function validatePriceDataset(dataset, options = {}) {
   const seen = new Set();
   for (const row of dataset.data) {
     const rowErrors = [];
-    const dateValid = /^\d{4}-\d{2}-\d{2}$/.test(row.date ?? "") &&
-      new Date((row.date ?? "") + "T00:00:00Z").toISOString?.().slice(0, 10) === row.date;
+    const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(row.date ?? "") ? new Date((row.date ?? "") + "T00:00:00Z") : null;
+    const dateValid = parsedDate !== null && Number.isFinite(parsedDate.getTime()) &&
+      parsedDate.toISOString().slice(0, 10) === row.date;
     if (!dateValid) rowErrors.push("invalid_date");
     if (seen.has(row.date)) rowErrors.push("duplicate_date");
     if (row.date) seen.add(row.date);
