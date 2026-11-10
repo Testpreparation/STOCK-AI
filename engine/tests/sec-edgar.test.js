@@ -8,16 +8,20 @@ const fixture = {
     "us-gaap": {
       RevenueFromContractWithCustomerExcludingAssessedTax: {
         units: { USD: [
-          { fy: 2024, form: "10-K", end: "2024-12-31", filed: "2025-02-20", val: 1200 },
-          { fy: 2023, form: "10-K", end: "2023-12-31", filed: "2024-02-20", val: 1000 },
+          { fy: 2024, form: "10-K", start: "2024-01-01", end: "2024-12-31", filed: "2025-02-20", val: 1200 },
+          { fy: 2024, form: "10-K", start: "2024-10-01", end: "2024-12-31", filed: "2025-02-20", val: 300 },
+          { fy: 2023, form: "10-K", start: "2023-01-01", end: "2023-12-31", filed: "2024-02-20", val: 1000 },
           { fy: 2024, form: "10-Q", end: "2024-09-30", filed: "2024-11-01", val: 900 }
         ] }
       },
+      Assets: { units: { USD: [
+        { fy: 2024, form: "10-K", end: "2024-12-31", filed: "2025-02-20", val: 5000 }
+      ] } },
       OperatingIncomeLoss: { units: { USD: [
-        { fy: 2024, form: "10-K", end: "2024-12-31", filed: "2025-02-20", val: 180 }
+        { fy: 2024, form: "10-K", start: "2024-01-01", end: "2024-12-31", filed: "2025-02-20", val: 180 }
       ] } },
       EarningsPerShareDiluted: { units: { "USD / shares": [
-        { fy: 2024, form: "10-K", end: "2024-12-31", filed: "2025-02-20", val: 3.25 }
+        { fy: 2024, form: "10-K", start: "2024-01-01", end: "2024-12-31", filed: "2025-02-20", val: 3.25 }
       ] } }
     }
   }
@@ -38,6 +42,7 @@ test("SEC adapter pads CIK, sends identifying User-Agent and extracts annual fac
   assert.equal(result.entityName, "Example Corporation");
   assert.equal(result.metrics.revenue.length, 2);
   assert.equal(result.metrics.revenue.at(-1).value, 1200);
+  assert.equal(result.metrics.totalAssets[0].value, 5000);
   assert.equal(result.metrics.operatingIncome[0].value, 180);
   assert.equal(result.metrics.dilutedEps[0].unit, "USD / shares");
   assert.deepEqual(result.availableMetrics.sort(), ["dilutedEps", "operatingIncome", "revenue"]);
