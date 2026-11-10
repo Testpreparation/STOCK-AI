@@ -19,7 +19,7 @@ export function assessHolding(holding,dataset,options={}) {
   const guards=[...analysis.score.guardrails];
   const reasons=[];
   if(!analysis.dataQuality.safeForPurchaseDecision) reasons.push("株価データが古い、または品質条件を満たしていません。");
-  if(dataset.priceAdjustment==="RAW_UNADJUSTED") reasons.push("未調整株価のため、分割・配当を考慮した買い増し判断は停止しています。");
+  if(dataset.priceAdjustment!=="SPLIT_ADJUSTED") reasons.push(dataset.priceAdjustment==="RAW_UNADJUSTED"?"未調整株価のため、分割・配当を考慮した買い増し判断は停止しています。":"価格調整方式を確認できないため、買い増し判断は停止しています。");
   if(analysis.score.coveragePercent<80) reasons.push("評価データ充足率が80%未満です。財務・バリュエーション等が不足しています。");
   if(guards.length) reasons.push(...guards);
   const referenceLevels=[];
@@ -29,7 +29,7 @@ export function assessHolding(holding,dataset,options={}) {
   const allowed=analysis.dataQuality.safeForPurchaseDecision&&analysis.score.coveragePercent>=80&&!guards.length;
   let status="WAIT";
   let label="様子見";
-  if(!analysis.dataQuality.safeForPurchaseDecision||dataset.priceAdjustment==="RAW_UNADJUSTED") {status="WAIT_DATA";label="データ更新待ち";}
+  if(!analysis.dataQuality.safeForPurchaseDecision||dataset.priceAdjustment!=="SPLIT_ADJUSTED") {status="WAIT_DATA";label="データ更新待ち";}
   else if(analysis.score.coveragePercent<80){status="INSUFFICIENT_DATA";label="判定保留";}
   else if(allowed&&["CONSIDER_BUY","VERY_PROMISING"].includes(recommendation.code)){status="ADD_WATCH";label="買い増し監視";}
   else if(allowed&&recommendation.code==="WATCH_FOR_DIP"){status="WAIT_DIP";label="押し目待ち";}
