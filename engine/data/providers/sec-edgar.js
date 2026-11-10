@@ -23,7 +23,7 @@ const METRICS = {
   currentAssets: ["AssetsCurrent"],
   currentLiabilities: ["LiabilitiesCurrent"],
   stockholdersEquity: ["StockholdersEquity"],
-  longTermDebt: ["LongTermDebtCurrent", "LongTermDebtNoncurrent", "LongTermDebt"]
+  longTermDebt: ["LongTermDebtNoncurrent", "LongTermDebt"]
 };
 
 const INSTANT_METRICS = new Set(["totalAssets", "totalLiabilities", "cashAndEquivalents", "currentAssets", "currentLiabilities", "stockholdersEquity", "longTermDebt"]);
