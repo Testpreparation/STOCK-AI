@@ -22,7 +22,7 @@ function growthValue(financial, name) {
 }
 
 function scoreGrowth(financial) {
-  const values = ["revenue", "operatingIncome", "dilutedEps"]
+  const values = ["revenue", "operatingIncome", "netIncome", "dilutedEps"]
     .map(name => growthValue(financial, name))
     .filter(finite);
   if (!values.length) return null;
