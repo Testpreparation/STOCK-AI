@@ -31,3 +31,16 @@ Official references:
 ## Provider activation policy
 
 A provider is not production-ready until its endpoint, authentication, rate limits, delay, coverage, licensing/terms, and failure behavior are documented and tested. Unofficial endpoints may be used only as explicitly labeled experimental fallbacks, never as the sole source for purchase decisions.
+
+## US equities: Alpha Vantage Free daily prices
+
+- Endpoint: `TIME_SERIES_DAILY`, `outputsize=compact` (latest 100 observations).
+- Requires a free API key stored as GitHub Actions secret `ALPHA_VANTAGE_API_KEY`.
+- Alpha Vantage states 25 requests/day for the standard free service. The scheduled job spaces requests and the configured universe should remain small.
+- The free daily endpoint used here returns raw, unadjusted OHLCV; the pipeline blocks buy-oriented recommendations and scenario forecasts for this dataset.
+- Real-time and 15-minute delayed US market data are premium-only.
+
+Official references:
+- https://www.alphavantage.co/support/
+- https://www.alphavantage.co/documentation/
+
