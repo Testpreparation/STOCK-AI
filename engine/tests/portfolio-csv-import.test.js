@@ -49,3 +49,9 @@ test("keeps JPY and USD values separate and does not invent total assets", () =>
   assert.equal(result.summary.totalsByCurrency.USD.marketValue, 190);
   assert.equal(result.summary.totalAssets, null);
 });
+
+test("infers alphabetic Japanese stock codes as JPY and JP market",()=>{
+ const result=importPortfolioCsv("銘柄コード,数量,取得単価\n282A,20,1000");
+ assert.equal(result.holdings[0].market,"JP");
+ assert.equal(result.holdings[0].currency,"JPY");
+});
