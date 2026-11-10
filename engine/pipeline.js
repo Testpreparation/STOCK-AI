@@ -20,7 +20,9 @@ export function analyzeInstrument({ priceDataset, financialData = null, valuatio
     ? calculateTechnicalIndicators(acceptedRows)
     : { sma20: [], sma50: [], ema12: [], ema26: [], rsi14: [] };
   const financial = financialData ? analyzeFinancials(financialData) : null;
-  const forecast = acceptedRows.length
+  const forecast = priceDataset.priceAdjustment === "RAW_UNADJUSTED"
+    ? { status: "unsupported_adjustment", reason: "未調整価格のため、分割・配当の影響を排除した予測は行いません", forecasts: [] }
+    : acceptedRows.length
     ? forecastPrices(cleanDataset, {
         asOfDate: asOf ? String(asOf).slice(0, 10) : undefined,
         maxDataAgeDays: maxForecastAgeDays,
@@ -44,7 +46,8 @@ export function analyzeInstrument({ priceDataset, financialData = null, valuatio
     risk,
     dataFreshness: {
       isStale: !validation.safeForPurchaseDecision,
-      isValid: validation.valid
+      isValid: validation.valid,
+      priceAdjustment: priceDataset.priceAdjustment ?? null
     }
   });
 
