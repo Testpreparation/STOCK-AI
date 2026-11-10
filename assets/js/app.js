@@ -29,7 +29,7 @@ if(list){
     const name=document.createElement("span");
     const tag=document.createElement("b");
     name.textContent=label;
-    tag.className="tag "+(capabilities[key]?"good":"pending");
+    tag.className="tag "+((key==="browserApiCredentials"||key==="automaticTrading")?"good":capabilities[key]?"good":"pending");
     tag.textContent=value;
     item.append(name,tag);
     list.append(item);
