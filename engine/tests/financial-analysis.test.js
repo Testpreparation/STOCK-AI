@@ -41,12 +41,23 @@ test("analysis calculates growth, margin and liabilities-to-assets", () => {
     dilutedEps: [fact("2023-12-31", 1), fact("2024-12-31", 2)],
     totalAssets: [fact("2024-12-31", 200)],
     totalLiabilities: [fact("2024-12-31", 80)],
-    operatingCashFlow: [fact("2024-12-31", 15)]
+    operatingCashFlow: [fact("2024-12-31", 15)],
+    capitalExpenditures: [fact("2024-12-31", 5)],
+    grossProfit: [fact("2024-12-31", 60)],
+    currentAssets: [fact("2024-12-31", 100)],
+    currentLiabilities: [fact("2024-12-31", 40)],
+    stockholdersEquity: [fact("2024-12-31", 120)],
+    longTermDebt: [fact("2024-12-31", 30)]
   }));
   const result = analyzeFinancials(data);
   assert.equal(result.metrics.revenue.yearOverYearGrowth.value, 25);
   assert.equal(result.derived.operatingMarginPercent, 16);
   assert.equal(result.derived.liabilitiesToAssetsPercent, 40);
+  assert.equal(result.derived.freeCashFlow, 10);
+  assert.equal(result.derived.currentRatio, 2.5);
+  assert.equal(result.derived.grossMarginPercent, 48);
+  assert.equal(result.derived.equityRatioPercent, 60);
+  assert.equal(result.derived.debtToEquity, 0.25);
   assert.equal(result.dataQuality.status, "good");
 });
 
