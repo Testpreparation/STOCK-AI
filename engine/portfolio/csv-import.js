@@ -1,4 +1,6 @@
-const JP_SYMBOL_PATTERN = /^(?:\\d{4,5}|\\d{3}[A-Z])(?:\\.T|\\.JP)?$/i;\n\nconst HEADER_ALIASES = {
+const JP_SYMBOL_PATTERN = /^(?:\d{4,5}|\d{3}[A-Z])(?:\.T|\.JP)?$/i;
+
+const HEADER_ALIASES = {
   symbol: ["銘柄コード","コード","銘柄コード（ティッカー）","ティッカー","symbol","ticker","code","銘柄"],
   name: ["銘柄名","銘柄名称","名称","商品名","name","security name"],
   quantity: ["保有数量","保有株数","数量","残高数量","株数","保有口数","quantity","shares"],
