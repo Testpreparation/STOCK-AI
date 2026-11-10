@@ -1,5 +1,6 @@
 import { analyzeInstrument } from "../pipeline.js";
 import { normalizeAnnualFinancials } from "../data/financial-normalizer.js";
+import { calculateValuationIndicators } from "../analysis/valuation.js";
 
 const finite=value=>Number.isFinite(value);
 const round=(value,digits=2)=>finite(value)?Number(value.toFixed(digits)):null;
@@ -17,6 +18,7 @@ export function assessHolding(holding,dataset,options={}) {
   const rawFinancials=options.financials?.[holding.market+":"+String(holding.symbol).replace(/\.(T|JP)$/i,"")]??null;
   const financialData=rawFinancials?normalizeAnnualFinancials(rawFinancials,{symbol:holding.symbol,market:holding.market,currency:holding.currency}):null;
   const analysis=analyzeInstrument({priceDataset:dataset,financialData,asOf,maxPriceAgeDays:options.maxPriceAgeDays??5,maxForecastAgeDays:options.maxForecastAgeDays??10});
+  const valuation=analysis.financial?calculateValuationIndicators({price:analysis.technical.latest.close,financial:analysis.financial}):null;
   const latest=analysis.technical.latest;
   const recommendation=analysis.score.recommendation;
   const guards=[...analysis.score.guardrails];
@@ -45,6 +47,7 @@ export function assessHolding(holding,dataset,options={}) {
     symbol:holding.symbol,market:holding.market,currency:dataset.currency??holding.currency??null,
     status,label,actionable:allowed&&["ADD_WATCH","WAIT_DIP"].includes(status),
     score:analysis.score.score,coveragePercent:analysis.score.coveragePercent,
+    valuation,
     financial:analysis.financial?{provider:rawFinancials?.provider??"unknown",delayPolicy:rawFinancials?.delayPolicy??null,latestPeriod:analysis.financial.latestPeriod,quality:analysis.financial.dataQuality.status,derived:analysis.financial.derived,metrics:analysis.financial.metrics,signals:analysis.financial.signals}:null,
     recommendation:recommendation.label,latestPrice:latest.close,latestDate:latest.date,
     priceAgeDays:analysis.dataQuality.ageDays,priceAdjustment:dataset.priceAdjustment??"UNKNOWN",
