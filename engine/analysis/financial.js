@@ -1,6 +1,8 @@
 const METRICS = [
   "revenue", "operatingIncome", "netIncome", "dilutedEps",
-  "totalAssets", "totalLiabilities", "operatingCashFlow"
+  "totalAssets", "totalLiabilities", "operatingCashFlow", "capitalExpenditures",
+  "grossProfit", "cashAndEquivalents", "currentAssets", "currentLiabilities",
+  "stockholdersEquity", "longTermDebt"
 ];
 
 const numeric = value => Number.isFinite(value) ? value : null;
@@ -78,11 +80,27 @@ export function analyzeFinancials(financialData) {
   const assets = metrics.totalAssets.latest;
   const liabilities = metrics.totalLiabilities.latest;
   const operatingCashFlow = metrics.operatingCashFlow.latest;
+  const capitalExpenditures = metrics.capitalExpenditures.latest;
+  const currentAssets = metrics.currentAssets.latest;
+  const currentLiabilities = metrics.currentLiabilities.latest;
+  const equity = metrics.stockholdersEquity.latest;
+  const longTermDebt = metrics.longTermDebt.latest;
+  const grossProfit = metrics.grossProfit.latest;
 
   const operatingMargin = revenue !== null && revenue > 0 && operatingIncome !== null
     ? (operatingIncome / revenue) * 100 : null;
   const liabilitiesToAssets = assets !== null && assets > 0 && liabilities !== null
     ? (liabilities / assets) * 100 : null;
+  const grossMargin = revenue !== null && revenue > 0 && grossProfit !== null
+    ? (grossProfit / revenue) * 100 : null;
+  const freeCashFlow = operatingCashFlow !== null && capitalExpenditures !== null
+    ? operatingCashFlow - Math.abs(capitalExpenditures) : null;
+  const currentRatio = currentAssets !== null && currentLiabilities !== null && currentLiabilities > 0
+    ? currentAssets / currentLiabilities : null;
+  const equityRatio = assets !== null && assets > 0 && equity !== null
+    ? (equity / assets) * 100 : null;
+  const debtToEquity = equity !== null && equity > 0 && longTermDebt !== null
+    ? longTermDebt / equity : null;
 
   const availableCount = METRICS.filter(name => metrics[name].latest !== null).length;
   const quality = availableCount >= 5 && periods.length >= 2 ? "good"
@@ -98,6 +116,9 @@ export function analyzeFinancials(financialData) {
   if (operatingCashFlow !== null) {
     signals.push({ name: "operating-cash-flow", status: operatingCashFlow > 0 ? "positive" : operatingCashFlow < 0 ? "negative" : "zero", value: operatingCashFlow });
   }
+  if (freeCashFlow !== null) signals.push({ name: "free-cash-flow", status: freeCashFlow > 0 ? "positive" : freeCashFlow < 0 ? "negative" : "zero", value: freeCashFlow });
+  if (currentRatio !== null) signals.push({ name: "current-ratio", status: currentRatio >= 1.5 ? "strong" : currentRatio >= 1 ? "adequate" : "weak", value: currentRatio });
+  if (grossMargin !== null) signals.push({ name: "gross-margin", status: grossMargin >= 40 ? "strong" : grossMargin >= 20 ? "moderate" : "weak", value: grossMargin });
   for (const name of ["revenue", "operatingIncome", "netIncome", "dilutedEps"]) {
     const result = metrics[name].yearOverYearGrowth;
     if (result?.status === "turnaround") signals.push({ name, status: "turnaround", detail: "Prior period was negative and current period is non-negative." });
@@ -117,7 +138,12 @@ export function analyzeFinancials(financialData) {
     metrics,
     derived: {
       operatingMarginPercent: numeric(operatingMargin),
-      liabilitiesToAssetsPercent: numeric(liabilitiesToAssets)
+      liabilitiesToAssetsPercent: numeric(liabilitiesToAssets),
+      grossMarginPercent: numeric(grossMargin),
+      freeCashFlow: numeric(freeCashFlow),
+      currentRatio: numeric(currentRatio),
+      equityRatioPercent: numeric(equityRatio),
+      debtToEquity: numeric(debtToEquity)
     },
     signals,
     dataQuality: {
