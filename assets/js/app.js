@@ -5,6 +5,7 @@ import { analyzePortfolio } from "../../engine/portfolio/analyzer.js";
 import { assessPortfolioHoldings } from "../../engine/portfolio/holding-advisor.js";
 import { normalizeAnnualFinancials } from "../../engine/data/financial-normalizer.js";
 import { calculateValuationIndicators } from "../../engine/analysis/valuation.js";
+import { evaluatePriceAlerts } from "../../engine/alerts/price-alerts.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -115,6 +116,55 @@ function renderInstrument(item,dataset,rawFinancials=null){
   return card;
 }
 
+const PRICE_ALERTS_KEY="stock-ai-price-alerts-v1";
+function readPriceAlerts(){try{const value=JSON.parse(localStorage.getItem(PRICE_ALERTS_KEY)??"[]");return Array.isArray(value)?value:[];}catch{return [];}}
+function savePriceAlerts(alerts){try{localStorage.setItem(PRICE_ALERTS_KEY,JSON.stringify(alerts));return true;}catch{return false;}}
+function renderPriceAlerts(){
+  const target=document.querySelector("#price-alert-list");if(!target)return;
+  const alerts=readPriceAlerts();target.replaceChildren();
+  if(!alerts.length){target.append(element("p","muted","価格アラートはまだ登録されていません。"));return;}
+  for(const alert of alerts){
+    const row=element("div","alert-row");
+    const condition=alert.condition==="BELOW"?"以下":"以上";
+    const info=element("span","",alert.symbol+"（"+(alert.market==="JP"?"日本株":"米国株")+"） "+alert.targetPrice+" "+condition+(alert.triggered?" · 到達済み":""));
+    const remove=element("button","secondary-button","削除");remove.type="button";remove.addEventListener("click",()=>{savePriceAlerts(readPriceAlerts().filter(item=>item.id!==alert.id));renderPriceAlerts();});
+    row.append(info,remove);target.append(row);
+  }
+}
+function checkPriceAlerts(){
+  const current=readPriceAlerts();if(!current.length)return;
+  const result=evaluatePriceAlerts(current,publishedDatasets);
+  if(savePriceAlerts(result.alerts))renderPriceAlerts();
+  for(const event of result.events){
+    const message=event.symbol+" の公開終値が "+event.price+" に到達しました（設定価格 "+event.targetPrice+"）";
+    const statusNode=document.querySelector("#alert-status");
+    if("Notification" in window&&Notification.permission==="granted"){
+      try{new Notification("STOCK AI 価格アラート",{body:message,tag:"stock-ai-"+event.id});}catch(error){console.warn("Browser notification unavailable:",error);}
+    }
+    if(statusNode)statusNode.textContent=message+"。日足データの更新時に検知しました。";
+  }
+}
+const alertSymbol=document.querySelector("#alert-symbol");
+const addAlertButton=document.querySelector("#add-price-alert");
+const notificationButton=document.querySelector("#notification-permission");
+if(notificationButton)notificationButton.addEventListener("click",async()=>{
+  const statusNode=document.querySelector("#alert-status");
+  if(!("Notification" in window)){if(statusNode)statusNode.textContent="このブラウザーは通知に対応していません。";return;}
+  try{const permission=await Notification.requestPermission();if(statusNode)statusNode.textContent=permission==="granted"?"ブラウザー通知を有効にしました。":"通知は許可されていません。アプリ内のアラート表示は利用できます。";}
+  catch(error){if(statusNode)statusNode.textContent="通知設定を変更できませんでした。ブラウザー設定を確認してください。";}
+});
+if(addAlertButton)addAlertButton.addEventListener("click",()=>{
+  const symbol=alertSymbol?.value??"",market=symbol.split(":")[0],ticker=symbol.split(":")[1];
+  const condition=document.querySelector("#alert-condition")?.value;
+  const targetPrice=Number(document.querySelector("#alert-price")?.value);
+  const statusNode=document.querySelector("#alert-status");
+  if(!ticker||!Number.isFinite(targetPrice)||targetPrice<=0){if(statusNode)statusNode.textContent="銘柄と0より大きい価格を入力してください。";return;}
+  const alerts=readPriceAlerts();
+  if(alerts.some(item=>item.market===market&&item.symbol===ticker&&item.condition===condition&&Number(item.targetPrice)===targetPrice)){if(statusNode)statusNode.textContent="同じ条件のアラートが登録済みです。";return;}
+  alerts.push({id:market+":"+ticker+":"+condition+":"+targetPrice+":"+Date.now(),market,symbol:ticker,condition,targetPrice,enabled:true,triggered:false,createdAt:new Date().toISOString()});
+  if(savePriceAlerts(alerts)){renderPriceAlerts();if(statusNode)statusNode.textContent="アラートを登録しました。公開データの更新時に価格を確認します。";}
+});
+renderPriceAlerts();
 let publishedDatasets={};
 let publishedFinancials={};
 let lastManifestGeneratedAt=null;
@@ -158,6 +208,13 @@ async function loadPublishedData(){
     }
     publishedDatasets=nextDatasets;
     publishedFinancials=nextFinancials;
+    if(alertSymbol){
+      const previous=alertSymbol.value;
+      alertSymbol.replaceChildren(new Option("銘柄を選択",""));
+      for(const {item,dataset} of loadedItems)alertSymbol.add(new Option(item.symbol+"（"+(item.market==="JP"?"日本株":"米国株")+"） "+dataset.currency,item.market+":"+item.symbol));
+      if([...alertSymbol.options].some(option=>option.value===previous))alertSymbol.value=previous;
+    }
+    checkPriceAlerts();
     for(const {item,dataset} of loadedItems){
       const card=renderInstrument(item,dataset,nextFinancials[item.market+":"+item.symbol]??null);
       overview.append(card);
