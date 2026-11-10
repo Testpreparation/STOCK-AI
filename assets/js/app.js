@@ -7,7 +7,7 @@ tabs.forEach(tab=>tab.addEventListener("click",()=>activate(tab.dataset.view)));
 
 const capabilities=getEngineCapabilities();
 const status=document.querySelector("#system-status");
-if(status)status.textContent="分析基盤統合済み・実データ接続待ち";
+if(status)status.textContent="定期取得の仕組み実装済み・API認証設定待ち";
 
 const labels={
   priceNormalization:["価格データ正規化","作成済み"],
@@ -17,7 +17,9 @@ const labels={
   weightedStockScoring:["100点評価","作成済み"],
   scenarioForecasting:["3シナリオ予測","作成済み"],
   forecastEvaluation:["予測精度評価","作成済み"],
-  liveProviderConnection:["実データ自動取得","未接続"],
+  providerAdapters:["株価データ取得アダプター","作成済み"],
+  scheduledDataIngestion:["毎日の自動取得ワークフロー","実装済み"],
+  liveProviderConnection:["実データの画面連携","未接続"],
   browserApiCredentials:["ブラウザーへのAPIキー露出","なし（安全設計）"],
   automaticTrading:["自動売買","非対応"]
 };
