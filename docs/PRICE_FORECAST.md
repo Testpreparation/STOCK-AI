@@ -33,3 +33,7 @@ Pass normalized price data from `normalizePriceRows`:
 ## Run tests
 
 `npm run test:engine`
+
+## Forecast evaluation
+
+Use `evaluateForecasts(records)` from `engine/analysis/forecast-evaluation.js` to compare saved forecasts with later observed prices. It reports MAE, RMSE, MAPE, directional accuracy and prediction-range coverage. Invalid pairs are excluded; directional accuracy and range coverage remain null when no eligible observations exist. Evaluation requires forecasts to be persisted with their original price and later joined to the actual price for the same symbol and target date. The evaluator does not automatically modify model parameters; calibration and walk-forward validation are separate safeguards before any model change.
