@@ -28,11 +28,11 @@ export function normalizePriceRows(rows, metadata = {}) {
     fetchedAt: metadata.fetchedAt ?? null,
     data: rows.map((row, sourceIndex) => ({
       date: toIsoDate(pick(row, ["date", "Date", "timestamp", "time"])),
-      open: toNumber(pick(row, ["open", "Open", "o"])),
-      high: toNumber(pick(row, ["high", "High", "h"])),
-      low: toNumber(pick(row, ["low", "Low", "l"])),
-      close: toNumber(pick(row, ["close", "Close", "adjClose", "adjusted_close", "c"])),
-      volume: toNumber(pick(row, ["volume", "Volume", "v"])),
+      open: toNumber(pick(row, ["adjusted_open", "AdjO", "open", "Open", "O", "o"])),
+      high: toNumber(pick(row, ["adjusted_high", "AdjH", "high", "High", "H", "h"])),
+      low: toNumber(pick(row, ["adjusted_low", "AdjL", "low", "Low", "L", "l"])),
+      close: toNumber(pick(row, ["adjusted_close", "AdjC", "adjClose", "close", "Close", "C", "c"])),
+      volume: toNumber(pick(row, ["adjusted_volume", "AdjVo", "volume", "Volume", "Vo", "v"])),
       sourceIndex
     }))
   };
