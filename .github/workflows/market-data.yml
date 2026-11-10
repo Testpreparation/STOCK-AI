@@ -4,6 +4,13 @@ on:
   schedule:
     - cron: "30 22 * * 0-4"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/market-data.yml"
+      - "scripts/update-market-data.js"
+      - "config/market-universe.json"
+      - "engine/data/**"
 
 permissions:
   contents: write
