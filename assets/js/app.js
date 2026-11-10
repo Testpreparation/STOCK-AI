@@ -55,9 +55,11 @@ function renderInstrument(item,dataset){
     const forecast=element("div","forecast-mini");
     forecast.append(element("strong","","基本シナリオ予測"));
     for(const scenario of analysis.forecast.forecasts){
-      const row=element("div","forecast-mini-row");
-      row.append(element("span","",scenario.label),element("b","",money(scenario.base,dataset.currency)));
-      forecast.append(row);
+      for(const [key,label] of [["bull","強気"],["base","基本"],["bear","弱気"]]){
+        const row=element("div","forecast-mini-row");
+        row.append(element("span","",scenario.label+"・"+label),element("b","",money(scenario[key],dataset.currency)));
+        forecast.append(row);
+      }
     }
     if(analysis.forecast.stale)forecast.append(element("small","instrument-meta","参考値：株価データが古いため売買判断には使用できません"));
     card.append(forecast);
