@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../analysis/forecast-history.js";
+import { applyForecastCalibration, createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../analysis/forecast-history.js";
 
 const dataset = {
   market: "JP",
@@ -54,4 +54,39 @@ test("summarizes only evaluated records and reports pending count", () => {
   assert.equal(result.sampleCount, 1);
   assert.equal(result.pendingCount, 1);
   assert.equal(result.mae, 3);
+});
+
+test("rebases pending predictions when historical adjusted prices are restated", () => {
+  const snapshot = {
+    originDate: dataset.data[0].date, tradingDays: 2, originPrice: 100,
+    predictedPrice: 110, predictedReturnRatio: 1.1, status: "pending"
+  };
+  const revised = { data: dataset.data.map((row, index) => ({ ...row, close: row.close * 2 })) };
+  const [resolved] = reconcileForecastHistory([snapshot], revised);
+  assert.equal(resolved.originPrice, 200);
+  assert.equal(resolved.predictedPrice, 220);
+  assert.equal(resolved.actualPrice, 204);
+});
+
+test("calibrates a horizon only after five completed forecasts and caps adjustment", () => {
+  const forecast = {
+    latestClose: 100,
+    forecasts: [{ key: "short", base: 110, bull: 120, bear: 90, range: { lower: 95, upper: 125 } }]
+  };
+  const history = Array.from({ length: 5 }, (_, index) => ({
+    status: "evaluated", horizon: "short", predictedPrice: 100, actualPrice: 150 + index
+  }));
+  const [result] = applyForecastCalibration(forecast, history).forecasts;
+  assert.equal(result.calibration.applied, true);
+  assert.equal(result.calibration.factor, 1.1);
+  assert.equal(result.base, 121);
+  assert.equal(result.expectedChangePercent, 21);
+});
+
+test("does not calibrate with fewer than five completed forecasts", () => {
+  const forecast = { latestClose: 100, forecasts: [{ key: "short", base: 110, bull: 120, bear: 90 }] };
+  const history = [{ status: "evaluated", horizon: "short", predictedPrice: 100, actualPrice: 105 }];
+  const [result] = applyForecastCalibration(forecast, history).forecasts;
+  assert.equal(result.calibration.applied, false);
+  assert.equal(result.base, 110);
 });
