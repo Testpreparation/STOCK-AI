@@ -45,7 +45,7 @@ test("SEC adapter pads CIK, sends identifying User-Agent and extracts annual fac
   assert.equal(result.metrics.totalAssets[0].value, 5000);
   assert.equal(result.metrics.operatingIncome[0].value, 180);
   assert.equal(result.metrics.dilutedEps[0].unit, "USD / shares");
-  assert.deepEqual(result.availableMetrics.sort(), ["dilutedEps", "operatingIncome", "revenue"]);
+  assert.deepEqual(result.availableMetrics.sort(), ["dilutedEps", "operatingIncome", "revenue", "totalAssets"]);
 });
 
 test("SEC adapter requires valid CIK and identifying User-Agent", async () => {
