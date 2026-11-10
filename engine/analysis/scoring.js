@@ -138,6 +138,7 @@ export function calculateStockScore(input = {}) {
   const guards = [];
   if (input.dataFreshness?.isStale === true) guards.push("株価または主要データが古いため、買い判定を停止しています。");
   if (input.dataFreshness?.isValid === false) guards.push("データ検証に失敗しています。");
+  if (input.dataFreshness?.priceAdjustment === "RAW_UNADJUSTED") guards.push("株価が分割・配当未調整のため、買い判定を停止しています。");
   if (input.financial?.dataQuality?.status === "insufficient") guards.push("財務データの品質が不足しています。");
   if (input.risk?.criticalAlert === true) guards.push("重大なリスク警告があります。");
   if (input.risk?.unresolvedEvent === true) guards.push("未評価の重要イベントがあります。");
