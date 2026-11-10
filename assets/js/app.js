@@ -244,6 +244,7 @@ function renderPortfolio(portfolio){
         card.append(element("p","muted","分析スコア："+(review.score===null?"—":review.score+"/100")+" ／ データ充足率："+review.coveragePercent+"% ／ 株価日："+(review.latestDate??"—")));
         if(review.latestPrice!==null) card.append(element("p","", "分析基準価格 "+money(review.latestPrice,review.currency)+" ／ 価格調整 "+review.priceAdjustment));
         if(review.financial){
+          if(review.valuation){const v=review.valuation;const parts=[["PER",v.pe===null?null:v.pe.toFixed(1)+"倍"],["PBR",v.pb===null?null:v.pb.toFixed(2)+"倍"],["EPS成長",v.epsGrowthPercent===null?null:v.epsGrowthPercent.toFixed(1)+"%"]].filter(([,value])=>value!==null);if(parts.length)card.append(element("p","", "企業価値指標："+parts.map(([label,value])=>label+" "+value).join(" ／ ")));if(v.scenarios)card.append(element("p","", "EPS×PER仮定価格：保守 "+money(v.scenarios.conservative,review.currency)+" ／ 基本 "+money(v.scenarios.base,review.currency)+" ／ 強気 "+money(v.scenarios.optimistic,review.currency)+"（PER 10/16/22倍）"));}
           const d=review.financial.derived??{};
           card.append(element("p","", "財務基準日 "+(review.financial.latestPeriod??"—")+" ／ 財務品質 "+review.financial.quality+" ／ 提供元 "+review.financial.provider+(review.financial.delayPolicy==="FREE_PLAN_12_WEEK_DELAY"?"（約12週間遅延）":"")));
           const ratios=[
