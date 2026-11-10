@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T02:19:15.845Z",
+  "generatedAt": "2026-11-10T02:23:43.523Z",
   "providers": {
     "jquants": "configured",
     "alphaVantage": "configured",
@@ -13,7 +13,7 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T02:19:16.891Z",
+      "fetchedAt": "2026-11-10T02:23:44.700Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
@@ -34,7 +34,7 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T02:19:30.042Z",
+      "fetchedAt": "2026-11-10T02:23:58.174Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
@@ -55,7 +55,7 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T02:19:43.271Z",
+      "fetchedAt": "2026-11-10T02:24:11.453Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
@@ -70,13 +70,34 @@
       "status": "updated"
     },
     {
+      "market": "JP",
+      "symbol": "282A",
+      "file": "/public-data/market/jp/282A.json",
+      "provider": "jquants",
+      "rows": 423,
+      "latestDate": "2026-08-18",
+      "fetchedAt": "2026-11-10T02:24:24.686Z",
+      "priceAdjustment": "SPLIT_ADJUSTED",
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
+      "market": "JP",
+      "symbol": "282A",
+      "provider": "jquants-fins-summary",
+      "fundamentalsFile": "/public-data/fundamentals/jp/282A.json",
+      "periods": 0,
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
       "market": "US",
       "symbol": "AAPL",
       "file": "/public-data/market/us/AAPL.json",
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T02:20:07.730Z",
+      "fetchedAt": "2026-11-10T02:24:37.089Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -88,7 +109,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T02:20:23.017Z",
+      "fetchedAt": "2026-11-10T02:24:52.256Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -100,7 +121,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T02:20:38.419Z",
+      "fetchedAt": "2026-11-10T02:25:07.459Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -127,19 +148,5 @@
       "status": "updated"
     }
   ],
-  "warnings": [
-    {
-      "market": "JP",
-      "symbol": "282A",
-      "code": "INVALID_CODE",
-      "message": "A 4- or 5-digit Japanese stock code is required"
-    },
-    {
-      "market": "JP",
-      "symbol": "282A",
-      "provider": "jquants-financials",
-      "code": "INVALID_CODE",
-      "message": "A 4- or 5-digit Japanese stock code is required"
-    }
-  ]
+  "warnings": []
 }

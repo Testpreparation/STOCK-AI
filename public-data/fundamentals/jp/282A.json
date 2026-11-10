@@ -1,0 +1,26 @@
+{
+  "provider": "jquants-fins-summary",
+  "market": "JP",
+  "symbol": "282A",
+  "currency": "JPY",
+  "fetchedAt": "2026-11-10T02:24:24.868Z",
+  "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+  "periods": 0,
+  "metrics": {
+    "revenue": [],
+    "operatingIncome": [],
+    "netIncome": [],
+    "dilutedEps": [],
+    "totalAssets": [],
+    "stockholdersEquity": [],
+    "operatingCashFlow": [],
+    "cashAndEquivalents": [],
+    "totalLiabilities": []
+  },
+  "limitations": [
+    "J-Quants Free plan financial information is subject to the plan's 12-week delay.",
+    "Only CurPerType=FY records are used; cumulative quarterly records are excluded.",
+    "Total liabilities are derived as total assets minus net assets (TA-Eq); this is not a separately reported liability line.",
+    "The summary endpoint does not provide all balance-sheet and cash-flow details; missing values remain unavailable."
+  ]
+}
