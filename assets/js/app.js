@@ -92,6 +92,7 @@ function renderInstrument(item,dataset){
 }
 
 let publishedDatasets={};
+let publishedFinancials={};
 let lastManifestGeneratedAt=null;
 let isLoadingMarketData=false;
 async function loadPublishedData(){
@@ -108,7 +109,9 @@ async function loadPublishedData(){
     if(lastManifestGeneratedAt===manifest.generatedAt)return;
     lastManifestGeneratedAt=manifest.generatedAt??null;
     const records=(manifest.instruments??[]).filter(item=>item.file&&item.status==="updated");
+    const fundamentals=(manifest.instruments??[]).filter(item=>item.fundamentalsFile&&item.status==="updated");
     const nextDatasets={};
+    const nextFinancials={};
     overview.replaceChildren();if(screening)screening.replaceChildren();
     let loaded=0;
     for(const item of records){
@@ -122,7 +125,15 @@ async function loadPublishedData(){
         loaded++;
       }catch(error){console.warn("Data load failed:",item.symbol,error);}
     }
+    for(const item of fundamentals){
+      try{
+        const response=await fetch("."+item.fundamentalsFile,{cache:"no-store"});
+        if(!response.ok)throw new Error("fundamentals HTTP "+response.status);
+        nextFinancials[item.market+":"+item.symbol]=await response.json();
+      }catch(error){console.warn("Fundamentals load failed:",item.symbol,error);}
+    }
     publishedDatasets=nextDatasets;
+    publishedFinancials=nextFinancials;
     renderPortfolio(readPortfolio());
     const forecastTarget=document.querySelector("#forecast-list");
     if(forecastTarget){forecastTarget.replaceChildren();for(const card of overview.children){forecastTarget.append(card.cloneNode(true));}if(!forecastTarget.children.length)forecastTarget.append(element("p","muted","予測対象データがありません。"));}
@@ -195,7 +206,7 @@ function renderPortfolio(portfolio){
     advice.replaceChildren();
     if(!portfolio) advice.append(element("p","muted","CSVを読み込むと保有銘柄ごとの投資判断材料を表示します。"));
     else {
-      const reviews=assessPortfolioHoldings(portfolio,publishedDatasets,{asOf:new Date().toISOString().slice(0,10)});
+      const reviews=assessPortfolioHoldings(portfolio,publishedDatasets,{asOf:new Date().toISOString().slice(0,10),financials:publishedFinancials});
       for(const review of reviews){
         const card=element("article","holding-advice-card");
         const head=element("div","holding-advice-head");
@@ -203,6 +214,19 @@ function renderPortfolio(portfolio){
         card.append(head);
         card.append(element("p","muted","分析スコア："+(review.score===null?"—":review.score+"/100")+" ／ データ充足率："+review.coveragePercent+"% ／ 株価日："+(review.latestDate??"—")));
         if(review.latestPrice!==null) card.append(element("p","", "分析基準価格 "+money(review.latestPrice,review.currency)+" ／ 価格調整 "+review.priceAdjustment));
+        if(review.financial){
+          const d=review.financial.derived??{};
+          card.append(element("p","", "財務基準日 "+(review.financial.latestPeriod??"—")+" ／ 財務品質 "+review.financial.quality));
+          const ratios=[
+            ["売上高成長率",review.financial.metrics?.revenue?.yearOverYearGrowth?.value,"%"],
+            ["営業利益率",d.operatingMarginPercent,"%"],
+            ["フリーキャッシュフロー",d.freeCashFlow,review.currency],
+            ["流動比率",d.currentRatio,"倍"],
+            ["自己資本比率",d.equityRatioPercent,"%"],
+            ["負債/自己資本",d.debtToEquity,"倍"]
+          ].filter(([,value])=>Number.isFinite(value));
+          if(ratios.length)card.append(element("p","",ratios.map(([label,value,unit])=>label+" "+(unit==="%"?value.toFixed(1)+"%":unit==="倍"?value.toFixed(2)+"倍":money(value,unit))).join(" ／ ")));
+        }
         if(review.referenceLevels.length){
           const levels=review.referenceLevels.map(level=>level.label+" "+money(level.price,review.currency)+(level.distancePercent===null?"":" ("+(level.distancePercent>=0?"+":"")+level.distancePercent+"%)")).join(" ／ ");
           card.append(element("p","", "押し目監視の参考水準："+levels));
