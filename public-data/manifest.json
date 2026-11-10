@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T01:36:02.025Z",
+  "generatedAt": "2026-11-10T02:05:17.463Z",
   "providers": {
     "jquants": "configured",
     "alphaVantage": "configured",
@@ -13,8 +13,17 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T01:36:03.361Z",
+      "fetchedAt": "2026-11-10T02:05:18.681Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
+      "market": "JP",
+      "symbol": "7203",
+      "provider": "jquants-fins-summary",
+      "fundamentalsFile": "/public-data/fundamentals/jp/7203.json",
+      "periods": 2,
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
     },
@@ -25,8 +34,17 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T01:36:16.532Z",
+      "fetchedAt": "2026-11-10T02:05:32.122Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
+      "market": "JP",
+      "symbol": "6758",
+      "provider": "jquants-fins-summary",
+      "fundamentalsFile": "/public-data/fundamentals/jp/6758.json",
+      "periods": 2,
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
     },
@@ -37,7 +55,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T01:36:28.683Z",
+      "fetchedAt": "2026-11-10T02:05:44.528Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -49,7 +67,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T01:36:43.772Z",
+      "fetchedAt": "2026-11-10T02:05:59.669Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"

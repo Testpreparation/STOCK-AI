@@ -1,0 +1,161 @@
+{
+  "provider": "jquants-fins-summary",
+  "market": "JP",
+  "symbol": "6758",
+  "currency": "JPY",
+  "fetchedAt": "2026-11-10T02:05:32.338Z",
+  "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+  "periods": 2,
+  "metrics": {
+    "revenue": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 12957064000000,
+        "unit": "JPY",
+        "sourceTag": "Sales"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 12479620000000,
+        "unit": "JPY",
+        "sourceTag": "Sales"
+      }
+    ],
+    "operatingIncome": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 1407163000000,
+        "unit": "JPY",
+        "sourceTag": "OP"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 1447507000000,
+        "unit": "JPY",
+        "sourceTag": "OP"
+      }
+    ],
+    "netIncome": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 1141600000000,
+        "unit": "JPY",
+        "sourceTag": "NP"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": -326865000000,
+        "unit": "JPY",
+        "sourceTag": "NP"
+      }
+    ],
+    "dilutedEps": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 187.92,
+        "unit": "JPY/share",
+        "sourceTag": "DEPS"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": -54.36,
+        "unit": "JPY/share",
+        "sourceTag": "DEPS"
+      }
+    ],
+    "totalAssets": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 35293173000000,
+        "unit": "JPY",
+        "sourceTag": "TA"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 15683490000000,
+        "unit": "JPY",
+        "sourceTag": "TA"
+      }
+    ],
+    "stockholdersEquity": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 8510151000000,
+        "unit": "JPY",
+        "sourceTag": "Eq"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 8513589000000,
+        "unit": "JPY",
+        "sourceTag": "Eq"
+      }
+    ],
+    "operatingCashFlow": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 2321675000000,
+        "unit": "JPY",
+        "sourceTag": "CFO"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 1945617000000,
+        "unit": "JPY",
+        "sourceTag": "CFO"
+      }
+    ],
+    "cashAndEquivalents": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 2980956000000,
+        "unit": "JPY",
+        "sourceTag": "CashEq"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 2208879000000,
+        "unit": "JPY",
+        "sourceTag": "CashEq"
+      }
+    ],
+    "totalLiabilities": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-14",
+        "value": 26783022000000,
+        "unit": "JPY",
+        "sourceTag": "TA-Eq"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-08",
+        "value": 7169901000000,
+        "unit": "JPY",
+        "sourceTag": "TA-Eq"
+      }
+    ]
+  },
+  "limitations": [
+    "J-Quants Free plan financial information is subject to the plan's 12-week delay.",
+    "Only CurPerType=FY records are used; cumulative quarterly records are excluded.",
+    "Total liabilities are derived as total assets minus net assets (TA-Eq); this is not a separately reported liability line.",
+    "The summary endpoint does not provide all balance-sheet and cash-flow details; missing values remain unavailable."
+  ]
+}
