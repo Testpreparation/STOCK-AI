@@ -1,6 +1,8 @@
 const METRIC_NAMES = [
   "revenue", "operatingIncome", "netIncome", "dilutedEps",
-  "totalAssets", "totalLiabilities", "operatingCashFlow"
+  "totalAssets", "totalLiabilities", "operatingCashFlow", "capitalExpenditures",
+  "grossProfit", "cashAndEquivalents", "currentAssets", "currentLiabilities",
+  "stockholdersEquity", "longTermDebt"
 ];
 
 function validDate(value) {
