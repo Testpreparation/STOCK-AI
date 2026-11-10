@@ -11,7 +11,7 @@
 ### United States — Alpha Vantage Free
 - Uses `TIME_SERIES_DAILY` with `outputsize=compact` (latest 100 daily observations).
 - Free API key is required; provider states 25 requests/day for the standard free service.
-- Daily raw OHLCV is not split/dividend adjusted. The manifest marks it `RAW_UNADJUSTED`; do not use it as the sole basis for purchase decisions or long-range technical backtests.
+- Daily raw OHLCV is not split/dividend adjusted. The manifest marks it `RAW_UNADJUSTED`; the integrated pipeline blocks buy-oriented recommendations and scenario forecasts for this source until adjusted history is available.
 - The scheduled workflow spaces requests to stay conservative. Keep the US universe small and within provider limits.
 
 ### US fundamentals — SEC EDGAR
