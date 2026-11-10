@@ -177,7 +177,7 @@ function renderPortfolio(portfolio){
   ];
   for(const [label,value,note] of metrics){const card=element("article","metric");card.append(element("span","",label),element("strong","",value),element("small","",note));summary.append(card);}
   tbody.replaceChildren();
-  if(!portfolio?.holdings?.length){const row=element("tr");const cell=element("td","muted","CSVを読み込むと表示されます。");cell.colSpan=6;row.append(cell);tbody.append(row);}
+  if(!portfolio?.holdings?.length){const row=element("tr");const cell=element("td","muted","CSVを読み込むと表示されます。");cell.colSpan=7;row.append(cell);tbody.append(row);}
   else for(const holding of (displayPortfolio?.holdings??portfolio.holdings)){
     const row=element("tr");
     const identity=element("td");identity.append(element("strong","",holding.symbol),element("small","portfolio-name",holding.name|| (holding.market==="JP"?"日本株":"米国株")));
