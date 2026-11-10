@@ -54,7 +54,7 @@ export async function fetchJQuantsAnnualFinancials({apiKey,code,fetchImpl=global
     revenue:mapMetric("Sales","JPY"),
     operatingIncome:mapMetric("OP","JPY"),
     netIncome:mapMetric("NP","JPY"),
-    dilutedEps:mapMetric("DEPS","JPY/share").length?mapMetric("DEPS","JPY/share"):mapMetric("EPS","JPY/share"),
+    dilutedEps:periods.map(([end,row])=>({fiscalYearEnd:end,filedAt:date(row.DiscDate),value:numeric(row.DEPS)||numeric(row.EPS),unit:"JPY/share",sourceTag:numeric(row.DEPS)!==null?"DEPS":"EPS"})).filter(item=>item.value!==null),
     totalAssets:mapMetric("TA","JPY"),
     stockholdersEquity:mapMetric("Eq","JPY"),
     operatingCashFlow:mapMetric("CFO","JPY"),
