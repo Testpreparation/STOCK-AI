@@ -40,4 +40,6 @@ test("uses latest disclosure for a fiscal year and follows pagination",async()=>
 test("validates API key and code",async()=>{
  await assert.rejects(()=>fetchJQuantsAnnualFinancials({code:"7203"}),error=>error instanceof JQuantsFinancialError&&error.code==="MISSING_API_KEY");
  await assert.rejects(()=>fetchJQuantsAnnualFinancials({apiKey:"key",code:"ABC"}),error=>error.code==="INVALID_CODE");
+ const letterCode=await fetchJQuantsAnnualFinancials({apiKey:"key",code:"282A",fetchImpl:async()=>({ok:true,json:async()=>({data:[]})})});
+ assert.equal(letterCode.symbol,"282A");
 });
