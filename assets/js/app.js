@@ -16,6 +16,8 @@ const labels={
   weightedStockScoring:["100点評価","作成済み"],
   scenarioForecasting:["3シナリオ予測","作成済み"],
   forecastEvaluation:["予測精度評価","作成済み"],
+  forecastHistoryTracking:["予測履歴の保存・答え合わせ","作成済み"],
+  forecastErrorCalibration:["過去の誤差による予測補正","5件以上で有効"],
   providerAdapters:["株価データ取得アダプター","作成済み"],
   scheduledDataIngestion:["毎日の自動取得ワークフロー","実装済み"],
   liveProviderConnection:["実データの画面連携","接続確認待ち"],
