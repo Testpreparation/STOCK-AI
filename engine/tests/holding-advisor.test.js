@@ -52,3 +52,12 @@ test("normalizes .T symbols when matching imported Japanese holdings",()=>{
  assert.equal(results[0].symbol,"7203.T");
  assert.equal(results[0].latestDate,"2026-11-09");
 });
+
+test("blocks purchase-oriented labels when adjustment metadata is unknown",()=>{
+ const dataset=makeDataset({adjustment:undefined});
+ delete dataset.priceAdjustment;
+ const result=assessHolding(holding,dataset,{asOf:"2026-11-10"});
+ assert.equal(result.status,"WAIT_DATA");
+ assert.equal(result.actionable,false);
+ assert.ok(result.reasons.some(reason=>reason.includes("価格調整方式")));
+});
