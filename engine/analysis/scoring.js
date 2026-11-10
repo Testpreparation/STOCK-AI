@@ -35,6 +35,10 @@ function scoreFinancialHealth(financial) {
   const liabilities = financial?.derived?.liabilitiesToAssetsPercent;
   const cashFlow = latestMetric(financial, "operatingCashFlow");
   const netIncome = latestMetric(financial, "netIncome");
+  const freeCashFlow = financial?.derived?.freeCashFlow;
+  const currentRatio = financial?.derived?.currentRatio;
+  const equityRatio = financial?.derived?.equityRatioPercent;
+  const grossMargin = financial?.derived?.grossMarginPercent;
 
   if (finite(margin)) parts.push(linearScore(margin, -5, 20));
   if (finite(liabilities)) parts.push(linearScore(100 - liabilities, 20, 80));
@@ -42,6 +46,10 @@ function scoreFinancialHealth(financial) {
   if (finite(cashFlow) && finite(netIncome) && netIncome > 0) {
     parts.push(cashFlow > netIncome * 0.8 ? 100 : cashFlow > 0 ? 60 : 0);
   }
+  if (finite(freeCashFlow)) parts.push(freeCashFlow > 0 ? 100 : freeCashFlow < 0 ? 0 : 40);
+  if (finite(currentRatio)) parts.push(linearScore(currentRatio, 0.5, 2.0));
+  if (finite(equityRatio)) parts.push(linearScore(equityRatio, 10, 70));
+  if (finite(grossMargin)) parts.push(linearScore(grossMargin, 5, 60));
   return parts.length ? parts.reduce((a, b) => a + b, 0) / parts.length : null;
 }
 
