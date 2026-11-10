@@ -224,6 +224,17 @@ async function loadPublishedData(){
     const forecastTarget=document.querySelector("#forecast-list");
     if(forecastTarget){forecastTarget.replaceChildren();for(const card of overview.children){forecastTarget.append(card.cloneNode(true));}if(!forecastTarget.children.length)forecastTarget.append(element("p","muted","予測対象データがありません。"));}
     const warningCount=(manifest.warnings??[]).length;
+    const state=document.querySelector("#dashboard-state");
+    if(state)state.textContent=loaded?"公開データ接続済み":"データ取得待ち";
+    const instrumentsMetric=document.querySelector("#metric-instruments");
+    if(instrumentsMetric)instrumentsMetric.textContent=String(loaded)+"銘柄";
+    const candidates=loadedItems.filter(({item,dataset})=>{
+      try{const financial=nextFinancials[item.market+":"+item.symbol];const normalized=financial?normalizeAnnualFinancials(financial,{symbol:item.symbol,market:item.market,currency:dataset.currency}):null;const result=analyzeInstrument({priceDataset:dataset,financialData:normalized,asOf:new Date().toISOString().slice(0,10)});return result.dataQuality.safeForPurchaseDecision&&result.score.coveragePercent>=80&&["CONSIDER_BUY","VERY_PROMISING"].includes(result.score.recommendation.code)&&item.priceAdjustment==="SPLIT_ADJUSTED";}catch{return false;}
+    }).length;
+    const candidateMetric=document.querySelector("#metric-candidates");if(candidateMetric)candidateMetric.textContent=String(candidates)+"銘柄";
+    const accuracyMetric=document.querySelector("#metric-accuracy");
+    if(accuracyMetric){const metrics=summarizeForecastHistory(readForecastHistory());accuracyMetric.textContent=metrics.sampleCount?metrics.mapePercent+"%誤差":"検証待ち";}
+    const portfolioMetric=document.querySelector("#metric-portfolio");if(portfolioMetric){const p=readPortfolio();portfolioMetric.textContent=p?.holdings?.length?String(p.holdings.length)+"銘柄":"未取込";}
     const accuracySummary=document.querySelector("#forecast-accuracy-summary");
     if(accuracySummary){
       const metrics=summarizeForecastHistory(readForecastHistory());
