@@ -25,6 +25,7 @@ export function assessHolding(holding,dataset,options={}) {
   if(dataset.priceAdjustment!=="SPLIT_ADJUSTED") reasons.push(dataset.priceAdjustment==="RAW_UNADJUSTED"?"未調整株価のため、分割・配当を考慮した買い増し判断は停止しています。":"価格調整方式を確認できないため、買い増し判断は停止しています。");
   if(analysis.score.coveragePercent<80) reasons.push("評価データ充足率が80%未満です。財務・バリュエーション等が不足しています。");
   if(financialData?.dataQuality?.periodCount) reasons.push("財務データ："+financialData.dataQuality.periodCount+"期間を取得。財務基準日："+(financialData.periods.at(-1)?.fiscalYearEnd??"不明"));
+  if(rawFinancials?.delayPolicy==="FREE_PLAN_12_WEEK_DELAY") reasons.push("財務データもJ-Quants Freeプランの約12週間遅延対象です。");
   if(guards.length) reasons.push(...guards);
   const referenceLevels=[];
   if(finite(latest.sma20)) referenceLevels.push({key:"sma20",label:"20日移動平均",price:round(latest.sma20),distancePercent:finite(latest.close)&&latest.close>0?round((latest.sma20/latest.close-1)*100):null});
@@ -44,7 +45,7 @@ export function assessHolding(holding,dataset,options={}) {
     symbol:holding.symbol,market:holding.market,currency:dataset.currency??holding.currency??null,
     status,label,actionable:allowed&&["ADD_WATCH","WAIT_DIP"].includes(status),
     score:analysis.score.score,coveragePercent:analysis.score.coveragePercent,
-    financial:analysis.financial?{latestPeriod:analysis.financial.latestPeriod,quality:analysis.financial.dataQuality.status,derived:analysis.financial.derived,metrics:analysis.financial.metrics,signals:analysis.financial.signals}:null,
+    financial:analysis.financial?{provider:rawFinancials?.provider??"unknown",delayPolicy:rawFinancials?.delayPolicy??null,latestPeriod:analysis.financial.latestPeriod,quality:analysis.financial.dataQuality.status,derived:analysis.financial.derived,metrics:analysis.financial.metrics,signals:analysis.financial.signals}:null,
     recommendation:recommendation.label,latestPrice:latest.close,latestDate:latest.date,
     priceAgeDays:analysis.dataQuality.ageDays,priceAdjustment:dataset.priceAdjustment??"UNKNOWN",
     referenceLevels,forecast:shortForecast?{base:shortForecast.base,bear:shortForecast.bear,bull:shortForecast.bull,range:shortForecast.range,expectedChangePercent:shortForecast.expectedChangePercent,confidence:analysis.forecast.confidence,status:analysis.forecast.status}:null,
