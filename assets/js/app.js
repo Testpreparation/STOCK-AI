@@ -3,6 +3,7 @@ import { applyForecastCalibration, createForecastSnapshots, reconcileForecastHis
 import { importPortfolioCsv } from "../../engine/portfolio/csv-import.js";
 import { analyzePortfolio } from "../../engine/portfolio/analyzer.js";
 import { assessPortfolioHoldings } from "../../engine/portfolio/holding-advisor.js";
+import { normalizeAnnualFinancials } from "../../engine/data/financial-normalizer.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
