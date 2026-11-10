@@ -40,3 +40,12 @@ test("recognizes cash and total asset summary columns", () => {
 test("rejects CSV without recognizable headers", () => {
   assert.throws(() => importPortfolioCsv("hello,world\na,b"), /見出し/);
 });
+
+test("keeps JPY and USD values separate and does not invent total assets", () => {
+  const csv = "銘柄コード,保有数量（株）,平均取得価額（円）,現在値,通貨\n7203,1,2000,2500,JPY\nAAPL,1,200,190,USD";
+  const result = importPortfolioCsv(csv);
+  assert.equal(result.holdings.length, 2);
+  assert.equal(result.summary.totalsByCurrency.JPY.marketValue, 2500);
+  assert.equal(result.summary.totalsByCurrency.USD.marketValue, 190);
+  assert.equal(result.summary.totalAssets, null);
+});
