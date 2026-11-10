@@ -1,5 +1,5 @@
 import { getEngineCapabilities, analyzeInstrument } from "../../engine/pipeline.js";
-import { createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../../engine/analysis/forecast-history.js";
+import { applyForecastCalibration, createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../../engine/analysis/forecast-history.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -37,7 +37,7 @@ function element(tag,className,text){const node=document.createElement(tag);if(c
 const FORECAST_HISTORY_KEY="stock-ai-forecast-history-v1";
 function readForecastHistory(){try{const value=JSON.parse(localStorage.getItem(FORECAST_HISTORY_KEY)??"[]");return Array.isArray(value)?value:[];}catch{return [];}}
 function writeForecastHistory(history){try{localStorage.setItem(FORECAST_HISTORY_KEY,JSON.stringify(history.slice(-1000)));return true;}catch(error){console.warn("Forecast history could not be saved:",error);return false;}}
-function updateForecastHistory(dataset,forecast){const history=readForecastHistory();const reconciled=reconcileForecastHistory(history,dataset);const known=new Set(reconciled.map(record=>record.id));const fresh=createForecastSnapshots(dataset,forecast).filter(record=>!known.has(record.id));const next=[...reconciled,...fresh].slice(-1000);const saved=writeForecastHistory(next);return {history:next,saved};}
+function updateForecastHistory(dataset,forecast){const history=readForecastHistory();const reconciled=reconcileForecastHistory(history,dataset);const calibratedForecast=applyForecastCalibration(forecast,reconciled);const known=new Set(reconciled.map(record=>record.id));const fresh=createForecastSnapshots(dataset,calibratedForecast).filter(record=>!known.has(record.id));const next=[...reconciled,...fresh].slice(-1000);const saved=writeForecastHistory(next);return {history:next,saved,forecast:calibratedForecast};}
 function renderInstrument(item,dataset){
   let analysis=null;
   try{analysis=analyzeInstrument({priceDataset:dataset,asOf:new Date().toISOString().slice(0,10)});}catch(error){console.warn("Analysis failed:",item.symbol,error);}
@@ -50,6 +50,7 @@ function renderInstrument(item,dataset){
   const score=analysis?.score;
   const historyResult=analysis?.forecast?.forecasts?.length?updateForecastHistory(dataset,analysis.forecast):{history:readForecastHistory(),saved:true};
   const ownHistory=historyResult.history.filter(record=>record.symbol===item.symbol&&record.market===item.market);
+  const forecastResult=historyResult.forecast??analysis?.forecast;
   const scoreRow=element("div","instrument-score");
   scoreRow.append(element("span","","分析スコア"),element("strong","",score?.score===null||score?.score===undefined?"—":`${score.score.toFixed(1)} / 100`));
   const recommendation=element("p","instrument-recommendation",score?.recommendation?.label??"判定保留");
@@ -58,17 +59,17 @@ function renderInstrument(item,dataset){
   if(item.priceAdjustment==="RAW_UNADJUSTED")warnings.push("未調整株価のため予測・買い判定を停止");
   card.append(head,detail,meta,scoreRow,recommendation,quality);
   if(warnings.length)card.append(element("p","instrument-warning",[...new Set(warnings)].join(" ")));
-  if(analysis?.forecast?.forecasts?.length){
+  if(forecastResult?.forecasts?.length){
     const forecast=element("div","forecast-mini");
     forecast.append(element("strong","","基本シナリオ予測"));
-    for(const scenario of analysis.forecast.forecasts){
+    for(const scenario of forecastResult.forecasts){
       for(const [key,label] of [["bull","強気"],["base","基本"],["bear","弱気"]]){
         const row=element("div","forecast-mini-row");
         row.append(element("span","",scenario.label+"・"+label),element("b","",money(scenario[key],dataset.currency)));
         forecast.append(row);
       }
     }
-    if(analysis.forecast.stale)forecast.append(element("small","instrument-meta","参考値：株価データが古いため売買判断には使用できません"));
+    if(forecastResult.stale)forecast.append(element("small","instrument-meta","参考値：株価データが古いため売買判断には使用できません"));
     const accuracy=element("div","forecast-accuracy");
     accuracy.append(element("strong","","予測の答え合わせ"));
     for(const horizon of ["short","medium","long"]){
