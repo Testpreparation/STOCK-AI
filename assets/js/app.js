@@ -165,6 +165,24 @@ if(addAlertButton)addAlertButton.addEventListener("click",()=>{
   if(savePriceAlerts(alerts)){renderPriceAlerts();if(statusNode)statusNode.textContent="アラートを登録しました。公開データの更新時に価格を確認します。";}
 });
 renderPriceAlerts();
+let screeningSourceItems=[];
+let screeningFinancialSource={};
+function renderScreeningList(){
+  const target=document.querySelector("#screening-list");if(!target)return;
+  const query=(document.querySelector("#screening-search")?.value??"").trim().toUpperCase();
+  const sort=document.querySelector("#screening-sort")?.value??"score";
+  const rows=screeningSourceItems.filter(({item})=>!query||item.symbol.toUpperCase().includes(query));
+  const scored=rows.map(entry=>{
+    const financial=screeningFinancialSource[entry.item.market+":"+entry.item.symbol];
+    try{const normalized=financial?normalizeAnnualFinancials(financial,{symbol:entry.item.symbol,market:entry.item.market,currency:entry.dataset.currency}):null;const result=analyzeInstrument({priceDataset:entry.dataset,financialData:normalized,asOf:new Date().toISOString().slice(0,10)});return {...entry,score:result.score.score??-1};}catch{return {...entry,score:-1};}
+  });
+  scored.sort((a,b)=>sort==="symbol"?a.item.symbol.localeCompare(b.item.symbol):sort==="market"?a.item.market.localeCompare(b.item.market)||a.item.symbol.localeCompare(b.item.symbol):b.score-a.score);
+  target.replaceChildren();
+  for(const entry of scored)target.append(renderInstrument(entry.item,entry.dataset,screeningFinancialSource[entry.item.market+":"+entry.item.symbol]??null));
+  if(!scored.length)target.append(element("p","muted","該当する銘柄はありません。"));
+}
+document.querySelector("#screening-search")?.addEventListener("input",renderScreeningList);
+document.querySelector("#screening-sort")?.addEventListener("change",renderScreeningList);
 let publishedDatasets={};
 let publishedFinancials={};
 let lastManifestGeneratedAt=null;
@@ -218,8 +236,10 @@ async function loadPublishedData(){
     for(const {item,dataset} of loadedItems){
       const card=renderInstrument(item,dataset,nextFinancials[item.market+":"+item.symbol]??null);
       overview.append(card);
-      if(screening)screening.append(card.cloneNode(true));
     }
+    screeningSourceItems=loadedItems;
+    screeningFinancialSource=nextFinancials;
+    renderScreeningList();
     renderPortfolio(readPortfolio());
     const forecastTarget=document.querySelector("#forecast-list");
     if(forecastTarget){forecastTarget.replaceChildren();for(const card of overview.children){forecastTarget.append(card.cloneNode(true));}if(!forecastTarget.children.length)forecastTarget.append(element("p","muted","予測対象データがありません。"));}
