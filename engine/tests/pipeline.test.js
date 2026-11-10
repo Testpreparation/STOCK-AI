@@ -35,7 +35,7 @@ const financialData = {
       operatingCashFlow: { value: 20 + index * 4, unit: "USD" }
     }
   }))
-});
+};
 
 test("integrates normalized prices, technicals, financial analysis, score and forecasts", () => {
   const rows = priceRows();
