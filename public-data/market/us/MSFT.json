@@ -4,7 +4,7 @@
   "market": "US",
   "currency": "USD",
   "source": "alpha-vantage",
-  "fetchedAt": "2026-11-10T02:24:52.256Z",
+  "fetchedAt": "2026-11-10T16:37:53.964Z",
   "data": [
     {
       "date": "2026-06-18",
@@ -903,7 +903,7 @@
       "high": 548.28,
       "low": 538.6996,
       "close": 545.18,
-      "volume": 25233649,
+      "volume": 25337411,
       "sourceIndex": 99
     }
   ],

@@ -2,7 +2,7 @@
   "provider": "sec-edgar-companyfacts",
   "cik": "0001824920",
   "entityName": "IonQ, Inc.",
-  "fetchedAt": "2026-11-10T02:25:25.355Z",
+  "fetchedAt": "2026-11-10T16:38:27.055Z",
   "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001824920.json",
   "metrics": {
     "revenue": [
