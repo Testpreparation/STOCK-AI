@@ -51,6 +51,17 @@ function renderInstrument(item,dataset){
   if(item.priceAdjustment==="RAW_UNADJUSTED")warnings.push("未調整株価のため予測・買い判定を停止");
   card.append(head,detail,meta,scoreRow,recommendation,quality);
   if(warnings.length)card.append(element("p","instrument-warning",[...new Set(warnings)].join(" ")));
+  if(analysis?.forecast?.forecasts?.length){
+    const forecast=element("div","forecast-mini");
+    forecast.append(element("strong","","基本シナリオ予測"));
+    for(const scenario of analysis.forecast.forecasts){
+      const row=element("div","forecast-mini-row");
+      row.append(element("span","",scenario.label),element("b","",money(scenario.base,dataset.currency)));
+      forecast.append(row);
+    }
+    if(analysis.forecast.stale)forecast.append(element("small","instrument-meta","参考値：株価データが古いため売買判断には使用できません"));
+    card.append(forecast);
+  }
   return card;
 }
 
@@ -76,6 +87,8 @@ async function loadPublishedData(){
         loaded++;
       }catch(error){console.warn("Data load failed:",item.symbol,error);}
     }
+    const forecastTarget=document.querySelector("#forecast-list");
+    if(forecastTarget){forecastTarget.replaceChildren();for(const card of overview.children){forecastTarget.append(card.cloneNode(true));}if(!forecastTarget.children.length)forecastTarget.append(element("p","muted","予測対象データがありません。"));}
     const warningCount=(manifest.warnings??[]).length;
     summary.textContent=`最終更新：${manifest.generatedAt?new Date(manifest.generatedAt).toLocaleString("ja-JP"):"不明"} ／ データ取得：${loaded}/${records.length}銘柄 ／ 警告：${warningCount}件`;
     if(status)status.textContent=loaded?`実データ読み込み済み：${loaded}銘柄（品質確認中）`:"取得データなし・自動更新設定を確認";
