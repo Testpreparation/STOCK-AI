@@ -94,6 +94,8 @@ export function getEngineCapabilities() {
     weightedStockScoring: true,
     scenarioForecasting: true,
     forecastEvaluation: true,
+    providerAdapters: true,
+    scheduledDataIngestion: true,
     liveProviderConnection: false,
     browserApiCredentials: false,
     automaticTrading: false
