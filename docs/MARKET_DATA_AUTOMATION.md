@@ -30,7 +30,7 @@ In repository Settings → Secrets and variables → Actions, add:
 - `ALPHA_VANTAGE_API_KEY`
 - `SEC_USER_AGENT` (example format: `STOCK-AI research contact@example.com`; use your own contact address)
 
-The workflow runs on weekdays at 07:30 JST (22:30 UTC previous day) and can also be started manually. It commits validated snapshots under `public-data/` for GitHub Pages to serve. Public repository data is public; never put personal holdings, account details, or API keys in the universe file or generated snapshots.
+The workflow runs on weekdays at 17:40 JST (08:40 UTC) and can also be started manually. This is a once-per-business-day refresh, not a streaming quote feed. The time is chosen to run after the Japanese market close and after the prior US session close; GitHub Actions scheduled starts can be delayed. It commits validated snapshots under `public-data/` for GitHub Pages to serve. While the dashboard tab is open, the browser checks the public manifest every five minutes and on returning to the foreground. If a new snapshot has been published, it reloads the data and recalculates the displayed analysis. This browser polling does not call provider APIs and does not make the underlying prices more current than the provider's latest available data. Public repository data is public; never put personal holdings, account details, or API keys in the universe file or generated snapshots.
 
 ## Safety
 - Existing snapshots are retained when an individual fetch fails; the manifest records the warning.
@@ -38,3 +38,10 @@ The workflow runs on weekdays at 07:30 JST (22:30 UTC previous day) and can also
 - API secrets are only passed to the GitHub Actions runtime.
 - Alpha Vantage raw unadjusted prices and J-Quants delayed prices are clearly labeled.
 - This workflow does not execute trades.
+
+## Free refresh behavior
+
+- J-Quants Free remains 12 weeks delayed; querying it more often does not remove that delay. The scheduled job collects the newest record available under the Free plan.
+- Alpha Vantage's free daily endpoint is updated at end of day. The dashboard refreshes when the next published snapshot appears; it does not provide free intraday quotes.
+- The dashboard checks for a new manifest every five minutes only while the page is visible, and also checks when the user returns to the tab.
+- A fresh browser check is not the same as a fresh market quote. Always inspect each instrument's `latestDate`, provider and adjustment status before relying on analysis.
