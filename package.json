@@ -1,0 +1,14 @@
+{
+  "name": "stock-ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Free, JavaScript-only stock analysis engine for Japanese and US equities",
+  "scripts": {
+    "test": "node --test",
+    "test:engine": "node --test engine/tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
