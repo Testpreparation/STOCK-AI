@@ -61,3 +61,21 @@ test("blocks purchase-oriented labels when adjustment metadata is unknown",()=>{
  assert.equal(result.actionable,false);
  assert.ok(result.reasons.some(reason=>reason.includes("価格調整方式")));
 });
+
+test("uses supplied annual fundamentals in the holding review",()=>{
+ const dataset=makeDataset();
+ const financials={provider:"jquants-fins-summary",metrics:{
+  revenue:[{fiscalYearEnd:"2025-03-31",filedAt:"2025-05-10",value:1000,unit:"JPY"},{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:1200,unit:"JPY"}],
+  operatingIncome:[{fiscalYearEnd:"2025-03-31",filedAt:"2025-05-10",value:100,unit:"JPY"},{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:150,unit:"JPY"}],
+  netIncome:[{fiscalYearEnd:"2025-03-31",filedAt:"2025-05-10",value:60,unit:"JPY"},{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:90,unit:"JPY"}],
+  dilutedEps:[{fiscalYearEnd:"2025-03-31",filedAt:"2025-05-10",value:60,unit:"JPY/share"},{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:90,unit:"JPY/share"}],
+  totalAssets:[{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:2400,unit:"JPY"}],
+  stockholdersEquity:[{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:1000,unit:"JPY"}],
+  totalLiabilities:[{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:1400,unit:"JPY"}],
+  operatingCashFlow:[{fiscalYearEnd:"2026-03-31",filedAt:"2026-05-10",value:130,unit:"JPY"}]
+ }};
+ const result=assessHolding(holding,dataset,{asOf:"2026-11-10",financials:{"JP:7203":financials}});
+ assert.equal(result.financial.latestPeriod,"2026-03-31");
+ assert.equal(result.financial.metrics.revenue.yearOverYearGrowth.value,20);
+ assert.equal(result.financial.derived.liabilitiesToAssetsPercent,58.333333333333336);
+});
