@@ -10,7 +10,7 @@ const round=(value,digits=2)=>finite(value)?Number(value.toFixed(digits)):null;
 export function assessHolding(holding,dataset,options={}) {
   if(!holding||!holding.symbol) throw new TypeError("holding.symbol is required");
   if(!dataset||!Array.isArray(dataset.data)||!dataset.data.length){
-    return {symbol:holding.symbol,market:holding.market,status:"DATA_UNAVAILABLE",label:"公開データ待ち",score:null,coveragePercent:0,latestPrice:null,latestDate:null,referenceLevels:[],forecast:null,reasons:["公開株価データがありません。CSVの価格は参考値としてのみ扱います。"]};
+    return {symbol:holding.symbol,market:holding.market,status:"DATA_UNAVAILABLE",label:"公開データ待ち",actionable:false,score:null,coveragePercent:0,latestPrice:null,latestDate:null,referenceLevels:[],forecast:null,reasons:["公開株価データがありません。CSVの価格は参考値としてのみ扱います。"]};
   }
   const asOf=options.asOf??new Date().toISOString().slice(0,10);
   const analysis=analyzeInstrument({priceDataset:dataset,asOf,maxPriceAgeDays:options.maxPriceAgeDays??5,maxForecastAgeDays:options.maxForecastAgeDays??10});
