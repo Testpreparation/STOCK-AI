@@ -26,6 +26,8 @@ test("J-Quants adapter sends V2 API key and normalizes pagination", async () => 
 test("J-Quants adapter rejects missing credentials and invalid codes", async () => {
   await assert.rejects(() => fetchJQuantsDaily({ code: "7203" }), error => error instanceof ProviderError && error.code === "MISSING_API_KEY");
   await assert.rejects(() => fetchJQuantsDaily({ apiKey: "x", code: "abc" }), error => error.code === "INVALID_CODE");
+  const letterCode = await fetchJQuantsDaily({ apiKey: "x", code: "282A", fetchImpl: async () => ({ ok: true, json: async () => ({ data: [] }) }) });
+  assert.equal(letterCode.symbol, "282A");
 });
 
 test("J-Quants adapter classifies rate-limit errors", async () => {
