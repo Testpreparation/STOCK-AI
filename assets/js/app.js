@@ -43,9 +43,9 @@ const FORECAST_HISTORY_KEY="stock-ai-forecast-history-v1";
 function readForecastHistory(){try{const value=JSON.parse(localStorage.getItem(FORECAST_HISTORY_KEY)??"[]");return Array.isArray(value)?value:[];}catch{return [];}}
 function writeForecastHistory(history){try{localStorage.setItem(FORECAST_HISTORY_KEY,JSON.stringify(history.slice(-1000)));return true;}catch(error){console.warn("Forecast history could not be saved:",error);return false;}}
 function updateForecastHistory(dataset,forecast){const history=readForecastHistory();const reconciled=reconcileForecastHistory(history,dataset);const calibratedForecast=applyForecastCalibration(forecast,reconciled);const known=new Set(reconciled.map(record=>record.id));const fresh=createForecastSnapshots(dataset,calibratedForecast).filter(record=>!known.has(record.id));const next=[...reconciled,...fresh].slice(-1000);const saved=writeForecastHistory(next);return {history:next,saved,forecast:calibratedForecast};}
-function renderInstrument(item,dataset){
+function renderInstrument(item,dataset,rawFinancials=null){
   let analysis=null;
-  try{analysis=analyzeInstrument({priceDataset:dataset,asOf:new Date().toISOString().slice(0,10)});}catch(error){console.warn("Analysis failed:",item.symbol,error);}
+  try{const financialData=rawFinancials?normalizeAnnualFinancials(rawFinancials,{symbol:item.symbol,market:item.market,currency:dataset.currency}):null;analysis=analyzeInstrument({priceDataset:dataset,financialData,asOf:new Date().toISOString().slice(0,10)});}catch(error){console.warn("Analysis failed:",item.symbol,error);}
   const card=element("article","instrument-card");
   const head=element("div","instrument-head");
   head.append(element("strong","",item.symbol),element("span","market-chip",item.market==="JP"?"日本株":"米国株"));
@@ -63,6 +63,17 @@ function renderInstrument(item,dataset){
   const warnings=[...(analysis?.score?.guardrails??[]),...(analysis?.forecast?.reason?[analysis.forecast.reason]:[])];
   if(item.priceAdjustment==="RAW_UNADJUSTED")warnings.push("未調整株価のため予測・買い判定を停止");
   card.append(head,detail,meta,scoreRow,recommendation,quality);
+  if(analysis?.financial){
+    const d=analysis.financial.derived??{};
+    const financialSummary=[
+      ["売上成長",analysis.financial.metrics?.revenue?.yearOverYearGrowth?.value,"%"],
+      ["営業利益率",d.operatingMarginPercent,"%"],
+      ["FCF",d.freeCashFlow,d.freeCashFlow===null?null:dataset.currency],
+      ["流動比率",d.currentRatio,"倍"],
+      ["自己資本比率",d.equityRatioPercent,"%"]
+    ].filter(([,value])=>Number.isFinite(value));
+    if(financialSummary.length)card.append(element("p","instrument-meta","財務（"+(analysis.financial.latestPeriod??"期間不明")+"）："+financialSummary.map(([label,value,unit])=>label+" "+(unit==="%"?value.toFixed(1)+"%":unit==="倍"?value.toFixed(2)+"倍":money(value,unit))).join(" ／ ")));
+  }
   if(warnings.length)card.append(element("p","instrument-warning",[...new Set(warnings)].join(" ")));
   if(forecastResult?.forecasts?.length){
     const forecast=element("div","forecast-mini");
@@ -112,6 +123,7 @@ async function loadPublishedData(){
     const fundamentals=(manifest.instruments??[]).filter(item=>item.fundamentalsFile&&item.status==="updated");
     const nextDatasets={};
     const nextFinancials={};
+    const loadedItems=[];
     overview.replaceChildren();if(screening)screening.replaceChildren();
     let loaded=0;
     for(const item of records){
@@ -120,8 +132,7 @@ async function loadPublishedData(){
         if(!dataResponse.ok)throw new Error(`data HTTP ${dataResponse.status}`);
         const dataset=await dataResponse.json();
         nextDatasets[item.market+":"+item.symbol]=dataset;
-        const card=renderInstrument(item,dataset);overview.append(card);
-        if(screening)screening.append(card.cloneNode(true));
+        loadedItems.push({item,dataset});
         loaded++;
       }catch(error){console.warn("Data load failed:",item.symbol,error);}
     }
@@ -134,6 +145,11 @@ async function loadPublishedData(){
     }
     publishedDatasets=nextDatasets;
     publishedFinancials=nextFinancials;
+    for(const {item,dataset} of loadedItems){
+      const card=renderInstrument(item,dataset,nextFinancials[item.market+":"+item.symbol]??null);
+      overview.append(card);
+      if(screening)screening.append(card.cloneNode(true));
+    }
     renderPortfolio(readPortfolio());
     const forecastTarget=document.querySelector("#forecast-list");
     if(forecastTarget){forecastTarget.replaceChildren();for(const card of overview.children){forecastTarget.append(card.cloneNode(true));}if(!forecastTarget.children.length)forecastTarget.append(element("p","muted","予測対象データがありません。"));}
