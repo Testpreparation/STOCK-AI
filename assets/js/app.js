@@ -154,11 +154,17 @@ function renderPortfolio(portfolio){
   const warnings=document.querySelector("#portfolio-warnings");
   if(!summary||!tbody)return;
   summary.replaceChildren();
+  const currencyTotals=(key)=>{
+    const totals=portfolio?.summary?.totalsByCurrency??{};
+    const parts=Object.entries(totals).filter(([,values])=>Number.isFinite(values[key])).map(([currency,values])=>money(values[key],currency));
+    return parts.length?parts.join(" ／ "):"—";
+  };
+  const cashValue=portfolio?.summary?.buyingPower??portfolio?.summary?.cash??null;
   const metrics=[
     ["保有銘柄数",String(portfolio?.summary?.holdingsCount??0)+"銘柄","CSV取込データ"],
-    ["保有株評価額",money(portfolio?.summary?.marketValue??null,"JPY"),"CSVの評価額または現在値から計算"],
-    ["評価損益",money(portfolio?.summary?.unrealizedPnl??null,"JPY"),"CSV記載値または取得単価から計算"],
-    ["買付余力",money(portfolio?.summary?.buyingPower??portfolio?.summary?.cash??null,"JPY"),"CSVに記載がある場合"]
+    ["保有株評価額",currencyTotals("marketValue"),"通貨ごとに分けて表示"],
+    ["評価損益",currencyTotals("unrealizedPnl"),"通貨ごとに分けて表示"],
+    ["買付余力",cashValue===null?"—":Number(cashValue).toLocaleString("ja-JP"),"CSV記載値（通貨単位は元データ準拠）"]
   ];
   for(const [label,value,note] of metrics){const card=element("article","metric");card.append(element("span","",label),element("strong","",value),element("small","",note));summary.append(card);}
   tbody.replaceChildren();
