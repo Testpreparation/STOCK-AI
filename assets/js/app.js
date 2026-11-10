@@ -4,6 +4,7 @@ import { importPortfolioCsv } from "../../engine/portfolio/csv-import.js";
 import { analyzePortfolio } from "../../engine/portfolio/analyzer.js";
 import { assessPortfolioHoldings } from "../../engine/portfolio/holding-advisor.js";
 import { normalizeAnnualFinancials } from "../../engine/data/financial-normalizer.js";
+import { calculateValuationIndicators } from "../../engine/analysis/valuation.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -54,6 +55,7 @@ function renderInstrument(item,dataset,rawFinancials=null){
   const detail=element("div","instrument-price",money(price,dataset.currency));
   const meta=element("p","instrument-meta",`最新データ：${item.latestDate??"不明"} ／ ${item.provider??"提供元不明"}`);
   const score=analysis?.score;
+  const valuation=analysis?.financial?calculateValuationIndicators({price,financial:analysis.financial}):null;
   const historyResult=analysis?.forecast?.forecasts?.length?updateForecastHistory(dataset,analysis.forecast):{history:readForecastHistory(),saved:true};
   const ownHistory=historyResult.history.filter(record=>record.symbol===item.symbol&&record.market===item.market);
   const forecastResult=historyResult.forecast??analysis?.forecast;
@@ -74,6 +76,16 @@ function renderInstrument(item,dataset,rawFinancials=null){
       ["自己資本比率",d.equityRatioPercent,"%"]
     ].filter(([,value])=>Number.isFinite(value));
     if(financialSummary.length)card.append(element("p","instrument-meta","財務（"+(analysis.financial.latestPeriod??"期間不明")+"）："+financialSummary.map(([label,value,unit])=>label+" "+(unit==="%"?value.toFixed(1)+"%":unit==="倍"?value.toFixed(2)+"倍":money(value,unit))).join(" ／ ")));
+  }
+  if(valuation){
+    const valuationText=[
+      ["PER",valuation.pe===null?null:valuation.pe.toFixed(1)+"倍"],
+      ["PBR",valuation.pb===null?null:valuation.pb.toFixed(2)+"倍"],
+      ["EPS",valuation.eps===null?null:money(valuation.eps,dataset.currency)],
+      ["EPS成長",valuation.epsGrowthPercent===null?null:valuation.epsGrowthPercent.toFixed(1)+"%"]
+    ].filter(([,value])=>value!==null);
+    if(valuationText.length)card.append(element("p","instrument-meta","企業価値指標："+valuationText.map(([label,value])=>label+" "+value).join(" ／ ")));
+    if(valuation.scenarios)card.append(element("p","instrument-meta","EPS×PER仮定価格：保守 "+money(valuation.scenarios.conservative,dataset.currency)+" ／ 基本 "+money(valuation.scenarios.base,dataset.currency)+" ／ 強気 "+money(valuation.scenarios.optimistic,dataset.currency)+"（PER 10/16/22倍の仮定）"));
   }
   if(warnings.length)card.append(element("p","instrument-warning",[...new Set(warnings)].join(" ")));
   if(forecastResult?.forecasts?.length){
