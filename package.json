@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Free, JavaScript-only stock analysis engine for Japanese and US equities",
   "scripts": {
-    "test": "node --test",
+    "test": "node --check assets/js/app.js && node --test",
     "test:engine": "node --test engine/tests/*.test.js",
     "update:market-data": "node scripts/update-market-data.js"
   },
