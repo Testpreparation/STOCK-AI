@@ -2,6 +2,7 @@ import { getEngineCapabilities, analyzeInstrument } from "../../engine/pipeline.
 import { applyForecastCalibration, createForecastSnapshots, reconcileForecastHistory, summarizeForecastHistory } from "../../engine/analysis/forecast-history.js";
 import { importPortfolioCsv } from "../../engine/portfolio/csv-import.js";
 import { analyzePortfolio } from "../../engine/portfolio/analyzer.js";
+import { assessPortfolioHoldings } from "../../engine/portfolio/holding-advisor.js";
 
 const tabs=[...document.querySelectorAll(".tab")];
 const views=[...document.querySelectorAll(".view")];
@@ -189,6 +190,32 @@ function renderPortfolio(portfolio){
   }
   if(updated)updated.textContent=portfolio?.importedAt?"取込："+new Date(portfolio.importedAt).toLocaleString("ja-JP"):"未読み込み";
   if(warnings){warnings.replaceChildren();for(const warning of [...(portfolio?.warnings??[]),...(portfolioAnalysis?.warnings??[])])warnings.append(element("li","",warning));}
+  const advice=document.querySelector("#portfolio-advice");
+  if(advice){
+    advice.replaceChildren();
+    if(!portfolio) advice.append(element("p","muted","CSVを読み込むと保有銘柄ごとの投資判断材料を表示します。"));
+    else {
+      const reviews=assessPortfolioHoldings(portfolio,publishedDatasets,{asOf:new Date().toISOString().slice(0,10)});
+      for(const review of reviews){
+        const card=element("article","holding-advice-card");
+        const head=element("div","holding-advice-head");
+        head.append(element("strong","",review.symbol),element("span","advice-status advice-"+review.status.toLowerCase(),review.label));
+        card.append(head);
+        card.append(element("p","muted","分析スコア："+(review.score===null?"—":review.score+"/100")+" ／ データ充足率："+review.coveragePercent+"% ／ 株価日："+(review.latestDate??"—")));
+        if(review.latestPrice!==null) card.append(element("p","", "分析基準価格 "+money(review.latestPrice,review.currency)+" ／ 価格調整 "+review.priceAdjustment));
+        if(review.referenceLevels.length){
+          const levels=review.referenceLevels.map(level=>level.label+" "+money(level.price,review.currency)+(level.distancePercent===null?"":" ("+(level.distancePercent>=0?"+":"")+level.distancePercent+"%)")).join(" ／ ");
+          card.append(element("p","", "押し目監視の参考水準："+levels));
+        }
+        if(review.forecast) card.append(element("p","", "短期シナリオ（統計参考）：弱気 "+money(review.forecast.bear,review.currency)+" ／ 基本 "+money(review.forecast.base,review.currency)+" ／ 強気 "+money(review.forecast.bull,review.currency)));
+        const reasons=element("ul","warning-list");
+        for(const reason of review.reasons) reasons.append(element("li","",reason));
+        card.append(reasons);
+        advice.append(card);
+      }
+      if(!reviews.length) advice.append(element("p","muted","保有銘柄がありません。"));
+    }
+  }
   const risk=document.querySelector("#portfolio-risk");
   if(risk){
     risk.replaceChildren();
