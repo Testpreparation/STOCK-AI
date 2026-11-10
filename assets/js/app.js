@@ -65,7 +65,7 @@ function renderInstrument(item,dataset){
     for(const scenario of forecastResult.forecasts){
       for(const [key,label] of [["bull","強気"],["base","基本"],["bear","弱気"]]){
         const row=element("div","forecast-mini-row");
-        row.append(element("span","",scenario.label+"・"+label),element("b","",money(scenario[key],dataset.currency)));
+        row.append(element("span","",scenario.label+"・"+label+(scenario.calibration?.applied?"（過去"+scenario.calibration.sampleCount+"件で補正）":"")),element("b","",money(scenario[key],dataset.currency)));
         forecast.append(row);
       }
     }
