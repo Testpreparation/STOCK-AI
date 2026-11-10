@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T02:05:17.463Z",
+  "generatedAt": "2026-11-10T02:19:15.845Z",
   "providers": {
     "jquants": "configured",
     "alphaVantage": "configured",
@@ -13,7 +13,7 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T02:05:18.681Z",
+      "fetchedAt": "2026-11-10T02:19:16.891Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
@@ -34,7 +34,7 @@
       "provider": "jquants",
       "rows": 487,
       "latestDate": "2026-08-18",
-      "fetchedAt": "2026-11-10T02:05:32.122Z",
+      "fetchedAt": "2026-11-10T02:19:30.042Z",
       "priceAdjustment": "SPLIT_ADJUSTED",
       "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
       "status": "updated"
@@ -49,13 +49,34 @@
       "status": "updated"
     },
     {
+      "market": "JP",
+      "symbol": "7011",
+      "file": "/public-data/market/jp/7011.json",
+      "provider": "jquants",
+      "rows": 487,
+      "latestDate": "2026-08-18",
+      "fetchedAt": "2026-11-10T02:19:43.271Z",
+      "priceAdjustment": "SPLIT_ADJUSTED",
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
+      "market": "JP",
+      "symbol": "7011",
+      "provider": "jquants-fins-summary",
+      "fundamentalsFile": "/public-data/fundamentals/jp/7011.json",
+      "periods": 2,
+      "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+      "status": "updated"
+    },
+    {
       "market": "US",
       "symbol": "AAPL",
       "file": "/public-data/market/us/AAPL.json",
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T02:05:44.528Z",
+      "fetchedAt": "2026-11-10T02:20:07.730Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -67,7 +88,19 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-09",
-      "fetchedAt": "2026-11-10T02:05:59.669Z",
+      "fetchedAt": "2026-11-10T02:20:23.017Z",
+      "priceAdjustment": "RAW_UNADJUSTED",
+      "delayPolicy": null,
+      "status": "updated"
+    },
+    {
+      "market": "US",
+      "symbol": "IONQ",
+      "file": "/public-data/market/us/IONQ.json",
+      "provider": "alpha-vantage",
+      "rows": 100,
+      "latestDate": "2026-11-09",
+      "fetchedAt": "2026-11-10T02:20:38.419Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -85,7 +118,28 @@
       "provider": "sec-edgar-companyfacts",
       "fundamentalsFile": "/public-data/fundamentals/us/MSFT.json",
       "status": "updated"
+    },
+    {
+      "market": "US",
+      "symbol": "IONQ",
+      "provider": "sec-edgar-companyfacts",
+      "fundamentalsFile": "/public-data/fundamentals/us/IONQ.json",
+      "status": "updated"
     }
   ],
-  "warnings": []
+  "warnings": [
+    {
+      "market": "JP",
+      "symbol": "282A",
+      "code": "INVALID_CODE",
+      "message": "A 4- or 5-digit Japanese stock code is required"
+    },
+    {
+      "market": "JP",
+      "symbol": "282A",
+      "provider": "jquants-financials",
+      "code": "INVALID_CODE",
+      "message": "A 4- or 5-digit Japanese stock code is required"
+    }
+  ]
 }

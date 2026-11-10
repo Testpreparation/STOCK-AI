@@ -1,0 +1,146 @@
+{
+  "provider": "jquants-fins-summary",
+  "market": "JP",
+  "symbol": "7011",
+  "currency": "JPY",
+  "fetchedAt": "2026-11-10T02:19:43.448Z",
+  "delayPolicy": "FREE_PLAN_12_WEEK_DELAY",
+  "periods": 2,
+  "metrics": {
+    "revenue": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 5027176000000,
+        "unit": "JPY",
+        "sourceTag": "Sales"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 4974168000000,
+        "unit": "JPY",
+        "sourceTag": "Sales"
+      }
+    ],
+    "operatingIncome": [],
+    "netIncome": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 245447000000,
+        "unit": "JPY",
+        "sourceTag": "NP"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 332129000000,
+        "unit": "JPY",
+        "sourceTag": "NP"
+      }
+    ],
+    "dilutedEps": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 73.02,
+        "unit": "JPY/share",
+        "sourceTag": "DEPS"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 98.84,
+        "unit": "JPY/share",
+        "sourceTag": "DEPS"
+      }
+    ],
+    "totalAssets": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 6658924000000,
+        "unit": "JPY",
+        "sourceTag": "TA"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 8269711000000,
+        "unit": "JPY",
+        "sourceTag": "TA"
+      }
+    ],
+    "stockholdersEquity": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 2469823000000,
+        "unit": "JPY",
+        "sourceTag": "Eq"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 3228400000000,
+        "unit": "JPY",
+        "sourceTag": "Eq"
+      }
+    ],
+    "operatingCashFlow": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 530459000000,
+        "unit": "JPY",
+        "sourceTag": "CFO"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 942619000000,
+        "unit": "JPY",
+        "sourceTag": "CFO"
+      }
+    ],
+    "cashAndEquivalents": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 657816000000,
+        "unit": "JPY",
+        "sourceTag": "CashEq"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 1334874000000,
+        "unit": "JPY",
+        "sourceTag": "CashEq"
+      }
+    ],
+    "totalLiabilities": [
+      {
+        "fiscalYearEnd": "2025-03-31",
+        "filedAt": "2025-05-09",
+        "value": 4189101000000,
+        "unit": "JPY",
+        "sourceTag": "TA-Eq"
+      },
+      {
+        "fiscalYearEnd": "2026-03-31",
+        "filedAt": "2026-05-12",
+        "value": 5041311000000,
+        "unit": "JPY",
+        "sourceTag": "TA-Eq"
+      }
+    ]
+  },
+  "limitations": [
+    "J-Quants Free plan financial information is subject to the plan's 12-week delay.",
+    "Only CurPerType=FY records are used; cumulative quarterly records are excluded.",
+    "Total liabilities are derived as total assets minus net assets (TA-Eq); this is not a separately reported liability line.",
+    "The summary endpoint does not provide all balance-sheet and cash-flow details; missing values remain unavailable."
+  ]
+}
