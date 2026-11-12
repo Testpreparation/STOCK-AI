@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T16:35:53.836Z",
+  "generatedAt": "2026-11-12T17:04:17.440Z",
   "providers": {
     "jquants": "configured",
     "alphaVantage": "configured",
@@ -48,8 +48,8 @@
       "file": "/public-data/market/us/AAPL.json",
       "provider": "alpha-vantage",
       "rows": 100,
-      "latestDate": "2026-11-10",
-      "fetchedAt": "2026-11-11T16:36:45.839Z",
+      "latestDate": "2026-11-11",
+      "fetchedAt": "2026-11-12T17:05:10.591Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -60,8 +60,8 @@
       "file": "/public-data/market/us/MSFT.json",
       "provider": "alpha-vantage",
       "rows": 100,
-      "latestDate": "2026-11-10",
-      "fetchedAt": "2026-11-11T16:37:01.054Z",
+      "latestDate": "2026-11-11",
+      "fetchedAt": "2026-11-12T17:05:25.669Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -72,8 +72,8 @@
       "file": "/public-data/market/us/IONQ.json",
       "provider": "alpha-vantage",
       "rows": 100,
-      "latestDate": "2026-11-10",
-      "fetchedAt": "2026-11-11T16:37:16.242Z",
+      "latestDate": "2026-11-11",
+      "fetchedAt": "2026-11-12T17:05:40.772Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
