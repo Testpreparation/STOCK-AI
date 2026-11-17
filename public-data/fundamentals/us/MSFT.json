@@ -2,7 +2,7 @@
   "provider": "sec-edgar-companyfacts",
   "cik": "0000789019",
   "entityName": "MICROSOFT CORP",
-  "fetchedAt": "2026-11-16T18:55:58.655Z",
+  "fetchedAt": "2026-11-17T17:54:56.263Z",
   "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
   "metrics": {
     "revenue": [
