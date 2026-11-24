@@ -2,7 +2,7 @@
   "provider": "sec-edgar-companyfacts",
   "cik": "0000320193",
   "entityName": "Apple Inc.",
-  "fetchedAt": "2026-11-23T20:34:00.994Z",
+  "fetchedAt": "2026-11-24T19:44:13.002Z",
   "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
   "metrics": {
     "revenue": [
