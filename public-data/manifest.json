@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T18:38:33.898Z",
+  "generatedAt": "2026-11-27T18:27:13.647Z",
   "providers": {
     "jquants": "configured",
     "alphaVantage": "configured",
@@ -49,7 +49,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-25",
-      "fetchedAt": "2026-11-26T18:39:26.940Z",
+      "fetchedAt": "2026-11-27T18:28:05.758Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -61,7 +61,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-25",
-      "fetchedAt": "2026-11-26T18:39:42.018Z",
+      "fetchedAt": "2026-11-27T18:28:20.969Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
@@ -73,7 +73,7 @@
       "provider": "alpha-vantage",
       "rows": 100,
       "latestDate": "2026-11-25",
-      "fetchedAt": "2026-11-26T18:39:57.097Z",
+      "fetchedAt": "2026-11-27T18:28:36.175Z",
       "priceAdjustment": "RAW_UNADJUSTED",
       "delayPolicy": null,
       "status": "updated"
